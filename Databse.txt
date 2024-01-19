@@ -1,0 +1,51 @@
+Database name: candela_database
+
+Tables
+- users
+    id              i
+    username        s
+    lastname        s
+    email           s
+    contactnumber   s
+    address         s null
+    password        s
+
+- contacts
+    id              i
+    name            s
+    email           s
+    contactnumber   s
+    comment         s
+
+- products
+    id              i
+    pname           s
+    image           s
+    productpage     s
+    price           s
+    stocks          i
+    description     s
+
+
+- basket_items
+    id              i
+    basket_content  s
+    user_id         i fk-ref users.id
+    product_id      i fk-ref products.id
+    quantity        i
+
+- checkout_orders
+    id              i
+    user_id         i fk-ref users.id
+    firstname       s
+    lastname        s
+    email           s
+    contact_number  s
+    address         s
+    p1              i
+    p2              i
+    p3              i
+    p4              i
+    p5              i
+    p6              i
+    total           i
