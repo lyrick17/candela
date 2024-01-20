@@ -1,3 +1,5 @@
+<?php include('utilities/process_userconn.php'); ?>
+
 <!DOCTYPE html><html>
 <head><title>Sign Up at Candela</title>
 	<meta charset="utf-8">
@@ -44,32 +46,33 @@
 			</p>
 			<p class="text-center">Please fill up the form to register.</p>
 					<!--FORM-->
-					<?php include('server.php'); ?>
 					<form method="post" action="signup-form.php#signUpForm" id="formstyle">
 
 						<?php
 							if (!isset($_SESSION['id'])) {
 						?>
+							<input type="hidden" name="type" value="signup" />
+
 						<label>First Name / Username:</label><br>
-							<input type="text" name="uName" placeholder="Enter First Name / Username" class="width-600" value="<?php echo $uName; ?>" />
+							<input type="text" name="uName" placeholder="Enter First Name / Username" class="width-600" value="<?php echo $signup['username']; ?>" />
 						<br>
 							<span class="field-validity"><?php echo $uNameErr; ?></span>
 						<br>
 
 						<label>Last Name:</label><br>
-							<input type="text" name="LName" placeholder="Enter Last Name" class="width-600" value="<?php echo $LName; ?>" />
+							<input type="text" name="LName" placeholder="Enter Last Name" class="width-600" value="<?php echo $signup['lastname']; ?>" />
 						<br>
 							<span class="field-validity"><?php echo $LNameErr; ?></span>
 						<br>
 
 						<label>Email:</label><br>
-							<input type="text" name="email" placeholder="Enter Email" class="width-600" value="<?php echo $email; ?>" />
+							<input type="text" name="email" placeholder="Enter Email" class="width-600" value="<?php echo $signup['email']; ?>" />
 						<br>
 							<span class="field-validity"><?php echo $emailErr; ?></span>
 						<br>
 
 						<label>Contact Number:</label><em>(optional)</em><br>
-							<input type="text" name="contactnum" placeholder="Enter Contact Number" class="width-600" value="<?php echo $contactnum; ?>" maxlength="11" />
+							<input type="text" name="contactnum" placeholder="Must start with '09'" class="width-600" value="<?php echo $signup['contact']; ?>" maxlength="11" />
 						<br>
 							<span class="field-validity"><?php echo $contactnumErr; ?></span>
 						<br>
@@ -97,20 +100,19 @@
 							  <!-- Modal content -->
  								<div class="modal-content">
 							    	<span class="close">&times;</span>
-									   	<?php echo $termsConditions; ?>
+									   	<?php include("templates/terms_conditions.php"); ?>
 								</div>
 							</div>
 					</div>
 					<div id="captchadiv">
-						<label style="font-weight: normal;"><b>Captcha:</b> Are You Human?</label><br>
-						<?php echo $no1 ." + ". $no2 ." = "; ?>
-						<input type="hidden" name="no1" value="<?php echo $no1; ?>">
-						<input type="hidden" name="no2" value="<?php echo $no2; ?>">
+						<!--<label style="font-weight: normal;"><b>Captcha:</b> Are You Human?</label><br>
+					
+						<input type="hidden" name="no1" value="">
+						<input type="hidden" name="no2" value="">
 							<input type="number" name="captcha" required /><br>
 							<span class="field-validity">
-								<?php echo $captchaErr; ?>
 							</span>
-						
+						-->
 					</div>
 						<?php if (!isset($_SESSION['id'])) {
 						?>

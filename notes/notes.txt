@@ -1,0 +1,19 @@
+Things to update in this Candela Version:
+
+Db_connection, separate the connection from server.php
+
+
+Register
+Firstname   - accepts anything but empty
+LastName    - accepts anything but empty
+Email       - unique, one email per registration, validation 
+Address
+Contact Number
+
+Captcha, API
+
+
+Login
+Username or Email
+Password
+

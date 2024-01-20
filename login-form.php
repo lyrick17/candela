@@ -1,4 +1,4 @@
-				<?php include('server.php'); ?>
+<?php include('utilities/process_userconn.php'); ?>
 <!DOCTYPE html><html>
 <head><title>Log in at Candela</title>
 	<meta charset="utf-8">
@@ -45,12 +45,14 @@
 					<p style="color: red;">
 						<?php echo $inputErr; ?>
 					</p>
-						<label>Username:</label>
+					<input type="hidden" name="type" value="login" />
+
+						<label>Email:</label>
 						<br>
 						<?php 
 							if (!isset($_SESSION['id'])) {
 						?>
-							<input type="text" name="loginName" placeholder="Enter Username" class="width-600" value="<?php echo $loginName; ?>" />
+							<input type="text" name="loginName" placeholder="Enter Email" class="width-600" value="<?php echo $username; ?>" />
 						<?php
 							}
 						?>

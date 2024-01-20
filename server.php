@@ -84,11 +84,12 @@
 		// connection to database
 	$user = "root"; $pass = ""; $db = "candela_database";
 	$mysqli = mysqli_connect('localhost', $user, $pass, $db) or die("Unable To Connect");
+	
 	function testInput($data) {
-	$data = trim($data);
-	$data = stripslashes($data);
-	$data = htmlspecialchars($data);
-	return $data;
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		return $data;
 	}
 
 	#Captcha...
@@ -289,14 +290,8 @@
 
 	} // end of if($_SERVER["REQUEST_METHOD"] == "POST") statement
 
-	if (isset($_SESSION['username']) && !isset($_SESSION['id'])) {
-		$idsql = "SELECT id FROM `users` WHERE Username ='". $_SESSION['username']."'";
-		$idresult = mysqli_query($mysqli, $idsql);
-		while ($idrow = mysqli_fetch_array($idresult)) {
-			$userid = $idrow['id'];
-			}
-		$_SESSION['id'] = $userid;
-	}
+	// makes sure session id is set
+
 
 	//Getting the data of products in products table
 		$productquery = 'SELECT * FROM products ORDER by id ASC';
