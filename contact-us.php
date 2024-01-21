@@ -1,4 +1,4 @@
-<?php include("server.php"); ?>
+<?php include("utilities/process_feedback.php"); ?>
 <!DOCTYPE html><html>
 <head><title>Contact Us - Candela</title>
 	<meta charset="utf-8">
@@ -90,50 +90,47 @@ $(document).ready(function() {
 			<form method="post" action="contact-us.php#contact-form">
 			<span class="font-25">Name:</span>
 				<span class="contact-required">(required)</span>
-					<span style="color: red;">*<?php echo $contnameErr; ?></span>
+					<span style="color: red;">*<?php echo $contact_err['name']; ?></span>
 				<br>
 					<input type="text" name="uName" class="contact-input" value="<?php if(isset($_SESSION['username'])){
 							echo $_SESSION['username'];} else {
-							echo $uName;
-							} ?>">
+							echo $contact['name'];
+							} ?>" maxlength="255">
 				<br><br>
 			<span class="font-25">E-mail:</span>
 				<span class="contact-required">(required)</span>
-					<span style="color: red;">*<?php echo $contemailErr; ?></span>
+					<span style="color: red;">*<?php echo $contact_err['email']; ?></span>
 				<br>	
 					<input type="text" name="email" class="contact-input" value="<?php if(isset($_SESSION['email'])){
 							echo $_SESSION['email'];} else {
-							echo $email;
-							} ?>">
+							echo $contact['email'];
+							} ?>" maxlength="100">
 				<br><br>
 			<span class="font-25">Contact Number:</span>
 				<span class="contact-required">(optional)</span>
-					<span style="color: red;"><?php echo $contcontactnumErr; ?></span>
+					<span style="color: red;"><?php echo $contact_err['contact']; ?></span>
 				<br>
 					<input type="text" name="contactnum" class="contact-input" value="<?php if(isset($_SESSION['contactnumber'])){
 							echo $_SESSION['contactnumber'];} else {
-							echo $contactnum;
+							echo $contact['contact'];
 							} ?>" maxlength="11" />
 				<br><br>
 			
-			<!--<span class="font-25">Gender:&nbsp;</span>
-
-				<input type="radio" name="gender" <?php #if (isset($gender) && $gender=="male") echo "checked";?> value="male"><span class="rad-oswald-18">Male</span>
-				<input type="radio" name="gender" <?php #if (isset($gender) && $gender=="female") echo "checked";?> value="female"><span class="rad-oswald-18">Female</span>
-				<input type="radio" name="gender" <?php #if (isset($gender) && $gender=="other") echo "checked";?> value="other"><span class="rad-oswald-18">Other</span>
-				<input type="radio" name="gender" <?php #if (isset($gender) && $gender=="notsay") echo "checked";?> value="notsay"><span class="rad-oswald-18">Rather Not Say</span>
-				<span style="color: red;">*<?php #echo $genderErr; ?></span>
-				<br><br>-->
+			<span class="font-25">Subject:</span>
+				<span class="contact-required">(required)</span>
+					<span style="color: red;">*<?php echo $contact_err['subject']; ?></span>
+				<br>
+					<input type="text" name="subject" class="contact-input" value="<?php echo $contact['subject']; ?>" maxlength="255" />
+				<br><br>
 
 			<span class="font-25">Comment:</span>
 				<span class="contact-required">(required)</span>
-					<span style="color: red;">*<?php echo $contcommentErr; ?></span>
+					<span style="color: red;">*<?php echo $contact_err['comment']; ?></span>
 				<br>	
-					<textarea maxlength="1000" name="comment"><?php echo $comment; ?></textarea>
+					<textarea maxlength="2000" name="comment"><?php echo $contact['comment']; ?></textarea>
 				<br><br>
 			
 			<input type="submit" name="submit" value="Submit Now" class="Snow" />
-				<?php echo $alert; ?>
 
 			</form><!-- END OF FORMS-->
 

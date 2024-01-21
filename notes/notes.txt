@@ -1,19 +1,30 @@
 Things to update in this Candela Version:
 
-Db_connection, separate the connection from server.php
+
+Further Upgrades to do:
+- limit email to 100 characters only                                    - DONE
+- limit comment to 2,000 characs only                                   - DONE
+- limit subject to 255 characs only                                     - DONE
+- change Err varialbes into array                                       - DONE
+- recaptha                                                              - DONE
+- client side JS do not submit form when recaptcha is not done          - DONE
+- server side PHP do not submit form when recaptcha is not done         - DONE
+- my account, 
+- change address and barangay, 
+- forgot password and delete account
+- SMTP for:
+    - sending contact from
+    - register, welcome to Candela
+    - basket checked out
+    - order is on the way
+    - order is delivered
+    - deleted an account
+- admin panels
 
 
-Register
-Firstname   - accepts anything but empty
-LastName    - accepts anything but empty
-Email       - unique, one email per registration, validation 
-Address
-Contact Number
-
-Captcha, API
-
-
-Login
-Username or Email
-Password
-
+Specifications:
+For Registration:
+- Username and Lastname -   must be atmost 255 characters.
+- Email                 -   must be valid, unique per account, atmost 100 characters.
+- Contact number        -   must start at 09, and then 11 digits only.
+- Password              -   must be atleast 8 characters.

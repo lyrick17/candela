@@ -19,7 +19,13 @@ $signup = array("username" => "",
 
 
 // contains the error messages
-$uNameErr = $LNameErr = $emailErr = $contactnumErr = $pswErr = $repswErr = $captchaErr = "";
+$signup_err = array("username" => "",
+                    "lastname" => "",
+                    "email" => "",
+                    "contact" => "",
+                    "psw" => "",
+                    "repsw" => "",
+                    "captcha" => "");
 
 // contains number of errors, would not proceed once incremented
 $errors = 0;
@@ -29,21 +35,32 @@ $emailcount = 0;
 $passlength = 0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
-    # For Register Form...
+
+    // Captcha Validation
+    if ($_POST['formcaptcha'] != "filled") {
+        $signup_err['captcha'] = error_messages("captcha_error");      // captcha not filled
+    }
+
 
     // -----Username / Firstname
         // must not be empty
     $signup['username'] = testInput($mysqli, $_POST["uName"]) ?? "";
 
-    $uNameErr = $signup['username'] ? "" : error_messages("username_error");
+    if (!$signup['username']) {
+        $signup_err['username'] = error_messages("username_error");     // username is empty
+    } elseif (strlen($signup['username']) > 255) {
+        $signup_err['username'] = error_messages("maxchar_error_255");    // username character is over 255
+    }
 
-    
     // -----Lastname
         // must not be empty   
     $signup['lastname'] = testInput($mysqli, $_POST["LName"]) ?? "";
 
-    $LNameErr = $signup['lastname'] ? "" : error_messages("lastname_error");
-
+    if (!$signup['lastname']) {
+        $signup_err['lastname'] = error_messages("lastname_error");       // lastname is empty
+    } elseif (strlen($signup['lastname']) > 255) {
+        $signup_err['lastname'] = error_messages("maxchar_error_255");    // lastname character is over 255
+    }
 
     // -----Email
         // must not be empty
@@ -56,12 +73,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
     $emailcount = mysqli_num_rows($emailresult);
     
     if (!$signup['email']) {
-        $emailErr = error_messages("email_error_1");
+        $signup_err['email'] = error_messages("email_error_1");        // email is empty
+    } elseif (strlen($signup['email']) > 100) {
+        $signup_err['email'] = error_messages("maxchar_error_100");    // email character is over 100
     } elseif (!filter_var($signup['email'], FILTER_VALIDATE_EMAIL)) {
-        $emailErr = error_messages("email_error_2");
+        $signup_err['email'] = error_messages("email_error_2");        // email is not valid
     } elseif ($emailcount == 1) {
-        $emailErr = error_messages("email_error_3");
-
+        $signup_err['email'] = error_messages("email_error_3");        // email is already takeen
     }
 
     
@@ -72,20 +90,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
         // optional
     $signup['contact'] = testInput($mysqli, $_POST['contactnum']) ?? "";
     if ($signup['contact'] && !preg_match("/^(09)\d{9}$/",$signup['contact'])) {
-        $contactnumErr = error_messages("contact_error");
+        $signup_err['contact'] = error_messages("contact_error");       // phone num not valid
     }
     
 
     // -----Password
-        // must be 8 characters
+        // must be atleast 8 characters
         // must be confirmed
     $signup['psw'] = $_POST["psw"] ?? "";
     $passlength = strlen($signup['psw']);
 
     if (!$signup['psw']) {
-        $pswErr = error_messages("psw_error_1");
+        $signup_err['psw'] = error_messages("psw_error_1");            // no password input
     } elseif ($passlength < 8) {
-        $pswErr = error_messages("psw_error_2");
+        $signup_err['psw'] = error_messages("psw_error_2");            // password less than 8 characters
     }
 
     // -----Confirm Password
@@ -93,18 +111,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
 
     if ($signup['psw'] && $passlength >= 8) {
         if (!$signup['rePass']) {
-            $repswErr = error_messages("psw_error_3");
+            $signup_err['repsw'] = error_messages("psw_error_3");      // password not confirmed
         } elseif ($signup['psw'] != $signup['rePass']) {
-            $repswErr = error_messages("psw_error_4");
-
+            $signup_err['repsw'] = error_messages("psw_error_4");      // passwords do not match
         } 
     }
     
+    
+    // error if captcha is not filled
+    $errors += ($_POST['formcaptcha'] != "filled");
     // compile the errors, once $error is incremented, there is error found
-    $errors += empty($_POST['uName']);
-    $errors += empty($_POST['LName']);
-    $errors += (empty($_POST['email']) || !filter_var($signup['email'],FILTER_VALIDATE_EMAIL) || $emailcount == 1);
-    $errors = $contactnumErr ? $errors + 1 : $errors;
+    $errors += (empty($_POST['uName']) || strlen($signup['username']) > 255);
+    $errors += empty($_POST['LName'] || strlen($signup['lastname']) > 255);
+    $errors += (empty($_POST['email']) || strlen($signup['email']) > 100 || !filter_var($signup['email'],FILTER_VALIDATE_EMAIL) || $emailcount == 1);
+    $errors = $signup_err['contact'] ? $errors + 1 : $errors;
     $errors += (empty($_POST['psw']) || $passlength < 8);
     $errors += (empty($_POST['rePass']) || $signup['psw'] != $signup['rePass']);
 
@@ -163,11 +183,12 @@ $inputErr = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
 
+    // get inputs
     $username = (!empty($_POST['loginName'])) ? testInput($mysqli, $_POST['loginName']) : FALSE;
     $password = (!empty($_POST['loginPass'])) ? $_POST['loginPass'] : FALSE;
     
     if ($username && $password) {
-
+        // check username exists, then get its password
         $q1 = "SELECT * FROM users WHERE `email` = '". $username ."'";
         $result1 = @mysqli_query($mysqli, $q1);
         $user_row = (mysqli_num_rows($result1) == 1) ? mysqli_fetch_array($result1, MYSQLI_ASSOC) : false;
@@ -175,7 +196,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
         if ($user_row) {
             $hashed_pass = $user_row['password'];
             
+            // compare the password typed now and from the db
             if (password_verify($password, $hashed_pass)) {
+                // password matched, assign the session variables
                 $_SESSION['id'] = $user_row['user_id'];
                 $_SESSION['username'] = $user_row['username'];
                 $_SESSION['lastname'] = $user_row['lastname'];
@@ -189,14 +212,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
                 header("location: index.php");
                 exit();
             } else {
-                $display_errors['login']  = error_message("login_error_2");
+                $display_errors['login']  = error_message("login_error_2");     // invalid login
             }
 
         } else {
-            $inputErr = error_messages("login_error_2");
+            $inputErr = error_messages("login_error_2");                        // invalid login
         }
     } else {
-        $inputErr  = error_messages("login_error_1");
+        $inputErr  = error_messages("login_error_1");                           // incomplete details
     }
 }
 ?>

@@ -7,7 +7,7 @@
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="icon" type="image/png" href="images/candelalogo.png">
 </head>
@@ -54,40 +54,40 @@
 							<input type="hidden" name="type" value="signup" />
 
 						<label>First Name / Username:</label><br>
-							<input type="text" name="uName" placeholder="Enter First Name / Username" class="width-600" value="<?php echo $signup['username']; ?>" />
+							<input type="text" name="uName" placeholder="Enter First Name / Username" class="width-600" value="<?php echo $signup['username']; ?>" maxlength="255" />
 						<br>
-							<span class="field-validity"><?php echo $uNameErr; ?></span>
+							<span class="field-validity"><?php echo $signup_err['username']; ?></span>
 						<br>
 
 						<label>Last Name:</label><br>
-							<input type="text" name="LName" placeholder="Enter Last Name" class="width-600" value="<?php echo $signup['lastname']; ?>" />
+							<input type="text" name="LName" placeholder="Enter Last Name" class="width-600" value="<?php echo $signup['lastname']; ?>" maxlength="255" />
 						<br>
-							<span class="field-validity"><?php echo $LNameErr; ?></span>
+							<span class="field-validity"><?php echo $signup_err['lastname']; ?></span>
 						<br>
 
 						<label>Email:</label><br>
-							<input type="text" name="email" placeholder="Enter Email" class="width-600" value="<?php echo $signup['email']; ?>" />
+							<input type="text" name="email" placeholder="Enter Email" class="width-600" value="<?php echo $signup['email']; ?>" maxlength="100" />
 						<br>
-							<span class="field-validity"><?php echo $emailErr; ?></span>
+							<span class="field-validity"><?php echo $signup_err['email']; ?></span>
 						<br>
 
 						<label>Contact Number:</label><em>(optional)</em><br>
 							<input type="text" name="contactnum" placeholder="Must start with '09'" class="width-600" value="<?php echo $signup['contact']; ?>" maxlength="11" />
 						<br>
-							<span class="field-validity"><?php echo $contactnumErr; ?></span>
+							<span class="field-validity"><?php echo $signup_err['contact']; ?></span>
 						<br>
 
 
 						<label>Password:</label><br>
 							<input type="password" name="psw" placeholder="Enter Password" class="width-600" />
 						<br>
-							<span class="field-validity"><?php echo $pswErr; ?></span>
+							<span class="field-validity"><?php echo $signup_err['psw']; ?></span>
 						<br>
 
 						<label>Confirm Password:</label><br>
 							<input type="password" name="rePass" placeholder="Retype Password" class="width-600" />
 						<br>
-							<span class="field-validity"><?php echo $repswErr; ?></span>
+							<span class="field-validity"><?php echo $signup_err['repsw']; ?></span>
 						<br>
 						<?php
 							}
@@ -104,16 +104,15 @@
 								</div>
 							</div>
 					</div>
-					<div id="captchadiv">
-						<!--<label style="font-weight: normal;"><b>Captcha:</b> Are You Human?</label><br>
 					
-						<input type="hidden" name="no1" value="">
-						<input type="hidden" name="no2" value="">
-							<input type="number" name="captcha" required /><br>
-							<span class="field-validity">
-							</span>
-						-->
-					</div>
+					<div class="g-recaptcha" 
+						data-callback="captchafilled"
+   						data-expired-callback="captchaexpired"
+						data-sitekey="6Lcsa1cpAAAAAJFa7UYI6_xqJYW6PCpKYGcAp90I" required name="captcha"></div>
+					<input type="hidden" name="formcaptcha" id="formcaptcha" value="">
+					<span class="field-validity" id="captcha_error"><?php echo $signup_err['captcha']; ?></span>
+					<br />
+					<br />
 						<?php if (!isset($_SESSION['id'])) {
 						?>
 							<input type="submit" name="submitfrm" value="Register" class="width-600" id="registerButton" /><br>
@@ -162,6 +161,6 @@ checkBoxes.change();*/
 		<a href="https://www.facebook.com/"><img src="images/facebooklogo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
 	</span>
 </div>
-<script src="javas.js">
-</script>
+<script src="javas.js"></script>
+<script src="utilities/captcha_validation.js"></script>
 </body></html>
