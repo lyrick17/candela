@@ -156,6 +156,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
             $_SESSION['email'] = $user_row['email'];
             $_SESSION['contactnumber'] = $user_row['contactnumber'];
             $_SESSION['type'] = (int) $user_row['type'];
+
+            $get_addr = "SELECT * FROM addresses WHERE `user_id` = '". $_SESSION['id'] ."'";
+            $get_addr_result = @mysqli_query($mysqli, $get_addr);
+
+            if ($get_addr_result) {
+                $row = mysqli_fetch_array($get_addr_result, MYSQLI_ASSOC);
+                $_SESSION['address_id'] = $row['address_id'];
+                $_SESSION['address'] = $row['user_address'];
+                $_SESSION['barangay'] = $row['barangay'];
+            }
+            
+        
         
         }
 
@@ -206,13 +218,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
                 $_SESSION['contactnumber'] = $user_row['contactnumber'];
                 $_SESSION['type'] = (int) $user_row['type'];
                 
+                // get the addresses
+                $get_addr = "SELECT * FROM addresses WHERE `user_id` = '". $_SESSION['id'] ."'";
+                $get_addr_result = @mysqli_query($mysqli, $get_addr);
+
+                if ($get_addr_result) {
+                    $row = mysqli_fetch_array($get_addr_result, MYSQLI_ASSOC);
+                    $_SESSION['address_id'] = $row['address_id'];
+                    $_SESSION['address'] = $row['user_address'];
+                    $_SESSION['barangay'] = $row['barangay'];
+                } 
+
+
                 mysqli_free_result($result1);
+                mysqli_free_result($get_addr_result);
                 mysqli_close($mysqli);
                 
                 header("location: index.php");
                 exit();
             } else {
-                $display_errors['login']  = error_message("login_error_2");     // invalid login
+                $inputErr  = error_messages("login_error_2");     // invalid login
             }
 
         } else {

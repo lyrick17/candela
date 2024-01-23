@@ -14,7 +14,6 @@ CREATE TABLE `addresses` (
   `user_id` mediumint NOT NULL,
   `address` text NOT NULL,
   `barangay` varchar(255) NOT NULL,
-  `province` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL
 );
 

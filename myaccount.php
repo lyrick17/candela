@@ -1,10 +1,10 @@
-<?php include("server.php"); ?>
-<?php if (isset($_SESSION['username'])) :
-	if (isset($_SESSION['address'])) {
-	}
-	if (isset($_SESSION['contactnumber'])) {
-	}
- ?>
+<?php include("utilities/account_user_edit_info.php"); ?>
+<?php 
+	if (!isset($_SESSION['id'])) {
+		header("Location: index.php");
+		exit();
+	} ?>
+
 <!DOCTYPE html><html>
 <head><title>Your Account - Candela</title>
 	<meta charset="utf-8">
@@ -84,6 +84,22 @@ $(document).ready(function() {
 			 <?php echo $termsConditions; ?>
 	</div>
 </div>
+
+<div id="myModal2" class="modal">
+<!-- Modal content for dedete account-->
+ 	<div class="modal-content">
+		<span class="close">&times;</span>
+				
+			<section style='padding: 10px; font-size: 15px; color:black; text-align:center;'>
+				<form  method="post" action="myaccount.php">
+					<p>Are you sure to <b>delete your account?</b><br />
+					 This would delete all your data.</p>
+					<input type='submit' id='input_yes' name='Sure' value='Yes' /> | 
+					<input type='submit' name='Nope' value='Cancel' />
+				</form>
+			</section>
+	</div>
+</div>
 	<div class="margin-t-90">
 		<div id="product-page">
 			<div id="accountnav">
@@ -93,86 +109,118 @@ $(document).ready(function() {
 			</div>
 			<div class="acc-content">
 				<div class="subacc-content">
+
+					<!-- Form for GENERAL INFORMATION -->
 					<h1><?php echo $_SESSION['username']; ?>'s Account</h1>
 					<hr>
-					<form method="post">
+					<form method="post" action="myaccount.php">
+						<input type="hidden" name="type" value="general"/>
 						<table>
 						<tr>
 							<td class="tdacc-details">First Name:</td>
 							<td class="tdacc-details"><input type="text" name="myfirstname" value="<?php echo $_SESSION['username'];?>" /></td>
 							<td class="tdacc-details">
-								<span class="field-validity-myaccount"><?php echo $myfirstnameNotice; ?></span>
-								<span class="field-success-myaccount"><?php echo $myfirstnameSuccess; ?></span>
+								<span class="field-validity-myaccount"><?php echo $notice['firstname']; ?></span>
+								<span class="field-success-myaccount"><?php echo $success['firstname']; ?></span>
 							</td>
 						</tr>
 						<tr>
 							<td class="tdacc-details">Last Name:</td>
 							<td class="tdacc-details"><input type="text" name="mylastname" value="<?php echo $_SESSION['lastname'];?>" /></td>
 							<td class="tdacc-details">
-								<span class="field-validity-myaccount"><?php echo $mylastnameNotice; ?></span>
-								<span class="field-success-myaccount"><?php echo $mylastnameSuccess; ?></span>
+								<span class="field-validity-myaccount"><?php echo $notice['lastname']; ?></span>
+								<span class="field-success-myaccount"><?php echo $success['lastname']; ?></span>
 							</td>
 						</tr>
 						<tr>
 							<td class="tdacc-details">E-mail:</td>
 							<td class="tdacc-details"><input type="text" name="myemail" value="<?php echo $_SESSION['email'];?>" /></td>
 							<td class="tdacc-details">
-								<span class="field-validity-myaccount"><?php echo $myemailNotice; ?></span>
-								<span class="field-success-myaccount"><?php echo $myemailSuccess; ?></span>
+								<span class="field-validity-myaccount"><?php echo $notice['email']; ?></span>
+								<span class="field-success-myaccount"><?php echo $success['email']; ?></span>
 							</td>
 						</tr>
 						<tr>
 							<td class="tdacc-details">Contact Number:</td>
 							<td class="tdacc-details"><input type="text" name="mynumber" value="<?php echo $_SESSION['contactnumber'];?>" maxlength="11" /></td>
 							<td class="tdacc-details">
-								<span class="field-validity-myaccount"><?php echo $mynumberNotice; ?></span>
-								<span class="field-success-myaccount"><?php echo $mynumberSuccess; ?></span>
-							</td>
-						</tr>
-						<tr>
-							<td class="tdacc-details">Address:</td>
-							<td class="tdacc-details"><input type="text" name="myaddress" value="<?php if (isset($_SESSION['address'])) { echo $_SESSION['address']; } ?>" style="width: 250%;" /></td>
-						</tr>
-						<tr>
-							<td class="tdacc-details" colspan="2" style="direction: rtl;">
-								<span class="field-validity-myaccount"><?php echo $myaddressNotice; ?></span>
-								<span class="field-success-myaccount"><?php echo $myaddressSuccess; ?></span>
+								<span class="field-validity-myaccount"><?php echo $notice['number']; ?></span>
+								<span class="field-success-myaccount"><?php echo $success['number']; ?></span>
 							</td>
 						</tr>
 						</table>
 						<input type="submit" name="newchanges" value="Save Changes" class="savechanges" />
 					</form><br>
+
+
 					<hr>
+
+					<!-- Form for ADDRESS UPDATE -->
+					<h3>My Address</h3>
+					<hr>
+					<form method="post" action="myaccount.php">
+						<input type="hidden" name="type" value="address"/>
+						<table>
+							<tr>
+							<td class="tdacc-details">Current Address:</td>
+							<td class="tdacc-details">
+							<textarea name="myaddress" style="width: 150%;"><?php echo $_SESSION['address'];?></textarea>
+						</td>
+						</tr>
+						<tr>
+							<td class="tdacc-details"></td>
+							<td class="tdacc-details">
+								<input type="hidden" id="barangayvalue" value="<?= $_SESSION['barangay'] ?>" />
+								<?php require("templates/barangay_list.php"); ?> Imus City, Cavite
+							</td>
+						</tr>
+						<tr>
+							<td class="tdacc-details" colspan="2" style="direction: rtl;">
+								<span class="field-validity-myaccount"><?php echo $notice['address']; ?></span>
+								<span class="field-success-myaccount"><?php echo $success['address']; ?></span>
+							</td>
+						</tr>
+					</table>
+						<input type="submit" name="newchanges" value="Update Address" class="savechanges" />
+					
+					</form>
+
+
+					<hr>
+
+					<!-- Form for PASSWORD CHANGE -->
 					<p>Do You want to change your password?</p>
-					<form method="post" id="changePass" action="myaccount.php#changePass">
+					
+					<form method="post" id="changePass" action="myaccount.php">
+						
+						<input type="hidden" name="type" value="password"/>
 						<table>
 						<tr>
 							<td class="tdacc-details" style="font-size: 90%;">Old Password:</td>
 							<td class="tdacc-details"><input type="password" name="oldpassword" value="" /></td>
-							<td class="tdacc-details">
-								<span class="field-validity-myaccount"><?php echo $oldpasswordErr; ?></span>
-							</td>
 						</tr>
 						<tr class="newpass-tr-style">
 							<td class="tdacc-details">New Password:</td>
 							<td class="tdacc-details"><input type="password" name="newpassword" value="" /></td>
-							<td class="tdacc-details">
-								<span class="field-validity-myaccount"><?php echo $newpasswordErr; ?></span>
-								<span class="field-success-myaccount"><?php echo $newpasswordSuccess; ?></span>
-							</td>
+							
 						</tr>
 						<tr class="confirm-tr-style">
 							<td class="tdacc-details">Confirm Password:</td>
 							<td class="tdacc-details"><input type="password" name="confirmpassword" value="" /></td>
 							<td class="tdacc-details">
-								<span class="field-validity-myaccount"><?php echo $confirmpasswordErr; ?></span>
+								<span class="field-validity-myaccount"><?php echo $notice['password']; ?></span>
+								<span class="field-success-myaccount"><?php echo $success['password']; ?></span>
 							</td>
 						</tr>
 						</table>
 						<input type="submit" name="changepassword" value="Change Password" class="savechanges" />
 					</form><br>
 				</div>
+
+
 				<hr>
+
+				<!-- Display the Checkout History -->
 				<div id="checkoutHistory">
 					<h1>My Checkout History</h1>
 					<hr>
@@ -287,95 +335,27 @@ $(document).ready(function() {
 						?>
 					</div>
 				</div>
+
+
+
 						<?php
-								$del_process = "";
-							if (isset($_POST['deleteAcc'])) {
-								if (!empty($_POST['mypassword'])) {
-									$mypass = sha1($_POST['mypassword']);
-									$del_pass_match_sql = mysqli_query($mysqli,"SELECT Password FROM `users` WHERE Username = '". $_SESSION['username'] ."' AND id = '". $_SESSION['id'] ."'") or die("Failed to Get User's Information");
-									$verify_order_sql = mysqli_query($mysqli,"SELECT * FROM checkout_orders WHERE user_id = '". $_SESSION['id'] ."' AND delivered = '' ") or die("Failed to Get User's Information");
-									$chk_count = mysqli_num_rows($verify_order_sql);
-									while ($pass_match = mysqli_fetch_array($del_pass_match_sql)) {
-										$savedpass = $pass_match['Password'];
-									}
-									if ($chk_count > 0) {
-										$del_process = "
-											<style>
-												#cant_delete {
-													padding: 10px;
-													font-size: 15px;
-													color: red;
-												}
-											</style>
-											<section id='cant_delete'>You cannot delete your account with order on process</section>";
-									} else {
-										if ($mypass == $savedpass) {
-								
-								$del_process = "
-									<style>
-										section#delete_warning {
-											padding: 10px;
-											font-size: 15px;
-											color: black;
-										}
-										#input_yes {
-											padding: 5px 20px;
-											border-style:solid;
-											border-width: 1px;
-											border-color: #0078d4;
-											border-radius: 6px;
-											background-color: #0078d4;
-											color: white;
-											font-size: 15px;
-										}
-										#input_yes:hover {
-											border-color: #0791fb;
-											background-color: #0791fb;
-									}
-										#input_cancel {
-											font-size: 15px;
-											padding: 5px 20px;
-										}
-									</style>
-									<section style='padding: 10px; font-size: 15px; color:black;'>
-										<p>Are you sure to <b>delete your account?</b> This would delete all your data.</p>
-										<input type='submit' id='input_yes' name='Sure' value='Yes' /> | 
-										<input type='submit' name='Nope' value='Cancel' />
-									</section>";
-											if (isset($_POST['Sure'])) {
-												$delete_user_acc = mysqli_query($mysqli, "DELETE FROM users WHERE id = '". $_SESSION['id'] ."'") or die("Unable to delete information");
-												$delete_user_bas = mysqli_query($mysqli, "DELETE FROM basket_items WHERE user_id = '". $_SESSION['id'] ."'") or die("Unable to delete basket");
-												$delete_user_chk = mysqli_query($mysqli, "DELETE FROM checkout_orders WHERE user_id = '". $_SESSION['id'] ."' AND delivered = 'Delivered' ") or die("Unable to delete orders");
-												echo "<script> alert('We're Sorry To See You Go.'); </script>";
-												unset($_SESSION['username']);
-												unset($_SESSION['id']);
-												session_destroy();
-												header("location: index.php");
-											} elseif (isset($_POST['Nope'])) {
-												unset($_POST['deleteAcc']);
-												header("location: myaccount.php");
-											}
-										} else {
-											$del_oldpasswordErr = "That is not your password";
-										}
-									}
-								} else {
-									$del_oldpasswordErr = "Please Enter Your Password";
-								}
-							}
+							
 						?>
-				<div align="right" id="deleteAccount">
+
+				<!-- Form for DELETE ACCOUNT-->
+				<div id="deleteAccount">
 					<hr>
 					<form method="post" action="myaccount.php#deleteAccount"><!-- SOON CHANGE TO A HREF -->
+						
+						<input type="hidden" name="type" value="deleteaccount"/>
 						<section style="padding: 15px;">
-							
-							<span class="field-validity-myaccount"><?php echo $del_oldpasswordErr; ?></span>
+							<input type="hidden" name="confirm" id="confirm_delete_account" value="<?= $deletevalue; ?>"/>
 							<span style="font-size: 90%;">Password:</span> &nbsp;
 							<input type="password" name="mypassword" value="" id="myoldpass" /><br>
+							<span class="field-validity-myaccount"><?php echo $notice['deleteaccount']; ?></span>
 
 						</section>
-					<input type="submit" name="deleteAcc" value="Delete Account" id="deleteacc" /><br>
-					<?php echo $del_process; ?>
+						<input type="submit" name="deleteAcc" value="Delete Account" id="deleteacc" /><br>
 					</form>
 				</div>
 			</div>
@@ -402,114 +382,6 @@ $(document).ready(function() {
 </div>
 <!-- SCRIPTING -->
 <script src="javas.js"></script>
+<script src="utilities/barangay_select.js"></script>
+<script src="utilities/del_acc_confirmation.js"></script>
 </body></html>
-
-
-
-
-
-<?php else : ?> <!-- if the customer entered the page without an account -->
-
-
-
-
-
-<!DOCTYPE html><html>
-<head><title>Your Account - Candela</title>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="icon" type="image/png" href="images/candelalogo.png">
-</head>
-<body>
-<!-- HEADER/NAVIGATION BAR -->
-	<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<ul class="nav navbar-nav left">
-			<li>0971-697-0022</li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<?php if (isset($_SESSION['username'])): ?>
-				<li><a href="#"><?php echo $_SESSION['username'];?>'s Account</a></li>
-				<li><a href="logout.php">Log Out</a></li>
-			<?php else: ?>
-				<li><a href="login-form.php">Log In</a></li>
-				<li><a href="signup-form.php">Create An Account</a></li>
-			<?php endif ?>
-		</ul>
-	</div>
-</nav>
-<div id="header">
-	<div id="business-name">
-		<a href="index.php"><img src="images/candela.png" alt="Candela" /></a>
-	</div>
-
-	<div class="navig-prov">
-		<div class="navi">
-			<a href="product.php">Product</a>
-		</div>
-		<div class="navi">
-			<a href="faqs.php">FAQs</a>
-		</div>
-		<div class="navi">
-			<a href="about.php">About</a>
-		</div>
-		<div class="navi">				
-			<a href="contact-us.php">Contact Us</a>
-		</div>
-	</div>
-
-	<div id="nav-basket">
-		<a href="basket.php" onmouseover="document.images.basketimg.src = 'images/basket-hover.png'" onmouseout="document.images.basketimg.src='images/basket.png'"><img src="images/basket.png" name="basketimg" height="17px"> Basket</a>
-	</div>
-</div>
-<!-- CONTENT -->
-<div class="body-content">
-<div id="myModal" class="modal">
-<!-- Modal content -->
- 	<div class="modal-content">
-		<span class="close">&times;</span>
-			<?php echo $termsConditions; ?>
-	</div>
-</div>
-	<div id="basket-box">
-		<div id="basket-header">
-			Ooops! Looks like you're not logged in yet visiting one's account page.
-		</div>
-			<hr>
-		<div style="font-size: 130%;">
-			<p>Do you want to log in your account?</p>
-			<p><a href="login-form.php" class="blue_button">Log In Now</a></p>
-			<p style="font-size: 60%;">First Time in Candela?<a href="signup-form.php">Sign Up</a> instead.</p>
-
-		</div>
-
-		
-	</div>
-</div>
-<!-- FOOTER -->
-<div class="footer">
-	&copy; 2018 Candela, All Rights Reserved 
-	<span>
-		<a href="about.php" class="fnav">About Candela</a> | 
-		<a href="contact-us.php" class="fnav">Contact Us</a> |
-		<a id="myBtn">Terms and Conditions</a>
-	</span><br />
-		
-	Bricklane Fake Subdivision Medicion II-E Block 90 Lot 1 Imus City, Cavite
-		&nbsp;&nbsp;:&nbsp;&nbsp; <i>0971-697-0022</i>
-	<span>
-		<i>Exclusively available at Imus City Only</i>&nbsp;&nbsp;&nbsp;
-		<a href="https://www.instagram.com/"><img src="images/instagramlogo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
-		<a href="https://twitter.com/"><img src="images/twitter-logo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
-		<a href="https://www.facebook.com/"><img src="images/facebooklogo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
-	</span>
-</div>
-<!-- SCRIPTING -->
-<script src="javas.js"></script>
-</body></html>
-<?php endif; ?>

@@ -9,9 +9,11 @@ Further Upgrades to do:
 - recaptha                                                              - DONE
 - client side JS do not submit form when recaptcha is not done          - DONE
 - server side PHP do not submit form when recaptcha is not done         - DONE
-- my account, 
-- change address and barangay, 
-- forgot password and delete account
+- my account,                                                           - DONE
+- change address and barangay,                                          - DONE
+- change password   `                                                   - DONE
+- delete account                                                        - DONE
+- 
 - SMTP for:
     - sending contact from
     - register, welcome to Candela

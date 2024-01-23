@@ -10,7 +10,7 @@ function testInput($mysqli, $data) {
     return $data;
 }
 
-// contains error messages for registration, contact forn
+// contains error messages for registration, contactform, editing user account
 function error_messages($error) {
     switch ($error) {
         // for general
@@ -61,6 +61,15 @@ function error_messages($error) {
         case "psw_error_4":
             return "Passwords Don't Match";
             break;
+        case "psw_error_5":
+            return "Please complete the form to change password";
+            break;
+        case "psw_error_6":
+            return "That is not your password";
+            break;
+        case "psw_error_7":
+            return "New password must be different from old password";
+            break;
         
         
         // for login
@@ -80,7 +89,28 @@ function error_messages($error) {
             return "Please enter the Title/Subject";
             break;
 
+        // for editing User Address
+        case "address_error":
+            return "Please complete the address";
+            break;
 
+        // for system failure
+        case "system_error":
+            return "System Error. Please contact the Candela Team";
+            break;
+
+        case "cant_delete_account":
+            return "You cannot delete your account with order on process";
+            break;
+    }
+}
+
+// contains messages when  process is successful
+function success_messages($message) {
+    switch ($message) {
+        case "update_successful":
+            return "Successfully changed";
+            break;
     }
 }
 ?>

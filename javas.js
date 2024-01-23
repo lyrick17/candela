@@ -1,26 +1,28 @@
-// STICKY HEADER
 
+
+// STICKY HEADER
 window.onscroll = function() {scrolling()};
 
-var menu = document.getElementById("header");
-var sticky = menu.offsetTop;
+let menu = document.getElementById("header");
+let sticky = menu.offsetTop;
 
 function scrolling() {
-	if (window.pageYOffset > sticky) {
-		menu.classList.add("sticky");
-	} else {
-		menu.classList.remove("sticky");
-	}
+  if (window.scrollY > sticky) {
+    menu.classList.add("sticky");
+  } else {
+    menu.classList.remove("sticky");
+  }
 }
 
+
+
+// Javascript for Terms and Conditions Modal
 // Get the modal
-var modal = document.getElementById('myModal');
-
+let modal = document.getElementById('myModal');
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
+let btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+let span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal 
 btn.onclick = function() {
