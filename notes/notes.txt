@@ -13,7 +13,22 @@ Further Upgrades to do:
 - change address and barangay,                                          - DONE
 - change password   `                                                   - DONE
 - delete account                                                        - DONE
-- 
+- fix product page display all products                                 - DONE 1-23-24
+- product page sidebar basket                                           - DONE 1-23-24
+- specific product page in product.php na                               - DONE 1-23-24
+- remove item in basket                                                 - DONE 1-24-24
+- clear basket                                                          - DONE 1-24-24
+- update basket                                                         - DONE 1-24-24
+- finish all templates                                                  - DONE 1-25-24
+- put faqs information in array
+- basket.php                                                            - DONE 1-25-24
+- clean codes for product.php
+- clean codes for basket.php
+- clean codes for index.php
+- clean codes for utiities/server.php
+- clean codes for all process.php files
+- clean codes for login-form.php
+- clean codes for signup-form.php
 - SMTP for:
     - sending contact from
     - register, welcome to Candela

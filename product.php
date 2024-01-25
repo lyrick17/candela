@@ -1,396 +1,182 @@
-<?php include("server.php"); ?>
-<!DOCTYPE html><html>
-<head><title>Products - Candela</title>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<?php require("utilities/server.php"); ?>
+<?php require("utilities/process_basket_updates.php"); ?>
+<?php 
 
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="icon" type="image/png" href="images/candelalogo.png">
+	if (isset($_GET['id']))
+		Restrict::product_page_access($_GET['id']);
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Products - Candela</title>
+	<?php require("templates/head.php"); ?>
 </head>
+
 <body>
 <!-- HEADER/NAVIGATION BAR -->
-	
-	<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<ul class="nav navbar-nav left">
-			<li>0971-697-0022</li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<?php if (isset($_SESSION['username'])): ?>
-				<li><a href="myaccount.php"><?php echo $_SESSION['username'];?>'s Account</a></li>
-				<li><a href="logout.php">Log Out</a></li>
-			<?php else: ?>
-				<li><a href="login-form.php">Log In</a></li>
-				<li><a href="signup-form.php">Create An Account</a></li>
-			<?php endif ?>
-		</ul>
-	</div>
-</nav>
-<div id="header">
-	<div id="business-name">
-		<a href="index.php"><img src="images/candela.png" alt="Candela" /></a>
-	</div>
+<?php require("templates/nav_graybar.php"); ?>
+<?php require("templates/nav.php"); ?>
 
-	<div class="navig-prov">
-		<div class="navi">
-			<a href="product.php">Product</a>
-		</div>
-		<div class="navi">
-			<a href="faqs.php">FAQs</a>
-		</div>
-		<div class="navi">
-			<a href="about.php">About</a>
-		</div>
-		<div class="navi">				
-			<a href="contact-us.php">Contact Us</a>
-		</div>
-	</div>
-
-	<div id="nav-basket">
-		<a href="basket.php" onmouseover="document.images.basketimg.src = 'images/basket-hover.png'" onmouseout="document.images.basketimg.src='images/basket.png'"><img src="images/basket.png" name="basketimg" height="17px"> Basket</a>
-	</div>
-</div>
-<!-- CONTENT -->
+<!-- BODY CONTENT -->
 <div class="body-content">
-<div id="myModal" class="modal">
-<!-- Modal content -->
- 	<div class="modal-content">
-		<span class="close">&times;</span>
-			<?php echo $termsConditions; ?>
-	</div>
-</div>
+
+	<!-- MODAL CONTENT for Terms and Conditions -->
+	<?php include("templates/modals/modal_terms_conditions.php"); ?>
+	
+	<!-- TWO BODY SECTIONS -->
+	<!-- 1. LIST OF ALL PRODUCTS -->
+	<!-- 2. SPECIFIC PRODUCT PAGE WITH PRODUCT INFORMATION -->
+	<?php if (!isset($_GET['id'])) { ?>
+
+	<!-- BODY 1. LIST OF ALL PRODUCTS -->
 	<div class="padding-x-110">
-			<header id="product-header">
-				Food Scented Candles
-			<hr><hr>
-			</header>
+
+
+
+		<header id="product-header">
+			Food Scented Candles
+		<hr><hr>
+		</header>
+
+
+
+		<!-- LIST OF PRODUCTS -->
 		<div id="products">
 			<div class="row" style="text-align: center;">
 
 				<?php 
-					if ($productresult) {
-						if (mysqli_num_rows($productresult) > 0) {
-							while ($product = mysqli_fetch_assoc($productresult)) {
+					$product_list = Products::select_all();
+					if ($product_list) {
+						while ($product = mysqli_fetch_array($product_list, MYSQLI_ASSOC)) {
 				?>
 
-				<div class="col-6 items">
-					<form method="post" action="product.php?action=add&id=<?php echo $product["id"]; ?>">
-					<span class="product-pic">
-						<a name="productpage" href="<?php echo $product['productpage']; ?>"><img name="p_pic" src="<?php echo $product['image']; ?>" alt="Product" class="img-responsive" /></a>
-					</span>
-					<div class="text-center">
-						<p class="product-name"><?php echo $product['pname']; ?></p>
-							<p>
-								<span>Price:</span> P<?php echo $product['price']; ?><br>
-								<input type="number" name="quantity" class="product-quantity" id="product-quantity" max="<?php echo $product['stocks']; ?>" min="1" value="1" />
-								<span class="font13em" id="quant_num">
-										*quantity needed
+						<div class="col-6 items">
+							<form method="post" action="product.php">
+								<span class="product-pic">
+									<a name="productpage" href="product.php?id=<?= $product['product_id']; ?>">
+										<!-- ITEM PICTURE -->
+										<img name="p_pic" src="<?= $product['image']; ?>" alt="Product" class="img-responsive" />
+									</a>
 								</span>
-								<br>
-								<!--<span>Total:</span>-->
-							</p>
-							<input type="hidden" name="hidden_name" value="<?php echo $product['pname']; ?>" />
-							<input type="hidden" name="hidden_price" value="<?php echo $product['price']; ?>" />
-							<input type="hidden" name="hidden_image" value="<?php echo $product['image']; ?>" />
-							<input type="hidden" name="hidden_stocks" value="<?php echo $product['stocks']; ?>" />
-							<input type="submit" name="add_to_basket" value="Add To Basket" class="bam bamColor" <?php if ($product['stocks'] == 0) { ?> disabled <?php }?> />
-					</div>				
-					</form>
-						<div style="padding-top: 10px;">
-						<a href="<?php echo $product['productpage']; ?>" class="bam bamColor">More Info</a>
-							<script>
-								if (<?php echo $product['stocks']; ?> <= 15) {
-									document.write("<span style='font-size:18px; font-style:italic;'>");
-									document.write("<?php echo $product['stocks']; ?> stock/s left");
-									document.write("</span>");
-								}
-							</script>
+								<div class="text-center">
+									<!-- ITEM INFORMATION -->
+									<p class="product-name"><?= $product['name']; ?></p>
+										<p>
+											<span>Price:</span> P<?= $product['price']; ?><br>
+											<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>" />
+											<input type="number" name="quantity" class="product-quantity" id="product-quantity" max="<?= $product['stocks']; ?>" min="1" value="1" />
+											<span class="font13em" id="quant_num">
+													*quantity needed
+											</span>
+											<br>
+										</p>
+										<input type="submit" name="add_to_basket" value="Add To Basket" class="bam bamColor" <?php if ($product['stocks'] == 0) { ?> disabled <?php }?> />
+								</div>				
+							</form>
+								<!-- Link For Item Description-->
+								<div style="padding-top: 10px;">
+								<a href="product.php?id=<?= $product['product_id']; ?>" class="bam bamColor">More Info</a>
+									
+								<span style='font-size:18px; font-style:italic;'>
+									<?php 
+									if ($product['stocks'] <= 15) {
+										echo $product['stocks'] . "stock/s left";
+									} elseif ($product['stocks'] == 0) {
+										echo "Unavailable";
+									}
+									?>
+								</span>
+								</div>
 						</div>
-				</div>
 
 				<?php 
-							} //end while
-						} //end if
+						} //end while
 					} //end if
 				?>
-
 			</div>
+		</div>
+		
 
-		</div><!--end of div #products-->
 
-		<!--SIDEBAR-->
+		<!-- SIDEBAR -->
 		<div id="prod-sidebar">
 			<div id="basket-sidebar">
 				<hr>
 				<h4><a href="basket.php">Your Basket</a></h4><hr style="margin: 0;">
-
-				<?php
-					while ($p1_stockrow = mysqli_fetch_array($p1result)) {
-						$p1_stock = $p1_stockrow['stocks'];
-					}
-					while ($p2_stockrow = mysqli_fetch_array($p2result)) {
-						$p2_stock = $p2_stockrow['stocks'];
-					}
-					while ($p3_stockrow = mysqli_fetch_array($p3result)) {
-						$p3_stock = $p3_stockrow['stocks'];
-					}
-					while ($p4_stockrow = mysqli_fetch_array($p4result)) {
-						$p4_stock = $p4_stockrow['stocks'];
-					}
-					while ($p5_stockrow = mysqli_fetch_array($p5result)) {
-						$p5_stock = $p5_stockrow['stocks'];
-					}
-					while ($p6_stockrow = mysqli_fetch_array($p6result)) {
-						$p6_stock = $p6_stockrow['stocks'];
-					}
-				if (isset($_SESSION['username']) && isset($_SESSION['id'])) {
-					$basket_id = intval($_SESSION['id']);
-
-					$basketsql = "SELECT basket_content FROM basket_items WHERE user_id = '". $basket_id ."'";
-					$basketsql_result = mysqli_query($mysqli, $basketsql) or die("Query to retrieve basket failed");
-					if (mysqli_num_rows($basketsql_result) < 1) {
-				?>
-					<!-- If there is no order. -->
-					<div style="text-align: center;margin-top: 15px;">
-						<p>Your Basket Is Empty.</p>
-					</div>
-				<?php } else {
-					$total = 0;
-				?>
-				<table style="width: 100%; margin: 10px 0;">
-				<?php
-					while ($basketrow = mysqli_fetch_array($basketsql_result)) {
-						$basket = unserialize( $basketrow['basket_content'] );
-						$_SESSION['basket'] = $basket;
-							foreach ($_SESSION['basket'] as $key => $product) {
-								$lessStock = array();
-								if ($product['id'] == 1) {
-									if ($product['quantity'] > $p1_stock) {
-										$product['quantity'] = $p1_stock;
-										array_push($lessStock, "Error");
-										$update_qty_sql1 = mysqli_query($mysqli, "UPDATE basket_items SET quantity = '". $p1_stock ."' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 1");
-										$basket[1]['quantity'] = $p1_stock;
-										$updated_basket = serialize($basket);
-										$update_basket_string_sql1 = mysqli_query($mysqli, "UPDATE basket_items SET basket_content = '" . mysqli_real_escape_string($mysqli, $updated_basket) . "' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 1 ");
-										$basket = unserialize($updated_basket);
-										$_SESSION['basket'] = $basket;
-										if ($p1_stock == 0) {
-											$delete_order_sql = mysqli_query($mysqli, "DELETE FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 1");
-										}
-									}
-								}
-								if ($product['id'] == 2) {
-									if ($product['quantity'] > $p2_stock) {
-										$product['quantity'] = $p2_stock;
-										array_push($lessStock, "Error");
-										$update_qty_sql2 = mysqli_query($mysqli, "UPDATE basket_items SET quantity = '". $p2_stock ."' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 2");
-										$basket[1]['quantity'] = $p2_stock;
-										$updated_basket = serialize($basket);
-										$update_basket_string_sql2 = mysqli_query($mysqli, "UPDATE basket_items SET basket_content = '" . mysqli_real_escape_string($mysqli, $updated_basket) . "' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 2 ");
-										$basket = unserialize($updated_basket);
-										$_SESSION['basket'] = $basket;
-										if ($p2_stock == 0) {
-											$delete_order_sql = mysqli_query($mysqli, "DELETE FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 2");
-										}
-
-									}
-								}
-								if ($product['id'] == 3) {
-									if ($product['quantity'] > $p3_stock) {
-										$product['quantity'] = $p3_stock;
-										array_push($lessStock, "Error");
-										$update_qty_sql3 = mysqli_query($mysqli, "UPDATE basket_items SET quantity = '". $p3_stock ."' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 3");
-										$basket[1]['quantity'] = $p3_stock;
-										$updated_basket = serialize($basket);
-										$update_basket_string_sql3 = mysqli_query($mysqli, "UPDATE basket_items SET basket_content = '" . mysqli_real_escape_string($mysqli, $updated_basket) . "' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 3 ");
-										$basket = unserialize($updated_basket);
-										$_SESSION['basket'] = $basket;
-										if ($p3_stock == 0) {
-											$delete_order_sql = mysqli_query($mysqli, "DELETE FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 3");
-										}
-									}
-								}
-								if ($product['id'] == 4) {
-									if ($product['quantity'] > $p4_stock) {
-										$product['quantity'] = $p4_stock;
-										array_push($lessStock, "Error");
-										$update_qty_sql4 = mysqli_query($mysqli, "UPDATE basket_items SET quantity = '". $p4_stock ."' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 4");
-										$basket[1]['quantity'] = $p4_stock;
-										$updated_basket = serialize($basket);
-										$update_basket_string_sql4 = mysqli_query($mysqli, "UPDATE basket_items SET basket_content = '" . mysqli_real_escape_string($mysqli, $updated_basket) . "' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 4 ");
-										$basket = unserialize($updated_basket);
-										$_SESSION['basket'] = $basket;
-										if ($p4_stock == 0) {
-											$delete_order_sql = mysqli_query($mysqli, "DELETE FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 4");
-										}
-									}
-								}
-								if ($product['id'] == 5) {
-									if ($product['quantity'] > $p5_stock) {
-										$product['quantity'] = $p5_stock;
-										array_push($lessStock, "Error");
-										$update_qty_sql5 = mysqli_query($mysqli, "UPDATE basket_items SET quantity = '". $p5_stock ."' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 5");
-										$basket[1]['quantity'] = $p5_stock;
-										$updated_basket = serialize($basket);
-										$update_basket_string_sql5 = mysqli_query($mysqli, "UPDATE basket_items SET basket_content = '" . mysqli_real_escape_string($mysqli, $updated_basket) . "' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 5 ");
-										$basket = unserialize($updated_basket);
-										$_SESSION['basket'] = $basket;
-										if ($p5_stock == 0) {
-											$delete_order_sql = mysqli_query($mysqli, "DELETE FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 5");
-										}
-									}
-								}
-								if ($product['id'] == 6) {
-									if ($product['quantity'] > $p6_stock) {
-										$product['quantity'] = $p6_stock;
-										array_push($lessStock, "Error");
-										$update_qty_sql6 = mysqli_query($mysqli, "UPDATE basket_items SET quantity = '". $p6_stock ."' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 6");
-										$basket[1]['quantity'] = $p6_stock;
-										$updated_basket = serialize($basket);
-										$update_basket_string_sql6 = mysqli_query($mysqli, "UPDATE basket_items SET basket_content = '" . mysqli_real_escape_string($mysqli, $updated_basket) . "' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 6 ");
-										$basket = unserialize($updated_basket);
-										$_SESSION['basket'] = $basket;
-										if ($p6_stock == 0) {
-											$delete_order_sql = mysqli_query($mysqli, "DELETE FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 6");
-										}
-									}
-								}
-								if (count($lessStock) != 0) {
-									echo "<script>alert('Sorry, some of your orders have been reduced its quantity or removed, we have less stocks than your chosen quantity.')</script>";
-								}
-				?>
-				<tr>
-					<td class="pbasket-td pb_item"><?php echo $product['pname']; ?></td>
-					<td class="pbasket-td pb_num"><?php echo $product['quantity']; ?></td>
-					<td class="pbasket-td pb_num">P<?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
-					<td class="pbasket-td pb_ri"><a href="product.php?action=pdelete&id=<?php echo $product['id'] ?>" style="color:red; font-size: 70%;">Remove Item</a></td>
-				</tr>
-				<?php
-					$total = $total + ($product['quantity'] * $product['price']);
-						} // end foreach
-					$_SESSION['total'] = $total;
-					} // end while
-				?>
-				<tr>
-				 	<td colspan="2" align="right" class="pbasket-td pb_total">Total</td>
-				 	<td class="pbasket-td pb_num">P<?php echo number_format($total, 2); ?></td>
-				 </tr>
-				</table>
-				<div class="text-center">
-					<span style="text-align: center;">
-						<a href="product.php?action=clear&id=<?php echo $product['id'] ?>" class="basket_buttons" name="clear">Clear Basket</a>
-						<a href="checkout.php" class="basket_buttons" name="checkout">Checkout >></a>
-					</span>
-				</div>
-				<?php
-					} //end else
-				} //end if
-				else { //if username isn't set
-					if (!empty($_SESSION['basket'])) {
-						$total = 0;
-				?>
+				
 				<?php 
+					if (empty($_SESSION['basket'])) {
 				?>
-
-				<table style="width: 100%; margin: 10px 0;">
-				<?php
-						foreach ($_SESSION['basket'] as $key => $product) {
-								if ($product['id'] == 1) {
-									if ($product['quantity'] > $p1_stock) {
-										$product['quantity'] = $p1_stock;
-										if ($p1_stock == 0) {
-											unset($_SESSION['basket'][$key]);
-										}
-									}
-								}
-								if ($product['id'] == 2) {
-									if ($product['quantity'] > $p2_stock) {
-										$product['quantity'] = $p2_stock;
-										if ($p2_stock == 0) {
-											unset($_SESSION['basket'][$key]);
-										}
-									}
-								}
-								if ($product['id'] == 3) {
-									if ($product['quantity'] > $p3_stock) {
-										$product['quantity'] = $p3_stock;
-										if ($p3_stock == 0) {
-											unset($_SESSION['basket'][$key]);
-										}
-									}
-								}
-								if ($product['id'] == 4) {
-									if ($product['quantity'] > $p4_stock) {
-										$product['quantity'] = $p4_stock;
-										if ($p4_stock == 0) {
-											unset($_SESSION['basket'][$key]);
-										}
-									}
-								}
-								if ($product['id'] == 5) {
-									if ($product['quantity'] > $p5_stock) {
-										$product['quantity'] = $p5_stock;
-										if ($p5_stock == 0) {
-											unset($_SESSION['basket'][$key]);
-										}
-									}
-								}
-								if ($product['id'] == 6) {
-									if ($product['quantity'] > $p6_stock) {
-										$product['quantity'] = $p6_stock;
-										if ($p6_stock == 0) {
-											unset($_SESSION['basket'][$key]);
-										}
-									}
-								}
-				?>
-				<tr>
-					<td class="pbasket-td pb_item"><?php echo $product['pname']; ?></td>
-					<td class="pbasket-td pb_num"><?php echo $product['quantity']; ?></td>
-					<td class="pbasket-td pb_num">P<?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
-					<td class="pbasket-td pb_ri"><a href="product.php?action=pdelete&id=<?php echo $product['id'] ?>" style="color:red; font-size: 70%;">Remove Item</a></td>
-				</tr>
-				<?php
-					$total = $total + ($product['quantity'] * $product['price']);
-					} // end foreach
-					$_SESSION['total'] = $total;
-				?>
-				<tr>
-				 	<td colspan="2" align="right" class="pbasket-td pb_total">Total</td>
-				 	<td class="pbasket-td pb_num">P<?php echo number_format($total, 2); ?></td>
-				 </tr>
-				</table>
-				<div class="text-center">
-					<span style="text-align: center;">
-						<a href="product.php?action=clear&id=<?php echo $product['id'] ?>" class="basket_buttons" name="clear">Clear Basket</a>
-						<a href="checkout.php" class="basket_buttons" name="checkout">Checkout >></a>
-					</span>
-				</div>
-				<?php
-					} //end if
-					else { ?>
-					<!-- If there is no order. -->
+						<!-- If there is no order. -->
 						<div style="text-align: center;margin-top: 15px;">
 							<p>Your Basket Is Empty.</p>
 						</div>
 				<?php
-					} //end else
-				} // end else
+					} else {
 				?>
-			</div>
+
+						<!-- If there is order -->
+						<table style="width: 100%; margin: 10px 0;">
+						
+				<?php
+
+						// includes the updating of basket_information
+						require("utilities/process_basket_sync.php");
+
+						foreach ($_SESSION['basket'] as $product_id => $quantity) {
+							$get_products = Products::get_product_info($product_id);
+							if ($get_products) {
+								$product = mysqli_fetch_array($get_products, MYSQLI_ASSOC);
+				?>
+							<tr>
+								<td class="pbasket-td pb_item"><?= $product['name']; ?></td>
+								<td class="pbasket-td pb_num"><?= $quantity; ?></td>
+								<td class="pbasket-td pb_num">P<?= number_format($quantity * $product['price'], 2); ?></td>
+								<form method="post" action="product.php">
+									<td class="pbasket-td pb_ri">
+										<input type="hidden" name="product_id" value="<?= $product_id ?>" />
+										<button type="submit" name="remove_item" style="color:red; font-size: 70%; background-color: #fff; border: none;">
+											Remove Item
+										</button>
+									</td>
+								</form>
+							</tr>
+				<?php
+							} // end of if
+						}	// end of foreach
+				?>
+					
+							<tr>
+								<td colspan="2" align="right" class="pbasket-td pb_total">Total</td>
+								<td class="pbasket-td pb_num">P<?= number_format($_SESSION['total'], 2); ?></td>
+							</tr>
+						</table>
+						<div class="text-center">
+							<span style="text-align: center;">
+								<form method="post" action="product.php">
+									<input type="submit" name="clear_basket" value="Clear Basket" class="basket_buttons" />
+									<a href="checkout.php" class="basket_buttons" name="checkout">Checkout >></a>
+								</form>
+							</span>
+						</div>
+						
+				<?php		
+					} // end else
+				?>
+
+			<!-- MY ACCOUNT LINK -->
 			<div class="myacc-sidebar">
 				<?php 
 					if (isset($_SESSION['username']) && isset($_SESSION['id'])) {
 				?>
-				<a href="myaccount.php" class="myacc-class">My Account</a>
+						<a href="myaccount.php" class="myacc-class">My Account</a>
 				<?php
 					}
 				?>
 			</div>
 
+			<!-- CONTACT FORM ADVERTISEMENT -->
 			<div id="psidebar">
 			<hr>
 				<section class="prod-sidebar-sec1">
@@ -407,6 +193,7 @@
 					<a href="contact-us.php" class="Snow" >CONTACT US</a>
 				<br><br><hr>
 			</div>
+			<!-- REMINDER BOX -->
 				<div id="reminder-box">
 					<h4>Reminder:</h4>
 					Please keep in mind that once you will check out your orders without an account and decided to create one instead, all previous orders will be deleted, as it will create new set of orders for a user with a registered account. <br>
@@ -414,26 +201,79 @@
 					<i>Enjoy Candela!</i>
 				</div>
 		</div>
-	</div>
-</div><!-- end of body-content -->
-<!-- FOOTER -->
-<div class="footer">
-	&copy; 2018 Candela, All Rights Reserved 
-	<span>
-		<a href="about.php" class="fnav">About Candela</a> | 
-		<a href="contact-us.php" class="fnav">Contact Us</a> |
-		<a id="myBtn">Terms and Conditions</a>
-	</span><br />
+		<!-- END OF SIDEBAR -->
 
-	Bricklane Fake Subdivision Medicion II-E Block 90 Lot 1 Imus City, Cavite
-		&nbsp;&nbsp;:&nbsp;&nbsp; <i>0971-697-0022</i>
-	<span>
-		<i>Exclusively available at Imus City Only</i>&nbsp;&nbsp;&nbsp;
-		<a href="https://www.instagram.com/"><img src="images/instagramlogo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
-		<a href="https://twitter.com/"><img src="images/twitter-logo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
-		<a href="https://www.facebook.com/"><img src="images/facebooklogo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
-	</span>
+
+
+	</div>
+	<!-- END OF BODY 1. -->
+
+
+	<!-- BODY 2. SPECIFIC PRODUCT PAGE WITH PRODUCT INFORMATION -->
+	<?php } else { // end of if (!isset($_GET['id'])) 
+	 		    $product_info = Products::get_product_info($_GET['id']); 
+	?>
+		<div class="margin-t-40">
+			<div id="product-page">
+
+				<div id="product-nav">
+					<a href="product.php"><< Back To Products</a>
+				</div>
+
+				<div class="product-info">
+					<?php $product = mysqli_fetch_array($product_info, MYSQLI_ASSOC); ?>
+
+					<form method="post" action="product.php?id=<?= $product['product_id'] ?>">
+						<!-- ITEM PICTURE -->
+						<img class="product-info-img img-responsive" name="p_pic" src="<?= $product['image'] ?>">
+						
+						<!-- ITEM INFORMATION-->
+						<div class="subproduct-info">
+							<blockquote>
+								<span class="product-header"><p><?= $product['name'] ?></p></span><br>
+									<span class="price"><p>P<?= $product['price'] ?></p></span>	
+									<p>Quantity<br>
+									<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>" />
+									<input type="number" name="quantity" class="product-quantity" id="product-quantity" max="<?= $product['stocks']; ?>" min="1" value="1" width="20px" />
+										<span class="font13em" id="quant_num">
+											*quantity needed
+										</span>
+									</p>
+									<p>
+										<input type="submit" name="add_to_basket" value="Add To Basket" class="bam bamColor" <?php if ($product['stocks'] == 0) { ?> disabled <?php }?> />
+										<span style='font-size:18px; font-style:italic;'>
+										<?php 
+										if ($product['stocks'] <= 15) {
+											echo $product['stocks'] . "stock/s left";
+										} elseif ($product['stocks'] == 0) {
+											echo "Unavailable";
+										}
+										?>
+								</span>
+									</p>
+							</blockquote>
+						</div>
+					</form>
+						<!-- ITEM DISCRIPTION -->
+						<div class="item-description">
+							<?= $product['description']; ?>
+						</div>
+
+					<div style="text-align: center;">
+						<a href="product.php" class="basket_buttons" style="font-size: 26px;"><< Keep Shopping</a>
+					</div>
+				</div>
+			</div><!-- END OF PRODUCT PAGE ID -->
+		</div>
+	<?php } ?>
+	<!-- END OF BODY 2. -->
+
 </div>
+<!-- END OF BODY-CONTENT -->
+
+<!-- FOOTER -->
+<?php require("templates/footer.php"); ?>
 <!-- SCRIPTING -->
 <script src="javas.js"></script>
-</body></html>
+</body>
+</html>

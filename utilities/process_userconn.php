@@ -1,7 +1,6 @@
 <?php 
-require("conn/db_connection.php");
-
-require("sanitize_input.php");
+// require("conn/db_connection.php");
+// require("sanitize_input.php");
 
 // Contains Process and Validation when User:
 //  - sign ups / register
@@ -44,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
 
     // -----Username / Firstname
         // must not be empty
-    $signup['username'] = testInput($mysqli, $_POST["uName"]) ?? "";
+    $signup['username'] = test_input($mysqli, $_POST["uName"]) ?? "";
 
     if (!$signup['username']) {
         $signup_err['username'] = error_messages("username_error");     // username is empty
@@ -54,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
 
     // -----Lastname
         // must not be empty   
-    $signup['lastname'] = testInput($mysqli, $_POST["LName"]) ?? "";
+    $signup['lastname'] = test_input($mysqli, $_POST["LName"]) ?? "";
 
     if (!$signup['lastname']) {
         $signup_err['lastname'] = error_messages("lastname_error");       // lastname is empty
@@ -66,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
         // must not be empty
         // must be unique and valid
         // must be less than or equal to 100 characters
-    $signup['email'] = testInput($mysqli, $_POST['email']) ?? "";
+    $signup['email'] = test_input($mysqli, $_POST['email']) ?? "";
 
     $emailcheck = "SELECT * FROM `users` WHERE email = '" . $signup['email'] . "'";
     $emailresult = mysqli_query($mysqli, $emailcheck);
@@ -88,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
         // must have 11 characters
         // all digits
         // optional
-    $signup['contact'] = testInput($mysqli, $_POST['contactnum']) ?? "";
+    $signup['contact'] = test_input($mysqli, $_POST['contactnum']) ?? "";
     if ($signup['contact'] && !preg_match("/^(09)\d{9}$/",$signup['contact'])) {
         $signup_err['contact'] = error_messages("contact_error");       // phone num not valid
     }
@@ -174,6 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
         // unset the basket that the guest user created
         if (isset($_SESSION['basket'])) {
             unset($_SESSION['basket']);
+            unset($_SESSION['total']);
         }
         
         mysqli_close($mysqli);
@@ -196,7 +196,7 @@ $inputErr = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
 
     // get inputs
-    $username = (!empty($_POST['loginName'])) ? testInput($mysqli, $_POST['loginName']) : FALSE;
+    $username = (!empty($_POST['loginName'])) ? test_input($mysqli, $_POST['loginName']) : FALSE;
     $password = (!empty($_POST['loginPass'])) ? $_POST['loginPass'] : FALSE;
     
     if ($username && $password) {
@@ -230,8 +230,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
                 } 
 
 
+                // unset the basket that the guest user created 
+                //  and create new basket array of registered user
+                if (isset($_SESSION['basket'])) {
+                    unset($_SESSION['basket']);
+                    unset($_SESSION['total']);
+
+                }
+                $_SESSION['basket'] = array();
+                
+                // create the basket array if they have products in their basket
+                $get_basket = "SELECT * FROM basket_items WHERE user_id = '". $_SESSION['id'] ."'";
+                $get_basket_result = @mysqli_query($mysqli, $get_basket);
+                if ($get_basket_result) {
+                    
+                    while ($row = mysqli_fetch_array($get_basket_result, MYSQLI_ASSOC)) {
+                        $_SESSION['basket'][$row['product_id']] = $row['quantity'];
+                    }
+                }
+
                 mysqli_free_result($result1);
                 mysqli_free_result($get_addr_result);
+                mysqli_free_result($get_basket_result);
                 mysqli_close($mysqli);
                 
                 header("location: index.php");

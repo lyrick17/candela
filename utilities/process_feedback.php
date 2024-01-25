@@ -1,6 +1,8 @@
 <?php 
-require("conn/db_connection.php");
-require("sanitize_input.php");
+// require("conn/db_connection.php");
+// require("sanitize_input.php");
+
+
 // Contains Process and Validation when User:
 //  - sends feedback through contact form
 
@@ -14,7 +16,6 @@ $contact_err = array("name" => "",
                     "contact" => "",
                     "subject" => "",
                     "comment" => "");
-$contnameErr = $contemailErr = $contcontactnumErr = $contsubjectErr = $contcommentErr = "";
 
 $errors = 0;
 
@@ -22,7 +23,7 @@ $errors = 0;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Name
-    $contact['name'] = testInput($mysqli, $_POST['uName']) ?? "";
+    $contact['name'] = test_input($mysqli, $_POST['uName']) ?? "";
 
     if (!$contact['name']) {
         $contact_err['name'] = error_messages("name_error");           // username is empty
@@ -31,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
     // Email
-    $contact['email'] = testInput($mysqli, $_POST['email']) ?? "";
+    $contact['email'] = test_input($mysqli, $_POST['email']) ?? "";
     if (!$contact['email']) {
         $contact_err['email'] = error_messages("email_error_1");       // no email input
     } elseif (strlen($contact['email']) > 100) {
@@ -41,13 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Contact Number
-    $contact['contact'] = testInput($mysqli, $_POST['contactnum']) ?? "";
+    $contact['contact'] = test_input($mysqli, $_POST['contactnum']) ?? "";
     if ($contact['contact'] && !preg_match("/^(09)\d{9}$/",$contact['contact'])) {
         $contact_err['contact'] = error_messages("contact_error");  // invalid phone number
     }
     
     // Subject
-    $contact['subject'] = testInput($mysqli, $_POST['subject']) ?? "";
+    $contact['subject'] = test_input($mysqli, $_POST['subject']) ?? "";
 
     if (!$contact['subject']) {
         $contact_err['subject'] = error_messages("subject_error");     // username is empty
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Comment
-    $contact['comment'] = testInput($mysqli, $_POST['comment']) ?? "";
+    $contact['comment'] = test_input($mysqli, $_POST['comment']) ?? "";
     if (!$contact['comment']) {
         $contact_err['comment'] = error_messages("comment_error");     // username is empty
     } elseif (strlen($contact['comment']) > 255) {

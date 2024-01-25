@@ -1,66 +1,21 @@
 <?php include("server.php"); ?>
 <!DOCTYPE html><html>
-<head><title>Checkout - Candela</title>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<head>
+	<title>Checkout - Candela</title>
 
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="icon" type="image/png" href="images/candelalogo.png">
+	<?php require("templates/head.php"); ?>
 </head>
 <body>
 <!-- HEADER/NAVIGATION BAR -->
-	<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<ul class="nav navbar-nav left">
-			<li>0971-697-0022</li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<?php if (isset($_SESSION['username'])): ?>
-				<li><a href="myaccount.php"><?php echo $_SESSION['username'];?>'s Account</a></li>
-				<li><a href="logout.php">Log Out</a></li>
-			<?php else: ?>
-				<li><a href="login-form.php">Log In</a></li>
-				<li><a href="signup-form.php">Create An Account</a></li>
-			<?php endif ?>
-		</ul>
-	</div>
-</nav>
-<div id="header">
-	<div id="business-name">
-		<a href="index.php"><img src="images/candela.png" alt="Candela" /></a>
-	</div>
+<?php require("templates/nav_graybar.php"); ?>
+<?php require("templates/nav.php"); ?>
 
-	<div class="navig-prov">
-		<div class="navi">
-			<a href="product.php">Product</a>
-		</div>
-		<div class="navi">
-			<a href="faqs.php">FAQs</a>
-		</div>
-		<div class="navi">
-			<a href="about.php">About</a>
-		</div>
-		<div class="navi">				
-			<a href="contact-us.php">Contact Us</a>
-		</div>
-	</div>
-
-	<div id="nav-basket">
-		<a href="basket.php" onmouseover="document.images.basketimg.src = 'images/basket-hover.png'" onmouseout="document.images.basketimg.src='images/basket.png'"><img src="images/basket.png" name="basketimg" height="17px"> Basket</a>
-	</div>
-</div>
 <!-- CONTENT -->
 <div class="body-content">
-<div id="myModal" class="modal">
-<!-- Modal content -->
- 	<div class="modal-content">
-		<span class="close">&times;</span>
-			 <?php echo $termsConditions; ?>
-	</div>
-</div>
+	<!-- MODAL CONTENT for Terms and Conditions -->
+	<?php include("templates/modals/modal_terms_conditions.php"); ?>
+
+
 	<div id="checkout-box">
 		<div id="basket-header">
 			Checkout Form
@@ -311,23 +266,9 @@
 	</div>
 </div>
 <!-- FOOTER -->
-<div class="footer">
-	&copy; 2018 Candela, All Rights Reserved 
-	<span>
-		<a href="about.php" class="fnav">About Candela</a> | 
-		<a href="contact-us.php" class="fnav">Contact Us</a> |
-		<a id="myBtn">Terms and Conditions</a>
-	</span><br />
-		
-	Bricklane Fake Subdivision Medicion II-E Block 90 Lot 1 Imus City, Cavite
-		&nbsp;&nbsp;:&nbsp;&nbsp; <i>0971-697-0022</i>
-	<span>
-		<i>Exclusively available at Imus City Only</i>&nbsp;&nbsp;&nbsp;
-		<a href="https://www.instagram.com/"><img src="images/instagramlogo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
-		<a href="https://twitter.com/"><img src="images/twitter-logo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
-		<a href="https://www.facebook.com/"><img src="images/facebooklogo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
-	</span>
-</div>
+<?php require("templates/footer.php"); ?>
+
 <!-- SCRIPTING -->
 <script src="javas.js"></script>
-</body></html>
+</body>
+</html>

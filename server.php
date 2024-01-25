@@ -106,6 +106,18 @@
 	// makes sure session id is set
 
 
+
+
+
+
+
+
+
+
+
+
+
+	
 	//Getting the data of products in products table
 		$productquery = 'SELECT * FROM products ORDER by id ASC';
 		$productresult = mysqli_query($mysqli,$productquery);
@@ -175,6 +187,14 @@
 		}
 	}
 
+
+
+
+
+
+
+
+	
 	if (isset($_POST['checkout_submit'])) {
 		#For Check Out Forms...
 		if (empty($_POST['fName'])) {
@@ -401,7 +421,7 @@
 
 
 
-
+	// confirm checkout
 	if (isset($_POST['confirm_checkout'])) {
 		if (!empty($_POST['captcha'])) {
 			$answer = $_POST['captcha'];
@@ -772,379 +792,10 @@
 		}
 	}
 
-	$product_ids = array();
-	//Check if Add to Cart button has been submitted
-	if (filter_input(INPUT_POST, 'add_to_basket')) {
-		if (isset($_SESSION['basket'])) {
-
-			//keep track of how many products are in the shopping cart
-			$count = count($_SESSION['basket']);
-
-			//create sequantial array for matching array keys to products id's
-			$product_ids = array_column($_SESSION['basket'], 'id');
-			//empty array for getting product id's from the database, array used when user's logged in
-			$array_product_ids = array();
-
-			if (isset($_SESSION['username']) && isset($_SESSION['id'])) {
-				// Getting The Ordered Products on Their Basket
-				$select_id_sql = mysqli_query($mysqli, "SELECT * FROM basket_items WHERE user_id = '". $_SESSION['id'] ."'");
-				while ($select_id_row = mysqli_fetch_array($select_id_sql)) {
-					$selectid = $select_id_row['user_id'];
-				}
-
-			}
-			if (isset($_GET['id']) && isset($_SESSION['id'])) {
-				$valproduct1 = "SELECT product_id FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 1";
-				$valproduct2 = "SELECT product_id FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 2";
-				$valproduct3 = "SELECT product_id FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 3";
-				$valproduct4 = "SELECT product_id FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 4";
-				$valproduct5 = "SELECT product_id FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 5";
-				$valproduct6 = "SELECT product_id FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = 6";
-				$execute_product_query1 = mysqli_query($mysqli, $valproduct1);
-				$execute_product_query2 = mysqli_query($mysqli, $valproduct2);
-				$execute_product_query3 = mysqli_query($mysqli, $valproduct3);
-				$execute_product_query4 = mysqli_query($mysqli, $valproduct4);
-				$execute_product_query5 = mysqli_query($mysqli, $valproduct5);
-				$execute_product_query6 = mysqli_query($mysqli, $valproduct6);
-				while ($pid1 = mysqli_fetch_array($execute_product_query1)) {
-					$p_id1 = $pid1['product_id'];
-				}
-					if (!isset($p_id1)) {
-						$p_id1 = "";
-					}
-					array_push($array_product_ids, $p_id1);
-				while ($pid2 = mysqli_fetch_array($execute_product_query2)) {
-					$p_id2 = $pid2['product_id'];
-				}
-					if (!isset($p_id2)) {
-						$p_id2 = "";
-					}
-					array_push($array_product_ids, $p_id2);
-				while ($pid3 = mysqli_fetch_array($execute_product_query3)) {
-					$p_id3 = $pid3['product_id'];
-				}
-					if (!isset($p_id3)) {
-						$p_id3 = "";
-					}
-					array_push($array_product_ids, $p_id3);
-				while ($pid4 = mysqli_fetch_array($execute_product_query4)) {
-					$p_id4 = $pid4['product_id'];
-				}
-					if (!isset($p_id4)) {
-						$p_id4 = "";
-					}
-					array_push($array_product_ids, $p_id4);
-				while ($pid5 = mysqli_fetch_array($execute_product_query5)) {
-					$p_id5 = $pid5['product_id'];
-				}
-					if (!isset($p_id5)) {
-						$p_id5 = "";
-					}
-					array_push($array_product_ids, $p_id5);
-				while ($pid6 = mysqli_fetch_array($execute_product_query6)) {
-					$p_id6 = $pid6['product_id'];
-				}
-					if (!isset($p_id6)) {
-						$p_id6 = "";
-					}
-					array_push($array_product_ids, $p_id6);
-			}
-
-			if (isset($_SESSION['username']) && isset($_SESSION['id'])) {
-				if (!in_array($_GET['id'], $array_product_ids)) {
-						$_SESSION['basket'][1] = array
-						(
-						'id' => filter_input(INPUT_GET, 'id'),
-						'pname' => filter_input(INPUT_POST, 'hidden_name'),
-						'image' => filter_input(INPUT_POST, 'hidden_image'),
-						'price' => filter_input(INPUT_POST, 'hidden_price'),
-						'quantity' => filter_input(INPUT_POST, 'quantity'),
-						'stocks' => filter_input(INPUT_POST, 'hidden_stocks')
-						);
-						$username = $_SESSION['username'];
-						$userid = $_SESSION['id'];
-						foreach ($_SESSION['basket'] as $key => $product) {
-							if ($product['id'] == filter_input(INPUT_GET, 'id')) {
-
-								$product_info_sql = "SELECT id from products WHERE id = '". $product['id'] . "'";
-								$product_info_sql_result = mysqli_query($mysqli, $product_info_sql);
-								
-								while ($productrow = mysqli_fetch_array($product_info_sql_result)) {
-									$productid = $productrow['id'];
-								}
-								$product_quantity = $product['quantity'];
-							}
-						}
-						
-						//if the user added an item
-						$serialized_basket = serialize($_SESSION["basket"]);
-						$basket_sql = "INSERT INTO basket_items (basket_content, user_id, product_id, quantity) VALUES ('" . mysqli_real_escape_string($mysqli, $serialized_basket) . "', $userid, $productid, $product_quantity)";
-						$basket_sql_result = mysqli_query($mysqli, $basket_sql) or die("Query to store basket failed");
-					
-
-				} else { //product already exist, increase quantity
-						for ($i = 1; $i <= 6; $i++) {
-							if (filter_input(INPUT_GET, 'id') == $i) { // determines what product are you adding
-						$select_pid = "SELECT * FROM basket_items WHERE product_id = '". $_GET['id'] ."' AND user_id = '".$_SESSION['id'] ."'";
-						$select_pid_result = mysqli_query($mysqli, $select_pid);	
-							while ($prodid_row = mysqli_fetch_array($select_pid_result)) {
-								$item_id = $prodid_row['quantity'];
-							}
-
-							$validateqty = $item_id + filter_input(INPUT_POST, 'quantity');
-								if ($item_id == filter_input(INPUT_POST, 'hidden_stocks')) {
-									echo "<script>alert('You have reached the limit of quantity orders')</script>";
-								} elseif ($validateqty > filter_input(INPUT_POST, 'hidden_stocks')) {
-									echo "<script>alert('You can\'t order higher than stock limit')</script>";
-								} else {
-									//add item quantity to the existing product in the database
-									$item_id += filter_input(INPUT_POST, 'quantity');
-									//Select order row from db
-									$basket_content = "SELECT basket_content FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = '". $_GET['id'] ."' ";
-									//execute
-									$basket_content_result = mysqli_query($mysqli, $basket_content);
-									//fetch the row
-									$basket_row = mysqli_fetch_array($basket_content_result);
-										// convert the basket string into array, in short unserializing
-										$update_array = unserialize($basket_row['basket_content']);
-										//change quantity in the array
-			    						$update_array[1]['quantity'] = $item_id;
-			    					//serialize it back, convert it into string
-									$update_serialized_basket = serialize($update_array);
-									//update row
-									$update_array_sql = "UPDATE basket_items SET basket_content = '" . mysqli_real_escape_string($mysqli, $update_serialized_basket) . "' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = '". $_GET['id'] ."' ";
-									//update row
-									$update_qty_sql = "UPDATE basket_items SET quantity = '". $item_id ."' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = '". $_GET['id'] ."' ";
-									//execute
-									$update_array_result = mysqli_query($mysqli, $update_array_sql) or die("Query to update quantity failed");
-									//execute
-									$update_qty_result = mysqli_query($mysqli, $update_qty_sql) or die("Query to update quantity failed");
-								}
-							}
-						}
-
-					
-				}
-			} else { // if the customer orders without an account
-
-				if (!in_array($_GET['id'], $product_ids)) {
-
-					$_SESSION['basket'][$count] = array
-					(
-						'id' => filter_input(INPUT_GET, 'id'),
-						'pname' => filter_input(INPUT_POST, 'hidden_name'),
-						'image' => filter_input(INPUT_POST, 'hidden_image'),
-						'price' => filter_input(INPUT_POST, 'hidden_price'),
-						'quantity' => filter_input(INPUT_POST, 'quantity'),
-						'stocks' => filter_input(INPUT_POST, 'hidden_stocks')
-					);
-
-				} else { //product already exist, increase quantity
-					// match array key to id of the product being added to the cart
-						for ($i = 0; $i < count($product_ids); $i++){ 
-							if ($product_ids[$i] == filter_input(INPUT_GET, 'id')) {
-									$validateqty = $_SESSION['basket'][$i]['quantity'] + filter_input(INPUT_POST, 'quantity');
-								if ($_SESSION['basket'][$i]['quantity'] == filter_input(INPUT_POST, 'hidden_stocks')) {
-									echo "<script>alert('You have reached the limit of quantity orders')</script>";
-								} else {
-									if ($validateqty > filter_input(INPUT_POST, 'hidden_stocks')) {
-									echo "<script>alert('You can\'t order higher than stock limit')</script>";
-									} else {
-										//add item quantity to the existing product in the array
-										$_SESSION['basket'][$i]['quantity'] += filter_input(INPUT_POST, 'quantity');
-									}
-								}
-							}
-						}
-
-					
-				}
-			}
-			
-		} else { //if basket doesn't exist, create first product with array key 0
-			// create array ysing submitted form data, start from key 0 and fill it with values
-
-				// if the user is logged in, the basket will be saved as string,
-				if (isset($_SESSION['username']) && isset($_SESSION['id'])) {
-					$_SESSION['basket'][1] = array
-					(
-					'id' => filter_input(INPUT_GET, 'id'),
-					'pname' => filter_input(INPUT_POST, 'hidden_name'),
-					'image' => filter_input(INPUT_POST, 'hidden_image'),
-					'price' => filter_input(INPUT_POST, 'hidden_price'),
-					'quantity' => filter_input(INPUT_POST, 'quantity'),
-					'stocks' => filter_input(INPUT_POST, 'hidden_stocks')
-					);
-					$username = $_SESSION['username'];
-					$userid = $_SESSION['id'];
-					foreach ($_SESSION['basket'] as $key => $product) {
-						if ($product['id'] == filter_input(INPUT_GET, 'id')) {
-
-							$product_info_sql = "SELECT id from products WHERE id = '". $product['id'] . "'";
-							$product_info_sql_result = mysqli_query($mysqli, $product_info_sql);
-							
-							while ($productrow = mysqli_fetch_array($product_info_sql_result)) {
-								$productid = $productrow['id'];
-							}
-							$product_quantity = $product['quantity'];
-						}
-					}
-
-					// converting array to string
-					$firstserialized_basket = serialize($_SESSION["basket"]);
-
-					$basket_sql = "INSERT INTO basket_items (basket_content, user_id, product_id, quantity) VALUES ('" . mysqli_real_escape_string($mysqli, $firstserialized_basket) . "', $userid, $productid, $product_quantity)";
-					//product_id, quantity :  $productid, $product_quantity
-					$serialized_basket_result = mysqli_query($mysqli, $basket_sql) or die("Query to store basket failed");
-				} else { // customer orders without account
-				$_SESSION['basket'][0] = array
-				(
-					'id' => filter_input(INPUT_GET, 'id'),
-					'pname' => filter_input(INPUT_POST, 'hidden_name'),
-					'image' => filter_input(INPUT_POST, 'hidden_image'),
-					'price' => filter_input(INPUT_POST, 'hidden_price'),
-					'quantity' => filter_input(INPUT_POST, 'quantity'),
-					'stocks' => filter_input(INPUT_POST, 'hidden_stocks')
-				);
-				}
-		}
-	}
-
-
-	if (filter_input(INPUT_GET, 'action') == 'delete') {
-		if (isset($_SESSION['id'])) {
-			$delete_sql = "DELETE FROM basket_items WHERE product_id = '". $_GET['id'] ."' AND user_id = '". $_SESSION['id'] ."'";
-			mysqli_query($mysqli, $delete_sql);
-			foreach ($_SESSION['basket'] as $key => $product) {
-				if ($product['id'] == filter_input(INPUT_GET, 'id')) {
-					unset($_SESSION['basket'][$key]);
-				}
-			}
-		} else {
-			foreach ($_SESSION['basket'] as $key => $product) {
-				if ($product['id'] == filter_input(INPUT_GET, 'id')) {
-					unset($_SESSION['basket'][$key]);
-				}
-			}
-		}
-		//reset session array keys so they match with $product_ids numeric array
-		$_SESSION['basket'] = array_values($_SESSION['basket']);
-	}
-	if (filter_input(INPUT_GET, 'action') == 'pdelete') {
-		if (isset($_SESSION['id'])) {
-			$delete_sql = "DELETE FROM basket_items WHERE product_id = '". $_GET['id'] ."' AND user_id = '". $_SESSION['id'] ."'";
-			mysqli_query($mysqli, $delete_sql);
-			foreach ($_SESSION['basket'] as $key => $product) {
-				if ($product['id'] == filter_input(INPUT_GET, 'id')) {
-					unset($_SESSION['basket'][$key]);
-				}
-			}
-		} else {
-			//loop through all products in the basket until it matches with GET id variable
-			foreach ($_SESSION['basket'] as $key => $product) {
-				if ($product['id'] == filter_input(INPUT_GET, 'id')) {
-					unset($_SESSION['basket'][$key]);
-				}
-			}
-		}
-		//reset session array keys so they match with $product_ids numeric array
-		$_SESSION['basket'] = array_values($_SESSION['basket']);
-	}
-	if (filter_input(INPUT_GET, 'action') == 'clear') {
-		if (isset($_SESSION['basket'])) {
-			foreach ($_SESSION['basket'] as $key => $product) {
-				if ($product['id'] == filter_input(INPUT_GET, 'id')) {
-					unset($_SESSION['basket']);
-					unset($_SESSION['total']);
-
-					if (isset($_SESSION['username'])) {
-						$delete_sql = "DELETE FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' ";
-						mysqli_query($mysqli, $delete_sql);
-					}
-				}
-			}
-		}
-	}
-	/*if (filter_input(INPUT_GET, 'action') == 'update') {
-		if (isset($_SESSION['id'])) {
-			for ($i = 1; $i <= 6; $i++) { 
-				if (filter_input(INPUT_GET, 'id') == $i) { // determines what product are you adding
-					$select_pid = "SELECT * FROM basket_items WHERE product_id = '". $_GET['id'] ."' AND user_id = '".$_SESSION['id'] ."'";
-					$select_pid_result = mysqli_query($mysqli, $select_pid);	
-					while ($prodid_row = mysqli_fetch_array($select_pid_result)) {
-						$item_id = $prodid_row['quantity'];
-					}
-					$item_id = filter_input(INPUT_POST, 'basket_qty');
-					$basket_content = "SELECT basket_content FROM basket_items WHERE user_id = '". $_SESSION['id'] ."' AND product_id = '". $_GET['id'] ."' ";
-					$basket_content_result = mysqli_query($mysqli, $basket_content);
-
-					$basket_row = mysqli_fetch_array($basket_content_result);
-
-					$update_array = unserialize($basket_row['basket_content']);
-
-		    		$update_array[1]['quantity'] = $item_id;
-
-					$update_serialized_basket = serialize($update_array);
-
-					$update_array_sql = "UPDATE basket_items SET basket_content = '" . mysqli_real_escape_string($mysqli, $update_serialized_basket) . "' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = '". $_GET['id'] ."' ";
-
-					$update_qty_sql = "UPDATE basket_items SET quantity = '". $item_id ."' WHERE user_id = '". $_SESSION['id'] ."' AND product_id = '". $_GET['id'] ."' ";
-
-					$update_array_result = mysqli_query($mysqli, $update_array_sql) or die("Query to update quantity failed");
-
-					$update_qty_result = mysqli_query($mysqli, $update_qty_sql) or die("Query to update quantity failed");
-				}
-			}
-			echo "<script>alert('Quantity Increased')</script>";
-		} else {
-			$product_ids = array_column($_SESSION['basket'], 'id');
-			print_r($product_ids);
-			for ($i = 0; $i < count($product_ids); $i++){ 
-				if ($product_ids[$i] == filter_input(INPUT_GET, 'id')) {
-					//add item quantity to the existing product in the array
-					$_SESSION['basket'][$i]['quantity'] = filter_input(INPUT_POST, 'basket_qty');
-					print_r(filter_input(INPUT_POST, 'basket_qty'));
-					}
-			}
-			echo "<script>alert('Quantity Increased')</script>";
-			print_r($_SESSION['basket']);
-		}
-	} */
-
 	if (!isset($_SESSION['basket'])) {
 		if (isset($_SESSION['total'])) {
 			unset($_SESSION['total']);
 		}
 	}
 
-	//Should Do The Update Cart
-	/*if (filter_input(INPUT_GET, 'action') == 'update') {
-		for ($i = 0; $i < count($product_ids); $i++){ 
-				if ($product_ids[$i] == filter_input(INPUT_GET, 'id')) {
-					//add item quantity to the existing product in the array
-					$_SESSION['basket'][$i]['quantity'] += filter_input(INPUT_POST, 'quantity');
-
-					if (isset($_SESSION['username']) && isset($_SESSION['id'])) {
-						$username = $_SESSION['username'];
-						$userid = $_SESSION['id'];
-							foreach ($_SESSION['basket'] as $key => $product) {
-								if ($product['id'] == filter_input(INPUT_GET, 'id')) {
-									$update_qty = "UPDATE basket_items SET quantity = '". $_SESSION['basket']['quantity'] ."' WHERE product_id = '". $product['id'] ."' AND user_id = '". $userid ."' " ;
-										$update_qty_result = mysqli_query($mysqli, $update_qty);
-								}
-							}
-					}
-
-				}
-		}
-	}*/
-
-	//using this to check if adding array in SESSION is working
-	/*pre_r($_SESSION);
-
-	function pre_r($array) {
-		echo "<pre>";
-		print_r($array);
-		echo "</pre>";
-	}*/
 ?>

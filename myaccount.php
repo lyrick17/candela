@@ -1,9 +1,11 @@
+<?php require('utilities/server.php'); ?>
 <?php include("utilities/account_user_edit_info.php"); ?>
 <?php 
-	if (!isset($_SESSION['id'])) {
-		header("Location: index.php");
-		exit();
-	} ?>
+
+	Restrict::user("guest");
+
+
+?>
 
 <!DOCTYPE html><html>
 <head><title>Your Account - Candela</title>
@@ -77,29 +79,12 @@ $(document).ready(function() {
 </div>
 <!-- CONTENT -->
 <div class="body-content">
-<div id="myModal" class="modal">
-<!-- Modal content -->
- 	<div class="modal-content">
-		<span class="close">&times;</span>
-			 <?php echo $termsConditions; ?>
-	</div>
-</div>
+	<!-- Modal content for Terms and Conditions -->
+	<?php include("templates/modals/modal_terms_conditions.php"); ?>
+	
+	<!-- Modal content for Delete Account -->
+	<?php include("templates/modals/modal_del_acc_confirmation.php"); ?>
 
-<div id="myModal2" class="modal">
-<!-- Modal content for dedete account-->
- 	<div class="modal-content">
-		<span class="close">&times;</span>
-				
-			<section style='padding: 10px; font-size: 15px; color:black; text-align:center;'>
-				<form  method="post" action="myaccount.php">
-					<p>Are you sure to <b>delete your account?</b><br />
-					 This would delete all your data.</p>
-					<input type='submit' id='input_yes' name='Sure' value='Yes' /> | 
-					<input type='submit' name='Nope' value='Cancel' />
-				</form>
-			</section>
-	</div>
-</div>
 	<div class="margin-t-90">
 		<div id="product-page">
 			<div id="accountnav">

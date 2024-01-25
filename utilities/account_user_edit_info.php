@@ -1,7 +1,6 @@
 <?php
-require("conn/db_connection.php");
-
-require("sanitize_input.php");
+// require("conn/db_connection.php");
+// require("sanitize_input.php");
 
 
 $notice = array("firstname" => "",
@@ -28,7 +27,7 @@ $mydetails = array("firstname" => "",
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "general") {
     
     // Firstname
-    $mydetails['firstname'] = testInput($mysqli, $_POST["myfirstname"]) ?? "";
+    $mydetails['firstname'] = test_input($mysqli, $_POST["myfirstname"]) ?? "";
     if (!$mydetails['firstname']) {                  
         $notice['firstname'] = error_messages("username_error");              // user left empty field    
     } elseif (strlen($mydetails['firstname']) > 255) {
@@ -45,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "general") {
     }
 
     // Lastname
-    $mydetails['lastname'] = testInput($mysqli, $_POST['mylastname']) ?? "";
+    $mydetails['lastname'] = test_input($mysqli, $_POST['mylastname']) ?? "";
     if (!$mydetails['lastname']) {                  
         $notice['lastname'] = error_messages("lastname_error");              // user left empty field    
     } elseif (strlen($mydetails['lastname']) > 255) {
@@ -62,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "general") {
     }
 
     // Email
-    $mydetails['email'] = testInput($mysqli, $_POST['myemail']) ?? "";
+    $mydetails['email'] = test_input($mysqli, $_POST['myemail']) ?? "";
 
     $emailcheck = "SELECT * FROM `users` WHERE email = '".$mydetails['email']."'";
     $emailresult = mysqli_query($mysqli, $emailcheck);
@@ -88,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "general") {
     }
 
     // Contact Number
-    $mydetails['number'] = testInput($mysqli, $_POST['mynumber']) ?? "";
+    $mydetails['number'] = test_input($mysqli, $_POST['mynumber']) ?? "";
     if ($mydetails['number'] && !preg_match("/^(09)\d{9}$/",$mydetails['number'])) {
         $notice['number'] = error_messages("contact_error");            // phone num not valid
     } elseif ($mydetails['number'] != $_SESSION['contactnumber']) {
@@ -112,8 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "general") {
 //changing address details in myaccount.php
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "address") {
     // Address of User
-    $mydetails['address'] = testInput($mysqli, $_POST["myaddress"]) ?? "";
-    $mydetails['barangay'] = testInput($mysqli, $_POST["barangay"]) ?? "";
+    $mydetails['address'] = test_input($mysqli, $_POST["myaddress"]) ?? "";
+    $mydetails['barangay'] = test_input($mysqli, $_POST["barangay"]) ?? "";
 
     if (!$mydetails['address'] || $mydetails['barangay'] == "- Select Your Barangay -") {                  
         $notice['address'] = error_messages("address_error");              // user did not complete address, user left empty on address    

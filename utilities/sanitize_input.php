@@ -1,7 +1,7 @@
 <?php 
 
 // Contains sanitization of user inputs:
-function testInput($mysqli, $data) {
+function test_input($mysqli, $data) {
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
@@ -101,6 +101,27 @@ function error_messages($error) {
 
         case "cant_delete_account":
             return "You cannot delete your account with order on process";
+            break;
+
+
+        case "fail_add_basket":
+            return "Failed to add item to basket";
+            break;
+
+        case "fail_remove_basket":
+            return "Failed to remove item from basket";
+            break;
+
+        case "fail_clear_basket":
+            return "Failed to clear basket";
+            break;
+
+        case "fail_mysql_del_basket":
+            return "Cannot delete the basket. Please contact the Candela team";
+            break;
+        
+        case "fail_mysql_upd_basket":
+            return "Cannot update the basket. Please contact the Candela team";
             break;
     }
 }
