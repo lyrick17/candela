@@ -38,7 +38,7 @@ foreach ($_SESSION['basket'] as $product_id => $quantity) {
                             : "unregistered";
             
             if (!$delete_order_sql) {
-                echo "Cannot delete the basket. Please contact the Candela Team";
+                echo special_error_messages("alert_fail_mysql_del_basket", $product['name']);
                 continue;
             }
             // 4.
@@ -53,7 +53,7 @@ foreach ($_SESSION['basket'] as $product_id => $quantity) {
                             : "unregistered";
 
         if (!$update_qty_sql) {
-            echo  "Cannot update the basket. Please contact the Candela Team";
+            echo special_error_messages("alert_fail_mysql_upd_basket", $product['name']);
             continue;
         }
                             
@@ -72,7 +72,7 @@ foreach ($_SESSION['basket'] as $product_id => $quantity) {
 
 // 6.
 if ($less_stocks > 0) {
-    echo "<script>alert('Sorry, some of your orders have been reduced its quantity or removed, we have less stocks than your chosen quantity.')</script>";
+    echo error_messages("reduced_order");
 }
 $_SESSION['total'] = $total;
 

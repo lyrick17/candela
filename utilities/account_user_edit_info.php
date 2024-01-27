@@ -63,23 +63,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "general") {
     // Email
     $mydetails['email'] = test_input($mysqli, $_POST['myemail']) ?? "";
 
-    $emailcheck = "SELECT * FROM `users` WHERE email = '".$mydetails['email']."'";
-    $emailresult = mysqli_query($mysqli, $emailcheck);
-    $emailcount = mysqli_num_rows($emailresult);
 
     if (!$mydetails['email']) {                  
-        $notice['email'] = error_messages("email_error_1");                   // user left empty field    
+        $notice['email'] = error_messages("email_error_1");                         // user left empty field    
     } elseif (strlen($mydetails['email']) > 100) {
-        $notice['email'] = error_messages("maxchar_error_100");     // user max 255 characters
+        $notice['email'] = error_messages("maxchar_error_100");                     // user max 255 characters
     } elseif (!filter_var($mydetails['email'],FILTER_VALIDATE_EMAIL)) {
-        $notice['email'] = error_messages("email_error_2");              // invalid email
-    } elseif ($emailcount == 1 && $mydetails['email'] != $_SESSION['email']) {
-        $notice['email'] = error_messages("email_error_3");                       // email already taken
+        $notice['email'] = error_messages("email_error_2");                         // invalid email
+    } elseif (!Users::verify_email($mydetails['email']) && $mydetails['email'] != $_SESSION['email']) {
+        $notice['email'] = error_messages("email_error_3");                         // email already taken
     } elseif ($mydetails['email'] != $_SESSION['email']) {
         $email_update_sql = "UPDATE users SET email = '". $mydetails['email'] ."' WHERE user_id = '". $_SESSION['id'] ."'";
         $email_update_sqlresult = @mysqli_query($mysqli, $email_update_sql);
         if ($email_update_sqlresult) {
-            $success['email'] = "Successfully changed";
+            $success['email'] = success_messages("update_successful");
             $_SESSION['email'] = $mydetails['email'];
         } else {
             $notice['email'] = error_messages("system_error");
@@ -143,31 +140,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "password") {
     $q1 = "SELECT password FROM users WHERE `user_id` = '". $_SESSION['id'] ."'";
     $result1 = @mysqli_query($mysqli, $q1);
     $row = mysqli_fetch_array($result1, MYSQLI_ASSOC);
-    $hashed_pass = $row['password'];
-
-
-    if (!$password || !$newpassword || !$confirmpassword) {
-        $notice['password'] = error_messages("psw_error_5"); $pass_error++;
-    } elseif (!password_verify($password, $hashed_pass)) {
-        $notice['password'] = error_messages("psw_error_6"); $pass_error++;
-    } elseif ($newpassword != $confirmpassword) {
-        $notice['password'] = error_messages("psw_error_4"); $pass_error++;
-    } elseif (strlen($newpassword) < 8) {
-        $notice['password'] = error_messages("psw_error_2"); $pass_error++;
-    } elseif ($newpassword == $password) {
-        $notice['password'] = error_messages("psw_error_7"); $pass_error++;
-    }
-
-    if ($pass_error == 0) {
-        $newpassword = password_hash($newpassword, PASSWORD_BCRYPT);
-        $q2 = "UPDATE users SET password = '". $newpassword ."' WHERE `user_id` = '". $_SESSION['id'] ."'";
-        $result2 = @mysqli_query($mysqli, $q2);
-        if ($result2) {
-            $success['password'] = success_messages("update_successful");
-        } else {
-            $notice['password'] = error_messages("system_error");
+    $pass_row = Users::get_password($_SESSION['id']);
+    if (!$pass_row) {
+        $notice['password'] = error_messages("system_error");
+    } else {
+        $hashed_pass = $row['password'];
+    
+        if (!$password || !$newpassword || !$confirmpassword) {
+            $notice['password'] = error_messages("psw_error_5"); $pass_error++;
+        } elseif (!password_verify($password, $hashed_pass)) {
+            $notice['password'] = error_messages("psw_error_6"); $pass_error++;
+        } elseif ($newpassword != $confirmpassword) {
+            $notice['password'] = error_messages("psw_error_4"); $pass_error++;
+        } elseif (strlen($newpassword) < 8) {
+            $notice['password'] = error_messages("psw_error_2"); $pass_error++;
+        } elseif ($newpassword == $password) {
+            $notice['password'] = error_messages("psw_error_7"); $pass_error++;
         }
+    
+        if ($pass_error == 0) {
+            $newpassword = password_hash($newpassword, PASSWORD_BCRYPT);
+            $q2 = "UPDATE users SET password = '". $newpassword ."' WHERE `user_id` = '". $_SESSION['id'] ."'";
+            $result2 = @mysqli_query($mysqli, $q2);
+            if ($result2) {
+                $success['password'] = success_messages("update_successful");
+            } else {
+                $notice['password'] = error_messages("system_error");
+            }
+        }
+
+        
     }
+
+
 }
 
 

@@ -64,13 +64,13 @@
 									<p class="product-name"><?= $product['name']; ?></p>
 										<p>
 											<span>Price:</span> P<?= $product['price']; ?><br>
-											<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>" />
 											<input type="number" name="quantity" class="product-quantity" id="product-quantity" max="<?= $product['stocks']; ?>" min="1" value="1" />
 											<span class="font13em" id="quant_num">
-													*quantity needed
+												*quantity needed
 											</span>
 											<br>
 										</p>
+										<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>" />
 										<input type="submit" name="add_to_basket" value="Add To Basket" class="bam bamColor" <?php if ($product['stocks'] == 0) { ?> disabled <?php }?> />
 								</div>				
 							</form>
@@ -79,13 +79,7 @@
 								<a href="product.php?id=<?= $product['product_id']; ?>" class="bam bamColor">More Info</a>
 									
 								<span style='font-size:18px; font-style:italic;'>
-									<?php 
-									if ($product['stocks'] <= 15) {
-										echo $product['stocks'] . "stock/s left";
-									} elseif ($product['stocks'] == 0) {
-										echo "Unavailable";
-									}
-									?>
+									<?php Formats::display_stocks_left($product['stocks']); ?>
 								</span>
 								</div>
 						</div>
@@ -168,7 +162,7 @@
 			<!-- MY ACCOUNT LINK -->
 			<div class="myacc-sidebar">
 				<?php 
-					if (isset($_SESSION['username']) && isset($_SESSION['id'])) {
+					if (isset($_SESSION['id'])) {
 				?>
 						<a href="myaccount.php" class="myacc-class">My Account</a>
 				<?php
@@ -242,14 +236,8 @@
 									<p>
 										<input type="submit" name="add_to_basket" value="Add To Basket" class="bam bamColor" <?php if ($product['stocks'] == 0) { ?> disabled <?php }?> />
 										<span style='font-size:18px; font-style:italic;'>
-										<?php 
-										if ($product['stocks'] <= 15) {
-											echo $product['stocks'] . "stock/s left";
-										} elseif ($product['stocks'] == 0) {
-											echo "Unavailable";
-										}
-										?>
-								</span>
+											<?php Formats::display_stocks_left($product['stocks']); ?>
+										</span>
 									</p>
 							</blockquote>
 						</div>

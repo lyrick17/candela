@@ -67,17 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
         // must be less than or equal to 100 characters
     $signup['email'] = test_input($mysqli, $_POST['email']) ?? "";
 
-    $emailcheck = "SELECT * FROM `users` WHERE email = '" . $signup['email'] . "'";
-    $emailresult = mysqli_query($mysqli, $emailcheck);
-    $emailcount = mysqli_num_rows($emailresult);
-    
     if (!$signup['email']) {
         $signup_err['email'] = error_messages("email_error_1");        // email is empty
     } elseif (strlen($signup['email']) > 100) {
         $signup_err['email'] = error_messages("maxchar_error_100");    // email character is over 100
     } elseif (!filter_var($signup['email'], FILTER_VALIDATE_EMAIL)) {
         $signup_err['email'] = error_messages("email_error_2");        // email is not valid
-    } elseif ($emailcount == 1) {
+    } elseif (!Users::verify_email($signup['email'])) {
         $signup_err['email'] = error_messages("email_error_3");        // email is already takeen
     }
 
@@ -143,9 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
             $usertype);
         $stmt->execute();
 
-        $sql_get_info = "SELECT * FROM users WHERE `email` = '". $signup['email'] ."'";
-        $sql_get_info_result = @mysqli_query($mysqli, $sql_get_info);
-        $user_row = (mysqli_num_rows($sql_get_info_result) == 1) ? mysqli_fetch_array($sql_get_info_result, MYSQLI_ASSOC) : false;
+        $user_row = Users::get_all_info($signup['email']);
         
         if ($user_row) {
             // initialize the session variables
@@ -156,14 +150,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
             $_SESSION['contactnumber'] = $user_row['contactnumber'];
             $_SESSION['type'] = (int) $user_row['type'];
 
-            $get_addr = "SELECT * FROM addresses WHERE `user_id` = '". $_SESSION['id'] ."'";
-            $get_addr_result = @mysqli_query($mysqli, $get_addr);
+            $address = Users::get_address($_SESSION['id']);
 
-            if ($get_addr_result) {
-                $row = mysqli_fetch_array($get_addr_result, MYSQLI_ASSOC);
-                $_SESSION['address_id'] = $row['address_id'];
-                $_SESSION['address'] = $row['user_address'];
-                $_SESSION['barangay'] = $row['barangay'];
+            if ($address) {
+                $_SESSION['address_id'] = $address['address_id'];
+                $_SESSION['address'] = $address['user_address'];
+                $_SESSION['barangay'] = $address['barangay'];
             }
             
         
@@ -200,10 +192,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
     $password = (!empty($_POST['loginPass'])) ? $_POST['loginPass'] : FALSE;
     
     if ($username && $password) {
-        // check username exists, then get its password
-        $q1 = "SELECT * FROM users WHERE `email` = '". $username ."'";
-        $result1 = @mysqli_query($mysqli, $q1);
-        $user_row = (mysqli_num_rows($result1) == 1) ? mysqli_fetch_array($result1, MYSQLI_ASSOC) : false;
+        // check if email exists, then get its password
+        $user_row = Users::get_all_info($username);
         
         if ($user_row) {
             $hashed_pass = $user_row['password'];
@@ -219,14 +209,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
                 $_SESSION['type'] = (int) $user_row['type'];
                 
                 // get the addresses
-                $get_addr = "SELECT * FROM addresses WHERE `user_id` = '". $_SESSION['id'] ."'";
-                $get_addr_result = @mysqli_query($mysqli, $get_addr);
+                $address = Users::get_address($_SESSION['id']);
 
-                if ($get_addr_result) {
-                    $row = mysqli_fetch_array($get_addr_result, MYSQLI_ASSOC);
-                    $_SESSION['address_id'] = $row['address_id'];
-                    $_SESSION['address'] = $row['user_address'];
-                    $_SESSION['barangay'] = $row['barangay'];
+                if ($address) {
+                    $_SESSION['address_id'] = $address['address_id'];
+                    $_SESSION['address'] = $address['user_address'];
+                    $_SESSION['barangay'] = $address['barangay'];
                 } 
 
 
@@ -237,21 +225,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
                     unset($_SESSION['total']);
 
                 }
+
                 $_SESSION['basket'] = array();
                 
                 // create the basket array if they have products in their basket
-                $get_basket = "SELECT * FROM basket_items WHERE user_id = '". $_SESSION['id'] ."'";
-                $get_basket_result = @mysqli_query($mysqli, $get_basket);
-                if ($get_basket_result) {
+                $get_basket = Basket::get_all_items($_SESSION['id']);
+                
+                if ($get_basket) {
                     
-                    while ($row = mysqli_fetch_array($get_basket_result, MYSQLI_ASSOC)) {
+                    while ($row = mysqli_fetch_array($get_basket, MYSQLI_ASSOC)) {
                         $_SESSION['basket'][$row['product_id']] = $row['quantity'];
                     }
                 }
 
-                mysqli_free_result($result1);
-                mysqli_free_result($get_addr_result);
-                mysqli_free_result($get_basket_result);
                 mysqli_close($mysqli);
                 
                 header("location: index.php");
@@ -261,10 +247,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
             }
 
         } else {
-            $inputErr = error_messages("login_error_2");                        // invalid login
+            $inputErr = error_messages("login_error_2");          // invalid login
         }
     } else {
-        $inputErr  = error_messages("login_error_1");                           // incomplete details
+        $inputErr  = error_messages("login_error_1");            // incomplete details
     }
 }
 ?>

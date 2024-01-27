@@ -7,18 +7,11 @@
 
 ?>
 
-<!DOCTYPE html><html>
-<head><title>Your Account - Candela</title>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  	<link rel="icon" type="image/png" href="images/candelalogo.png">
-  	<link rel="stylesheet" type="text/css" href="style.css">
-
-  	<link rel='stylesheet' type='text/css' href='alertifyjs/css/alertify.css'>
-  	<script type="text/javascript" src='javascript/alertify.min.js'></script>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Your Account - Candela</title>
+	<?php require("templates/head.php"); ?>
  <script>
 $(document).ready(function() {
 	$("a").on('click', function(event) {
@@ -37,46 +30,9 @@ $(document).ready(function() {
 </head>
 <body>
 <!-- HEADER/NAVIGATION BAR -->
-<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<ul class="nav navbar-nav left">
-			<li>0971-697-0022</li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<?php if (isset($_SESSION['username'])): ?>
-				<li><a href="myaccount.php"><?php echo $_SESSION['username'];?>'s Account</a></li>
-				<li><a href="logout.php">Log Out</a></li>
-			<?php else: ?>
-				<li><a href="login-form.php">Log In</a></li>
-				<li><a href="signup-form.php">Create An Account</a></li>
-			<?php endif ?>
-		</ul>
-	</div>
-</nav>
-<div id="header">
-	<div id="business-name">
-		<a href="index.php"><img src="images/candela.png" alt="Candela" /></a>
-	</div>
+<?php require("templates/nav_graybar.php"); ?>
+<?php require("templates/nav.php"); ?>
 
-	<div class="navig-prov">
-		<div class="navi">
-			<a href="product.php">Product</a>
-		</div>
-		<div class="navi">
-			<a href="faqs.php">FAQs</a>
-		</div>
-		<div class="navi">
-			<a href="about.php">About</a>
-		</div>
-		<div class="navi">				
-			<a href="contact-us.php">Contact Us</a>
-		</div>
-	</div>
-
-	<div id="nav-basket">
-		<a href="basket.php" onmouseover="document.images.basketimg.src = 'images/basket-hover.png'" onmouseout="document.images.basketimg.src='images/basket.png'"><img src="images/basket.png" name="basketimg" height="17px"> Basket</a>
-	</div>
-</div>
 <!-- CONTENT -->
 <div class="body-content">
 	<!-- Modal content for Terms and Conditions -->
@@ -369,4 +325,5 @@ $(document).ready(function() {
 <script src="javas.js"></script>
 <script src="utilities/barangay_select.js"></script>
 <script src="utilities/del_acc_confirmation.js"></script>
-</body></html>
+</body>
+</html>

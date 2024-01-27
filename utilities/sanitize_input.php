@@ -104,28 +104,41 @@ function error_messages($error) {
             break;
 
 
-        case "fail_add_basket":
-            return "Failed to add item to basket";
+        case "alert_fail_add_basket":
+            return "<script>alert('Failed to add item to basket. Please contact the Candela Team.');</script>";
+            break;
+            
+        case "alert_fail_remove_basket":
+            return "<script>alert('Failed to remove item from basket. Please contact the Candela Team.');</script>";
+            break;
+            
+        case "alert_fail_clear_basket":
+            return "<script>alert('Failed to clear the basket. Please contact the Candela Team.');</script>";
             break;
 
-        case "fail_remove_basket":
-            return "Failed to remove item from basket";
+        case "alert_maximum_product":
+            return "<script>alert('Sorry, you have ordered the maximum amount of the product available.');</script>";
             break;
-
-        case "fail_clear_basket":
-            return "Failed to clear basket";
+        case "reduced_order":
+            return "<script>alert('Sorry, some of your orders have been reduced its quantity or removed, we have less stocks than your chosen quantity.')</script>";
             break;
-
-        case "fail_mysql_del_basket":
-            return "Cannot delete the basket. Please contact the Candela team";
-            break;
-        
-        case "fail_mysql_upd_basket":
-            return "Cannot update the basket. Please contact the Candela team";
-            break;
-    }
+        }
 }
 
+// Error messages that contains specific names
+function special_error_messages($error, $name) {
+    switch ($error) {
+        
+        case "alert_fail_mysql_del_basket":
+            return "<script>alert('Cannot delete the basket due to no more stocks available on product " . $name . ". Please contact the Candela team');</script>";
+            break;
+            
+        case "alert_fail_mysql_upd_basket":
+            return "<script>alert('Cannot update the basket to match records in our Database on product " . $name . ". Please contact the Candela team');</script>";
+            break;
+    
+    }
+}
 // contains messages when  process is successful
 function success_messages($message) {
     switch ($message) {

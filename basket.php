@@ -37,24 +37,24 @@
 						// includes the updating of basket_information
 						require("utilities/process_basket_sync.php");
 				?>
-						<form method="POST" action="basket.php">
-							<div class="table-responsive">
-								<table>
+						<div class="table-responsive">
+							<table>
+								<tr>
+									<td class="basket-td bktd1">Item</td>
+									<td class="basket-td bktd2"></td>
+									<td class="basket-td bktd3">Price</td>
+									<td class="basket-td bktd4">Quantity</td>
+									<td class="basket-td bktd3">Total</td>
+									<td class="basket-td bktd4"></td>
+								</tr>
+								<?php 
+									foreach ($_SESSION['basket'] as $product_id => $quantity) {
+										$get_products = Products::get_product_info($product_id);
+										if ($get_products) {
+											$product = mysqli_fetch_array($get_products, MYSQLI_ASSOC);
+											?>
 									<tr>
-										<td class="basket-td bktd1">Item</td>
-										<td class="basket-td bktd2"></td>
-										<td class="basket-td bktd3">Price</td>
-										<td class="basket-td bktd4">Quantity</td>
-										<td class="basket-td bktd3">Total</td>
-										<td class="basket-td bktd4"></td>
-									</tr>
-									<?php 
-										foreach ($_SESSION['basket'] as $product_id => $quantity) {
-											$get_products = Products::get_product_info($product_id);
-											if ($get_products) {
-												$product = mysqli_fetch_array($get_products, MYSQLI_ASSOC);
-									?>
-										<tr>
+										<form method="POST" action="basket.php">
 											<td class="basket-td bktd1">
 												<img src="<?php echo $product['image']; ?>" height="200px">
 											</td>
@@ -68,25 +68,27 @@
 													Remove Item
 												</button>
 											</td>
-										</tr>
-									<?php
-											} // end of if
-										}	// end of foreach
-									?>
-									<tr>
-										<td colspan="4" align="right" class="basket-td bktd4">Total</td>
-										<td class="basket-td bktd3">P<?php echo number_format($total, 2); ?></td>
-										<td class="basket-td bktd4"></td>
+										</form>
 									</tr>
-								</table>
-							</div>
-							<div style="text-align: center; margin-top: 15px;">
-								<a href="product.php" class="basket_buttons"><< Keep Shopping</a>
-								<!--<a href="basket.php?action=update&id=<?php echo $product['id'] ?>" name="update" value="Update Basket" class="basket_buttons">Update Basket</a>-->
+								<?php
+										} // end of if
+									}	// end of foreach
+								?>
+								<tr>
+									<td colspan="4" align="right" class="basket-td bktd4">Total</td>
+									<td class="basket-td bktd3">P<?php echo number_format($total, 2); ?></td>
+									<td class="basket-td bktd4"></td>
+								</tr>
+							</table>
+						</div>
+						<div style="text-align: center; margin-top: 15px;">
+							<form method="post" action="basket.php">
+							<a href="product.php" class="basket_buttons"><< Keep Shopping</a>
+							<!--<a href="basket.php?action=update&id=<?php echo $product['id'] ?>" name="update" value="Update Basket" class="basket_buttons">Update Basket</a>-->
 								<input type="submit" name="clear_basket" value="Clear Basket" class="basket_buttons" />
 								<a href="checkout.php" class="basket_buttons" name="checkout">Checkout >></a>
-							</div>
-						</form>
+							</form>
+						</div>
 
 				<?php 
 					}
@@ -98,4 +100,5 @@
 <?php require("templates/footer.php"); ?>
 <!-- SCRIPTING -->
 <script src="javas.js"></script>
-</body></html>
+</body>
+</html>
