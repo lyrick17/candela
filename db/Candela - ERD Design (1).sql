@@ -28,7 +28,7 @@ CREATE TABLE `products` (
 );
 
 CREATE TABLE `contacts` (
-  `contact_id` mediumint NOT NULL,
+  `contact_id` mediumint PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` mediumint,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `contacts` (
 );
 
 CREATE TABLE `basket_items` (
-  `basket_id` mediumint NOT NULL,
+  `basket_id` mediumint PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` mediumint NOT NULL,
   `product_id` mediumint NOT NULL,
   `quantity` mediumint NOT NULL,
@@ -47,14 +47,15 @@ CREATE TABLE `basket_items` (
 );
 
 CREATE TABLE `checkout_orders` (
-  `checkout_id` mediumint NOT NULL,
+  `checkout_id` mediumint PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` mediumint NOT NULL,
   `order_id` varchar(255) NOT NULL,
-  `address_id` mediumint NOT NULL,
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `contactnumber` varchar(11) NOT NULL,
+  `address` text NOT NULL,
+  `barangay` varchar(255) NOT NULL,
   `products` text NOT NULL,
   `total` int NOT NULL,
   `checked_out` timestamp NOT NULL,
@@ -70,5 +71,3 @@ ALTER TABLE `checkout_orders` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`u
 ALTER TABLE `addresses` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 ALTER TABLE `basket_items` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
-
-ALTER TABLE `checkout_orders` ADD FOREIGN KEY (`address_id`) REFERENCES `addresses` (`address_id`);

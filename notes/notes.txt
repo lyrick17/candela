@@ -20,7 +20,8 @@ Further Upgrades to do:
 - clear basket                                                          - DONE 1-24-24
 - update basket                                                         - DONE 1-24-24
 - finish all templates                                                  - DONE 1-25-24
-- put faqs information in array
+- put faqs information in array                                         - DONE 1-27-24
+- put all barangay in an array                                          - DONT 1-27-24
 - basket.php                                                            - DONE 1-25-24
 - clean codes for product.php                                           - DONE 1-26-24
 - clean codes for basket.php                                            - DONE 1-26-24
@@ -31,7 +32,15 @@ Further Upgrades to do:
 - clean codes for signup-form.php                                       - DONE 1-25-24
 - Users and Basket class                                                - DONE 1-26-24
 - add error messages and condition ordering more than stocks            - DONE 1-27-24 
-- decide if use form or get on checkout
+- decide if use form or get on checkout (use just the link)             - DONE 1-29-24
+- to checkout, requirements must be met:      
+    - session basket is aligned with basket database                    - DONE 1-29-24
+    - all user information validation                                   - DONE 1-29-24
+    - total order is P500                                               - DONE 1-29-24
+    - barangay is valid                                                 - DONE 1-29-24
+    - once checked out, create session array variable containning   
+        all valuable infomation needed on the checkout                  - DONE 1-29-24
+        
 - SMTP for:
     - sending contact from
     - register, welcome to Candela

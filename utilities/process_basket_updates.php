@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['clear_basket'])) {
         }
     }
     unset($_SESSION['basket']);
-    unset($_SESSION['total']);
+    unset($_SESSION['subtotal']);
     
 }
 

@@ -4,6 +4,8 @@
 
 	if (isset($_GET['id']))
 		Restrict::product_page_access($_GET['id']);
+	Restrict::remove_checkout_sess();
+	Restrict::remove_order_id_sess();
 
 ?>
 <!DOCTYPE html>
@@ -143,7 +145,7 @@
 					
 							<tr>
 								<td colspan="2" align="right" class="pbasket-td pb_total">Total</td>
-								<td class="pbasket-td pb_num">P<?= number_format($_SESSION['total'], 2); ?></td>
+								<td class="pbasket-td pb_num">P<?= number_format($_SESSION['subtotal'], 2); ?></td>
 							</tr>
 						</table>
 						<div class="text-center">

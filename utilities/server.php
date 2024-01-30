@@ -8,6 +8,7 @@ if (!isset($_SESSION['basket'])) {
 	$_SESSION['basket'] = array();
 }
 
+
 class Restrict {
 
 	//  check if the user is logged in or not before allowing user to access a webpage
@@ -33,6 +34,36 @@ class Restrict {
 	
 	}
 
+	// check if session id is set before confirming checkout
+	static function confirm_checkout_page_access() {
+		if (!isset($_SESSION['checkout'])) {
+			header("Location: product.php");
+			exit();
+		}
+	}
+	
+	// do not allow the user to see success.php unless user has successfully checked out
+	static function success_page_access() {
+		if (!isset($_SESSION['recent_order_id'])) {
+			header("Location: index.php");
+			exit();
+		}
+	}
+	
+	// always remove the session checkout whenever user is not doing th process
+	static function remove_checkout_sess() {
+		if (isset($_SESSION['checkout'])) {
+			unset($_SESSION['checkout']);
+		}
+	}
+	
+	// always remove the session recent order it whenever user is finished on ordering
+	static function remove_order_id_sess() {
+		if (isset($_SESSION['recent_order_id'])) {
+			unset($_SESSION['recent_order_id']);
+		}
+	}
+	
 }
 
 
@@ -140,6 +171,59 @@ class Basket {
 
 		return ($result) ? $result : false;
 	}
+	
+	// get the quantity of the specific product of a specific user
+	static function get_quantity($id, $product_id) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+		$product_id = test_input($mysqli, $product_id) ?? "";
+
+		$query = "SELECT quantity FROM basket_items WHERE user_id = '$id' AND product_id = '$product_id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
+	}
+}
+
+// MySQLi Checkout Order Functions
+class Orders {
+	
+	// get all orders of a specific user
+	static function get_all_orders($user_id) {
+		global $mysqli;
+		$user_id = test_input($mysqli, $user_id) ?? "";
+
+		$query = "SELECT * FROM checkout_orders WHERE user_id = '$user_id' ORDER BY checkout_id DESC";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? $result : false;
+	
+	}
+
+	// get the recent order of a specific user
+	static function get_order($order_id) {
+		global $mysqli;
+		$order_id = test_input($mysqli, $order_id) ?? "";
+
+		$query = "SELECT * FROM checkout_orders WHERE order_id = '$order_id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
+	}
+	
+	// get the most recent order's checkout_id
+	static function get_recent_checkout_id() {
+		global $mysqli;
+
+		$query = "SELECT checkout_id FROM checkout_orders ORDER BY checkout_id DESC LIMIT 1";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
+	}
+
+	
+
+
 }
 
 // Other repeatable codes for the website 
@@ -150,6 +234,10 @@ class Formats {
 		} elseif ($stocks == 0) {
 			echo "Unavailable";
 		}
+	}
+
+	static function display_checkout_info($id, $checkout_info) {
+		return (isset($_SESSION[$id])) ? $_SESSION[$id] : $checkout_info;
 	}
 }
 ?>

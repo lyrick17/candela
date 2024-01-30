@@ -46,7 +46,10 @@ function error_messages($error) {
         case "email_error_3":
             return "Email Already Taken";
             break;
-        case "contact_error":
+        case "contact_error_1":
+            return "Please enter your Contact Number";
+            break;
+        case "contact_error_2":
             return "Invalid Phone Number format";
             break;
         case "psw_error_1":
@@ -92,6 +95,9 @@ function error_messages($error) {
         // for editing User Address
         case "address_error":
             return "Please complete the address";
+            break;
+        case "barangay_error":
+            return "Please select a valid Barangay";
             break;
 
         // for system failure

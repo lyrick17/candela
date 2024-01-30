@@ -1,4 +1,8 @@
 <?php require("utilities/server.php"); ?>
+<?php
+	Restrict::remove_checkout_sess();
+	Restrict::remove_order_id_sess();
+?>
 <!DOCTYPE html>
 <html>
 <head>

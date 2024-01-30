@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
         // optional
     $signup['contact'] = test_input($mysqli, $_POST['contactnum']) ?? "";
     if ($signup['contact'] && !preg_match("/^(09)\d{9}$/",$signup['contact'])) {
-        $signup_err['contact'] = error_messages("contact_error");       // phone num not valid
+        $signup_err['contact'] = error_messages("contact_error_2");       // phone num not valid
     }
     
 
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
     // compile the errors, once $error is incremented, there is error found
     $errors += (empty($_POST['uName']) || strlen($signup['username']) > 255);
     $errors += empty($_POST['LName'] || strlen($signup['lastname']) > 255);
-    $errors += (empty($_POST['email']) || strlen($signup['email']) > 100 || !filter_var($signup['email'],FILTER_VALIDATE_EMAIL) || $emailcount == 1);
+    $errors += (empty($_POST['email']) || strlen($signup['email']) > 100 || !filter_var($signup['email'],FILTER_VALIDATE_EMAIL) || !Users::verify_email($signup['email']));
     $errors = $signup_err['contact'] ? $errors + 1 : $errors;
     $errors += (empty($_POST['psw']) || $passlength < 8);
     $errors += (empty($_POST['rePass']) || $signup['psw'] != $signup['rePass']);
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
         // unset the basket that the guest user created
         if (isset($_SESSION['basket'])) {
             unset($_SESSION['basket']);
-            unset($_SESSION['total']);
+            unset($_SESSION['subtotal']);
         }
         
         mysqli_close($mysqli);
@@ -222,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
                 //  and create new basket array of registered user
                 if (isset($_SESSION['basket'])) {
                     unset($_SESSION['basket']);
-                    unset($_SESSION['total']);
+                    unset($_SESSION['subtotal']);
 
                 }
 

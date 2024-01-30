@@ -2,6 +2,8 @@
 <?php require('utilities/process_userconn.php'); ?>
 <?php 
 	Restrict::user("logged");
+	Restrict::remove_checkout_sess();
+	Restrict::remove_order_id_sess();
 ?>
 <!DOCTYPE html>
 <html>

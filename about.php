@@ -1,5 +1,8 @@
-<?php include("server.php"); ?>
-<!DOCTYPE html><html>
+<?php require("utilities/server.php"); ?>
+<?php Restrict::remove_checkout_sess(); ?>
+<?php Restrict::remove_order_id_sess(); ?>
+<!DOCTYPE html>
+<html>
 <head>
 	<title>About Candela</title>
 	<?php require("templates/head.php"); ?>

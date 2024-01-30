@@ -1,5 +1,11 @@
+<?php require("utilities/server.php"); ?>
 <?php include("utilities/process_feedback.php"); ?>
-<!DOCTYPE html><html>
+<?php
+	Restrict::remove_checkout_sess();
+	Restrict::remove_order_id_sess();
+?>
+<!DOCTYPE html>
+<html>
 <head>
 	<title>Contact Us - Candela</title>
 	<?php require("templates/head.php"); ?>

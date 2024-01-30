@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Contact Number
     $contact['contact'] = test_input($mysqli, $_POST['contactnum']) ?? "";
     if ($contact['contact'] && !preg_match("/^(09)\d{9}$/",$contact['contact'])) {
-        $contact_err['contact'] = error_messages("contact_error");  // invalid phone number
+        $contact_err['contact'] = error_messages("contact_error_2");  // invalid phone number
     }
     
     // Subject

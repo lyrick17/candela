@@ -1,5 +1,7 @@
 <?php include("utilities/server.php"); ?>
 <?php require("utilities/process_basket_updates.php"); ?>
+<?php Restrict::remove_checkout_sess(); ?>
+<?php Restrict::remove_order_id_sess(); ?>
 <!DOCTYPE html>
 <html>
 <head>

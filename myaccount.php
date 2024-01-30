@@ -3,6 +3,8 @@
 <?php 
 
 	Restrict::user("guest");
+	Restrict::remove_checkout_sess();
+	Restrict::remove_order_id_sess();
 
 
 ?>
@@ -167,121 +169,66 @@ $(document).ready(function() {
 					<hr>
 					<div id="checkoutHistory_content">
 						<?php 
-							$users_checkout_sql = mysqli_query($mysqli, "SELECT * FROM checkout_orders WHERE user_id = '". $_SESSION['id'] ."'");
-							$users_checkout_count = mysqli_num_rows($users_checkout_sql);
-							$myrow = array();
-							if ($users_checkout_count >= 1) {
-								while ($checkout_row = mysqli_fetch_array($users_checkout_sql)) {
-									$myrow[] = $checkout_row;
-								}
-									foreach ($myrow as $chkinfo) {
-										$users_id = $chkinfo['user_id'];
-										$timestamp =  strtotime($chkinfo['checked_out']);
+							$user_orders = Orders::get_all_orders($_SESSION['id']);
+							if ($user_orders) {
+								while ($order = mysqli_fetch_array($user_orders)) {
+									$timestamp =  strtotime($order['checked_out']);
+									$order = Orders::get_order($order['order_id']);
+									if ($order) {
+										$items = json_decode($order['products'], true);
+										$items = array_filter($items);
+									} else {
+										// the process hasnt processed well
+									}
 						?>
-						<hr class="chk-hrstyle">
-						<p>Ordered last: <?php echo date('m/d/Y', $timestamp); ?> , <?php echo date('l', $timestamp); ?></p>
-							<table class="chk-hrstyle-table">
-								<tr>
-									<td class="chk-hrstyle-table-td">
-										<?php if ($chkinfo['p1'] > 0) {
-											$p1_sql = mysqli_query($mysqli, "SELECT * FROM products WHERE id = 1");
-												while ($p1_row = mysqli_fetch_array($p1_sql)) {
-														$p1_price = $p1_row['price'];
-														$p1_name = $p1_row['pname'];
-												}
-										?>
+									<hr class="chk-hrstyle">
+									<p>Ordered last: <?= date('m/d/Y', $timestamp); ?> , <?= date('l', $timestamp); ?></p>
+									<table class="chk-hrstyle-table">
+										<tr>
+											<td class="chk-hrstyle-table-td">
+											<?php 
+											foreach ($items as $product_id => $quantity) {
+												$product = Products::get_product_info($product_id);
+												if (!$product) continue;
+												$product = mysqli_fetch_array($product, MYSQLI_ASSOC);
+												$product_name = $product['name'];
+												$product_price = $product['price'];
+												$product_total = $product_price * $quantity;
+												echo $quantity . " <b>" . $product_name . "/s</b> : P" . $product_total . "<br>";
+											}
+											?>
+											</td>
+											<td class="chk-hrstyle-table-td">
+												Shipping Fee: P<?php echo $order['shipping_fee']; ?>
+											</td>
+											<td class="chk-hrstyle-table-td">
+												A Total of: P<?php echo $order['total']; ?>
+											</td>
+											<td class="chk-hrstyle-table-td">
+												<span class="field-success-myaccount"><?php echo $order['delivered']; ?></span>
+											</td>
+											<?php if ($order['delivered'] != "") : ?>
+											<td class="chk-hrstyle-table-td">
+												<a href="myaccount.php?action=deletechk&id=<?php echo $order['checkout_id'] ?>" style="color:red;"> Delete Recorded Orders</span>
+											</td>
+											<?php endif; ?>
+										</tr>
+									</table>
 
-										<?php echo $chkinfo['p1']; ?> <b><?php echo $p1_name; ?>/s</b> : P<?php echo $p1_price; ?><br>
 
-										<?php }
-											if ($chkinfo['p2'] > 0) {
-											$p2_sql = mysqli_query($mysqli, "SELECT * FROM products WHERE id = 2");
-												while ($p2_row = mysqli_fetch_array($p2_sql)) {
-														$p2_price = $p2_row['price'];
-														$p2_name = $p2_row['pname'];
-												}
-										?>
-
-										<?php echo $chkinfo['p2']; ?> <b><?php echo $p2_name; ?>/s</b> : P<?php echo $p2_price; ?><br>
-
-										<?php }
-											if ($chkinfo['p3'] > 0) {
-											$p3_sql = mysqli_query($mysqli, "SELECT * FROM products WHERE id = 3");
-												while ($p3_row = mysqli_fetch_array($p3_sql)) {
-														$p3_price = $p3_row['price'];
-														$p3_name = $p3_row['pname'];
-												}
-										?>
-
-										<?php echo $chkinfo['p3']; ?> <b><?php echo $p3_name; ?>/s</b> : P<?php echo $p3_price; ?><br>
-
-										<?php }
-											if ($chkinfo['p4'] > 0) {
-											$p4_sql = mysqli_query($mysqli, "SELECT * FROM products WHERE id = 4");
-												while ($p4_row = mysqli_fetch_array($p4_sql)) {
-														$p4_price = $p4_row['price'];
-														$p4_name = $p4_row['pname'];
-												}
-										?>
-
-										<?php echo $chkinfo['p4']; ?> <b><?php echo $p4_name; ?>/s</b> : P<?php echo $p4_price; ?><br>
-
-										<?php }
-											if ($chkinfo['p5'] > 0) {
-											$p5_sql = mysqli_query($mysqli, "SELECT * FROM products WHERE id = 5");
-												while ($p5_row = mysqli_fetch_array($p5_sql)) {
-														$p5_price = $p5_row['price'];
-														$p5_name = $p5_row['pname'];
-												}
-										?>
-
-										<?php echo $chkinfo['p5']; ?> <b><?php echo $p5_name; ?>/s</b> : P<?php echo $p5_price; ?><br>
-
-										<?php }
-											if ($chkinfo['p6'] > 0) {
-											$p6_sql = mysqli_query($mysqli, "SELECT * FROM products WHERE id = 6");
-												while ($p6_row = mysqli_fetch_array($p6_sql)) {
-														$p6_price = $p6_row['price'];
-														$p6_name = $p6_row['pname'];
-												}
-										?>
-
-										<?php echo $chkinfo['p6']; ?> <b><?php echo $p6_name; ?>/s</b> : P<?php echo $p6_price; ?><br>
-
-										<?php } ?>
-									</td>
-									<td class="chk-hrstyle-table-td">
-										A Total of: P<?php echo $chkinfo['total']; ?>
-									</td>
-									<td class="chk-hrstyle-table-td">
-										<span class="field-success-myaccount"><?php echo $chkinfo['delivered']; ?></span>
-									</td>
-									<?php if ($chkinfo['delivered'] != "") : ?>
-										<td class="chk-hrstyle-table-td">
-											<a href="myaccount.php?action=deletechk&id=<?php echo $chkinfo['id'] ?>" style="color:red;"> Delete Recorded Orders</span>
-										</td>
-									<?php endif; ?>
-								</tr>
-							</table>
 						<?php
-									} // end foreach
-							} // end if 
-							else { // if the user doesn't have any orders
+								}  // end of while loop
+							} // end of if
+							else {
 						?>
-							<p> You haven't checked out.</p>
-							<a href="product.php" class="basket_buttons"><< Keep Shopping</a>
-							<a href="basket.php" class="basket_buttons">Go To My Basket</a>
+								<p> You haven't checked out.</p>
+								<a href="product.php" class="basket_buttons"><< Keep Shopping</a>
+								<a href="basket.php" class="basket_buttons">Go To My Basket</a>
 						<?php
-							} // end else
+							}
 						?>
 					</div>
 				</div>
-
-
-
-						<?php
-							
-						?>
 
 				<!-- Form for DELETE ACCOUNT-->
 				<div id="deleteAccount">
@@ -303,24 +250,10 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+
 <!-- FOOTER -->
-<div class="footer">
-	&copy; 2018 Candela, All Rights Reserved 
-	<span>
-		<a href="about.php" class="fnav">About Candela</a> | 
-		<a href="contact-us.php" class="fnav">Contact Us</a> |
-		<a id="myBtn">Terms and Conditions</a>
-	</span><br />
-		
-	Bricklane Fake Subdivision Medicion II-E Block 90 Lot 1 Imus City, Cavite
-		&nbsp;&nbsp;:&nbsp;&nbsp; <i>0971-697-0022</i>
-	<span>
-		<i>Exclusively available at Imus City Only</i>&nbsp;&nbsp;&nbsp;
-		<a href="https://www.instagram.com/"><img src="images/instagramlogo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
-		<a href="https://twitter.com/"><img src="images/twitter-logo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
-		<a href="https://www.facebook.com/"><img src="images/facebooklogo.png" class="fsocial-acc"></a>&nbsp;&nbsp;&nbsp;
-	</span>
-</div>
+<?php require("templates/footer.php"); ?>
+
 <!-- SCRIPTING -->
 <script src="javas.js"></script>
 <script src="utilities/barangay_select.js"></script>

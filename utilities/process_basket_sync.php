@@ -74,6 +74,6 @@ foreach ($_SESSION['basket'] as $product_id => $quantity) {
 if ($less_stocks > 0) {
     echo error_messages("reduced_order");
 }
-$_SESSION['total'] = $total;
+$_SESSION['subtotal'] = $total;
 
 ?>

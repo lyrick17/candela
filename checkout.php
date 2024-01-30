@@ -1,5 +1,9 @@
-<?php include("server.php"); ?>
-<!DOCTYPE html><html>
+<?php include("utilities/server.php"); ?>
+<?php include("utilities/process_checkout.php"); ?>
+<?php Restrict::remove_checkout_sess(); ?>
+<?php Restrict::remove_order_id_sess(); ?>
+<!DOCTYPE html>
+<html>
 <head>
 	<title>Checkout - Candela</title>
 
@@ -17,12 +21,20 @@
 
 
 	<div id="checkout-box">
+
+		<!-- LEFT SIDE - USER INFORMATION -->	
 		<div id="basket-header">
 			Checkout Form
 		</div>
 		<div style="display: inline-block; width: 60%;" id="checkout_form" >
 			<hr><br>
-			<p id="checkout_note"><b>Please Note That</b>: <i>You will be using a <u>guest checkout</u> option for you're ordering without an account.</i></p>
+			<?php if (!isset($_SESSION['id'])) { ?>
+				<p id="checkout_note">
+					<b>Please Note That</b>: 
+					<i>You will be using a <u>guest checkout</u> option for you're ordering without an account.</i>
+				</p>
+			
+			<?php } ?>
 			<span id="checkoutForms"></span>
 			<p>Please Fill Up (<span style="font-size:75%; font-style: italic;">if blank</span>) and Validate your Details for the Delivery. This will be <i>Cash on Delivery</i>.</p><br>
 
@@ -32,44 +44,40 @@
 				<tr>
 					<td class="td-login">First Name:<span style="color:red;">*</span></td>
 					<td class="td-login">
-						<input type="text" name="fName" value="<?php if(isset($_SESSION['username'])){
-							echo $_SESSION['username'];} else {
-							echo $uName;
-							} ?>" required />
+						<input type="text" name="fName" value="<?= Formats::display_checkout_info('username', $checkout_info['username']); ?>" required />
 					</td>
-					<td><span class="field-validity"><?php echo $fNameErr;  ?></span></td>
+					<td><span class="field-validity"><?= $info_error['username'];  ?></span></td>
 				</tr>
 				<tr>
 					<td class="td-login">Last Name:<span style="color:red;">*</span></td>
 					<td class="td-login">
-						<input type="text" name="LName" value="<?php if(isset($_SESSION['lastname'])){
-							echo $_SESSION['lastname'];} else {
-							echo $LName;
-							} ?>" required />
+						<input type="text" name="LName" value="<?= Formats::display_checkout_info('lastname', $checkout_info['lastname']); ?>" required />
 					</td>
-					<td><span class="field-validity"><?php echo $lNameErr;  ?></span></td>
+					<td><span class="field-validity"><?= $info_error['lastname'];  ?></span></td>
 				</tr>
 				<tr>
 					<td class="td-login">E-mail:<span style="color:red;">*</span></td>
-					<td class="td-login"><input type="text" name="email" value="<?php echo email(); ?>" required />
+					<td class="td-login">
+						<input type="text" name="email" value="<?= Formats::display_checkout_info('email', $checkout_info['email']); ?>" required />
 					</td>
-					<td><span class="field-validity"><?php echo $chkemailErr;  ?></span></td>
+					<td><span class="field-validity"><?= $info_error['email'];  ?></span></td>
 				</tr>
 				<tr>
 					<td class="td-login">Contact Number:<span style="color:red;">*</span></td>
-					<td class="td-login"><input type="text" name="contactnum" value="<?php echo chkcontact(); ?>" maxlength="11" required /></td>
-					<td><span class="field-validity"><?php echo $chkcontactnumErr; ?></span></td>
+					<td class="td-login"><input type="text" name="contactnum" value="<?= Formats::display_checkout_info('contactnumber', $checkout_info['contact']); ?>" maxlength="11" required /></td>
+					<td><span class="field-validity"><?= $info_error['contact']; ?></span></td>
 				</tr>
 				<tr>
 					<td class="td-login">Address:<span style="color:red;">*</span></td>
-					<td class="td-login"><input type="text" name="addr" value="<?php echo chkaddr(); ?>" style="width: 250%;" required /> </td>
-					<td><span class="field-validity"><?php echo $addrErr;  ?></span></td>
+					<td class="td-login"><input type="text" name="addr" value="<?= Formats::display_checkout_info('address', $checkout_info['address']); ?>" style="width: 250%;" required /> </td>
 				</tr>
 				<tr>
 					<td class="td-login"></td>
 					<td class="td-login">
+						<input type="hidden" id="barangayvalue" value="<?= Formats::display_checkout_info('barangay', $checkout_info['barangay']); ?>" />
 						<?php require("templates/barangay_list.php"); ?>
 					</td>
+					<td><span class="field-validity"><?= $info_error['address'];  ?></span></td>
 				</tr>
 				<tr>
 					<td class="td-login">City: </td>
@@ -87,8 +95,8 @@
 				<tr>
 					<td style="text-align: center;">
 						<?php 
-							if (isset($_SESSION['total'])) {
-								if ($_SESSION['total'] < 500) {
+							if (isset($_SESSION['subtotal'])) {
+								if ($_SESSION['subtotal'] < 500) {
 						?>
 
 									<div class="less500">
@@ -111,155 +119,90 @@
 			</table>
 		</form>
 		</div>
+
+		<!-- RIGHT SIDE - ORDERS -->
 		<div style=" display: inline-block; vertical-align: top;">
+			
 			<hr>
+			
 			<p>Please make sure that you've ordered your choice of items.</p>
 			<p class="red-reminders">Once checked out, the orders cannot be changed.</i></p>
+
 			<hr>
-				<?php
-				if (isset($_SESSION['username']) && isset($_SESSION['id'])) {
-					$basket_id = intval($_SESSION['id']);
 
-					$basketsql = "SELECT basket_content FROM basket_items WHERE user_id = '". $basket_id ."'";
-					$basketsql_result = mysqli_query($mysqli, $basketsql) or die("Query to retrieve basket failed");
-					if (mysqli_num_rows($basketsql_result) < 1) {
-				?>
-					<!-- If there is no order. -->
-					<div style="text-align: center;margin-top: 15px;">
-						<p>Your Basket Is Empty.</p>
-					</div>
-				<?php } else {
-					$total = 0;
-				?>
-				<table style="width: 100%; margin: 10px 0;">
-				<?php
-					while ($basketrow = mysqli_fetch_array($basketsql_result)) {
-						$basket = unserialize( $basketrow['basket_content'] );
-						$_SESSION['basket'] = $basket;
-							foreach ($_SESSION['basket'] as $key => $product) {
-				?>
-				<tr>
-					<td class="pbasket-td pb_item"><?php echo $product['pname']; ?></td>
-					<td class="pbasket-td pb_num"><?php echo $product['quantity']; ?></td>
-					<td class="pbasket-td pb_num">P<?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
-				</tr>
-				<?php
-					$total = $total + ($product['quantity'] * $product['price']);
-						} // end foreach
-					} // end while
-					$_SESSION['total'] = $total;
-				?>
-				<tr>
-				 	<td colspan="2" align="right" class="pbasket-td pb_total">Total</td>
-				 	<td class="pbasket-td pb_num">P<?php echo number_format($total, 2); ?></td>
-				 </tr>
-				</table>
-				<div class="text-center">
-					<span style="text-align: center;">
-						<a href="basket.php" class="basket_buttons">I have to update my basket</a>
-					</span>
-				</div>
-				<div class="shipping-fee">
-					<?php if ($total < 2000) {
-					?>
-					Shipping Fee : P50.00<br>
-					<span style="float: right;">
-						<?php 
-						$shippingfee = 50;
-						$subtotal = $total + $shippingfee; 
-						?>
-						Total : <b>P<?php echo number_format($subtotal, 2); ?></b>
-						<?php 
-						$_SESSION['subtotal'] = $subtotal;
-						?>
-					</span>
-					
-					<?php 
-						} else {
-					?>
-					<span style="text-decoration: line-through;">Shipping Fee: P50.00</span><br>
-					<span style="float: right;">
-						Total: <b><?php echo number_format($total, 2); ?></b>
-						<?php $_SESSION['subtotal'] = $total; ?>
-					</span>
-					<?php
-						}
-					?>
-				</div>
-				<?php
-					} //end else
-				} //end if
-				else { //if username isn't set
-					if (!empty($_SESSION['basket'])) {
-						$total = 0;
-				?>
 				<?php 
+					if (empty($_SESSION['basket'])) {
 				?>
-
-				<table style="width: 100%; margin: 10px 0;">
-				<?php
-						foreach ($_SESSION['basket'] as $key => $product) {
-				?>
-				<tr>
-					<td class="pbasket-td pb_item"><?php echo $product['pname']; ?></td>
-					<td class="pbasket-td pb_num"><?php echo $product['quantity']; ?></td>
-					<td class="pbasket-td pb_num">P<?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
-				</tr>
-				<?php
-					$total = $total + ($product['quantity'] * $product['price']);
-					} // end foreach
-					$_SESSION['total'] = $total;
-				?>
-				<tr>
-				 	<td colspan="2" align="right" class="pbasket-td pb_total">Total</td>
-				 	<td class="pbasket-td pb_num"><b>P<?php echo number_format($total, 2); ?></b></td>
-				 </tr>
-				</table>
-				<div class="text-center">
-					<span style="text-align: center;">
-						<a href="basket.php" class="basket_buttons">I have to update my basket</a>
-
-					</span>
-				</div>
-				<div class="shipping-fee">
-					<?php if ($total < 2000) {
-					?>
-					Shipping Fee : P50.00<br>
-					<span style="float: right;">
-						<?php 
-						$shippingfee = 50;
-						$subtotal = $total + $shippingfee; 
-						?>
-						Total : <b>P<?php echo number_format($subtotal, 2); ?></b>
-						<?php 
-						$_SESSION['subtotal'] = $subtotal;
-						?>
-					</span>
-					
-					<?php 
-						} else {
-					?>
-					<span style="text-decoration: line-through;">Shipping Fee: P50.00</span><br>
-					<span style="float: right;">
-
-						Total: <b><?php echo number_format($total, 2); ?></b>
-						<?php $_SESSION['subtotal'] = $total; ?>
-					</span>
-					<?php
-						}
-					?>
-				</div>
-
-				<?php
-					} //end if
-					else { ?>
-					<!-- If there is no order. -->
+						<!-- If there is no order. -->
 						<div style="text-align: center;margin-top: 15px;">
 							<p>Your Basket Is Empty.</p>
 						</div>
+
 				<?php
-					} //end else
-				} // end else
+					} else {
+				?>
+					<table style="width: 100%; margin: 10px 0;">
+				<?php 
+				
+					// includes the updating of basket_information
+					require("utilities/process_basket_sync.php");
+
+					foreach ($_SESSION['basket'] as $product_id => $quantity) {
+						$get_products = Products::get_product_info($product_id);
+						if ($get_products) {
+							$product = mysqli_fetch_array($get_products, MYSQLI_ASSOC);
+				?>
+						<tr>
+							<td class="pbasket-td pb_item"><?php echo $product['name']; ?></td>
+							<td class="pbasket-td pb_num"><?php echo $quantity; ?></td>
+							<td class="pbasket-td pb_num">P<?php echo number_format($quantity * $product['price'], 2); ?></td>
+						</tr>
+				<?php 
+						} // end if
+					} // end foreach
+				?>
+						
+						<tr>
+							<td colspan="2" align="right" class="pbasket-td pb_total">Total</td>
+							<td class="pbasket-td pb_num">P<?php echo number_format($total, 2); ?></td>
+						</tr>
+					</table>
+
+				<div class="text-center">
+					<span style="text-align: center;">
+						<a href="basket.php" class="basket_buttons">I have to update my basket</a>
+					</span>
+				</div>
+
+				<div class="shipping-fee">
+					<?php if ($total < 2000) {
+					?>
+					Shipping Fee : P50.00<br>
+					<span style="float: right;">
+						<?php 
+						$shippingfee = 50;
+						$subtotal = $total + $shippingfee; 
+						?>
+						Total : <b>P<?php echo number_format($subtotal, 2); ?></b>
+						<?php 
+						$_SESSION['total'] = $subtotal;
+						?>
+					</span>
+					
+					<?php 
+						} else {
+					?>
+					<span style="text-decoration: line-through;">Shipping Fee: P50.00</span><br>
+					<span style="float: right;">
+						Total: <b><?php echo number_format($total, 2); ?></b>
+						<?php $_SESSION['total'] = $total; ?>
+					</span>
+					<?php
+						}
+					?>
+				</div>
+				<?php 
+					} // end else, if there are orders in basket
 				?>
 		</div>
 		
@@ -270,5 +213,6 @@
 
 <!-- SCRIPTING -->
 <script src="javas.js"></script>
+<script src="utilities/barangay_select.js"></script>
 </body>
 </html>
