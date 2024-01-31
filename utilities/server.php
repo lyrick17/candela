@@ -221,8 +221,25 @@ class Orders {
 		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
 
-	
+	static function get_address($order_id) {
+		global $mysqli;
+		$order_id = test_input($mysqli, $order_id) ?? "";
 
+		$query = "SELECT address, barangay FROM checkout_orders WHERE order_id = '$order_id' ORDER BY checkout_id DESC LIMIT 1";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
+	}
+
+	static function get_contact_number($order_id) {
+		global $mysqli;
+		$order_id = test_input($mysqli, $order_id) ?? "";
+
+		$query = "SELECT contactnumber FROM checkout_orders WHERE order_id = '$order_id' ORDER BY checkout_id DESC LIMIT 1";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
+	}
 
 }
 
