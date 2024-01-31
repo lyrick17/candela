@@ -235,7 +235,7 @@ class Orders {
 		global $mysqli;
 		$order_id = test_input($mysqli, $order_id) ?? "";
 
-		$query = "SELECT contactnumber FROM checkout_orders WHERE order_id = '$order_id' ORDER BY checkout_id DESC LIMIT 1";
+		$query = "SELECT contactnumber FROM checkout_orders WHERE order_id = '$order_id'";
 		$result = @mysqli_query($mysqli, $query);
 
 		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
