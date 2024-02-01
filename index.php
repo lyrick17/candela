@@ -45,7 +45,7 @@
 			$product_list = Products::select_all();
 			if ($product_list) {
 				$i = 0;
-				while ($product = mysqli_fetch_assoc($product_list) && $i < 3) {
+				while ($product = mysqli_fetch_assoc($product_list)) {
 			?>
 					<div class="col-4 productDisplay">
 						<span class="product-pic">

@@ -40,7 +40,7 @@ Further Upgrades to do:
     - barangay is valid                                                 - DONE 1-29-24
     - once checked out, create session array variable containning   
         all valuable infomation needed on the checkout                  - DONE 1-29-24
-        
+- Use Fetch API on address and contact number change                    - DONE 2-1-24
 - SMTP for:
     - sending contact from
     - register, welcome to Candela

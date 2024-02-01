@@ -1,8 +1,7 @@
-<?php include("utilities/server.php"); ?>
-<?php include("utilities/process_checkout_upd_info.php"); ?>
+<?php require("utilities/server.php"); ?>
+<?php require("utilities/process_checkout_upd_info.php"); ?>
 <?php
 	Restrict::success_page_access();
-
 
 ?>
 
@@ -93,21 +92,22 @@
 				<div style="padding: 30px 0;" >
 
 					<hr>
-					<div id="new_info_address">
-						<!-- Use Fetch API on changing Address and contact Number-->
-						<?php if (isset($_SESSION['id'])) {
-		
-								if (!isset($_SESSION['address'])) { ?>
+
+					<?php if (isset($_SESSION['id'])) { ?>
+						<!-- Changing Address -->
+						<div id="new_info_address">
+							<form method="post" id="form_change_address" enctype="multipart/form-data" action="success.php">
+						
+							<?php if (!isset($_SESSION['address'])) { ?>
 								<p class="changed-addr-num">You have now entered your <b>address</b>, would you like to save it on your account?</p>
 								<p>
 									<i>Your new address is :</i> &nbsp;&nbsp;<?php echo $complete_address; ?>
 								</p>
-									<form method="post" id="form_address_change" action="success.php">
-										<input type="submit" name="change_address" value="Yes, I would love to!" />
+										<input type="hidden" name="insert_address" value="" />
+										<input type="submit" name="" value="Yes, I would love to!" />
 										<span class="dismiss-request">Dismiss if you don't want to.</span>
-									</form>
-							<?php } elseif ($_SESSION['address'] != $order['address']) {
-							?>
+										<?php } elseif ($_SESSION['address'] != $order['address']) {
+											?>
 								<p class="changed-addr-num">You have entered other <b>address</b> in this order. Would you like to change your previous one?</p>
 								<p>
 									<i>Your old address is :</i> &nbsp;&nbsp;<?php echo $_SESSION['address'] . ", " . $_SESSION['barangay']; ?>
@@ -115,30 +115,33 @@
 								<p>
 									<i>Your new address is :</i> &nbsp;&nbsp;<?php echo $complete_address; ?>
 								</p>
-								<form method="post" id="form_address_change" action="success.php">
-									<input type="submit" name="change_address" value="Yes, I would love to!" />
+									<input type="hidden" name="change_address" value="" />
+									<input type="submit" name="" value="Yes, I would love to!" />
 									<span class="dismiss-request">Dismiss if you don't want to.</span>
-								</form>
-						<?php	} ?>
-					</div>
-					<div id="change_address_success" style="display:none;">
-						<p class="changed-addr-num"><b>Address</b> has been successfully changed.</p>
-					</div>
+							<?php	} ?>
 
-					<hr>
-					<div id="new_info_contactnumber">
-						<?php 
-							if (!isset($_SESSION['contactnumber'])) { ?>
+							</form>
+						</div>
+						
+						<div id="change_address_success" style="display:none;">
+							<p class="changed-addr-num"><b>Address</b> has been successfully changed.</p>
+						</div>
+
+						<hr>
+
+						<!-- Changing Contact Number-->
+						<div id="new_info_contactnumber">
+							<form method="post" id="form_change_contactnum" enctype="multipart/form-data" action="success.php">
+
+							<?php if (!isset($_SESSION['contactnumber'])) { ?>
 							<p class="changed-addr-num">You have now entered your <b>contact number</b>. Would you like to save it on your account?</p>
 							<p>
 								<i>Your new contact number is :</i> &nbsp;&nbsp;<?php echo $order['contactnumber']; ?>
 							</p>
-							<form method="post" id="form_contactnum_change" action="success.php">
-								<input type="submit" name="change_contactnum" value="Yes, I would love to!" />
+								<input type="hidden" name="change_contactnum" value="" />
+								<input type="submit" name="" value="Yes, I would love to!" />
 								<span class="dismiss-request">Dismiss if you don't want to.</span>
-							</form>
-						<?php } elseif ($_SESSION['contactnumber'] != $order['contactnumber']) {
-						?>
+							<?php } elseif ($_SESSION['contactnumber'] != $order['contactnumber']) { ?>
 							<p class="changed-addr-num">You have entered other <b>contact number</b> in this order. Would you like to change your previous one?</p>
 							<p>
 								<i>Your old contact number is :</i> &nbsp;&nbsp;<?php echo $_SESSION['contactnumber']; ?>
@@ -146,22 +149,24 @@
 							<p>
 								<i>Your new contact number is :</i> &nbsp;&nbsp;<?php echo $order['contactnumber']; ?>
 							</p>
-							<form method="post" id="form_contactnum_change" action="success.php">
-								<input type="submit" name="change_contactnum" value="Yes, I would love to!" />
+								<input type="hidden" name="change_contactnum" value="" />
+								<input type="submit" name="" value="Yes, I would love to!" />
 								<span class="dismiss-request">Dismiss if you don't want to.</span>
+							<?php } ?>
 							</form>
-						<?php	} ?>
-					</div>
-					<div id="change_contactnumber_success" style="display:none;">
-						<p class="changed-addr-num"><b>Contact Number</b> has been successfully changed.</p>
-					</div>
-					<hr>
+						</div>
+						<div id="change_contactnumber_success" style="display:none;">
+							<p class="changed-addr-num"><b>Contact Number</b> has been successfully changed.</p>
+						</div>
+						<hr>		
 					
-				<?php } //end if ?>
-				<div style="margin-top: 50px;">
-					<a href="index.php" class="lend_feedback"><< Home</a>
-					<a href="myaccount.php" class="lend_feedback">My Account</a>
-				</div>
+					<?php } //end if ?>
+					
+
+					<div style="margin-top: 50px;">
+						<a href="index.php" class="lend_feedback"><< Home</a>
+						<a href="myaccount.php" class="lend_feedback">My Account</a>
+					</div>
 
 				</div>
 			</div>
