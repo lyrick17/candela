@@ -254,6 +254,9 @@ class Formats {
 	}
 
 	static function display_checkout_info($id, $checkout_info) {
+		if (isset($_SESSION['checkout'])) {
+			return $_SESSION['checkout'][$id];
+		}
 		return (isset($_SESSION[$id])) ? $_SESSION[$id] : $checkout_info;
 	}
 }

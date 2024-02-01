@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['checkout_submit'])) {
             $_SESSION['checkout']['username'] = $checkout_info['username'];
             $_SESSION['checkout']['lastname'] = $checkout_info['lastname'];
             $_SESSION['checkout']['email'] = $checkout_info['email'];
-            $_SESSION['checkout']['contact'] = $checkout_info['contact'];
+            $_SESSION['checkout']['contactnumber'] = $checkout_info['contact'];
             $_SESSION['checkout']['address'] = $checkout_info['address'];
             $_SESSION['checkout']['barangay'] = $checkout_info['barangay'];
             

@@ -62,7 +62,7 @@
 					</tr>
 					<tr>
 						<td class="td-login" style="width: 55%;">Contact Number:</td>
-						<td class="td-login" style="width: 45%;"><?= $_SESSION['checkout']['contact']; ?></td>
+						<td class="td-login" style="width: 45%;"><?= $_SESSION['checkout']['contactnumber']; ?></td>
 					</tr>
 					<tr>
 						<td class="td-login" style="width: 55%;">Address:</td>

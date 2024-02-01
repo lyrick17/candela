@@ -181,6 +181,7 @@ $(document).ready(function() {
 										// the process hasnt processed well
 									}
 						?>
+								<div class="paginate">
 									<hr class="chk-hrstyle">
 									<p>Ordered last: <?= date('m/d/Y', $timestamp); ?> , <?= date('l', $timestamp); ?></p>
 									<table class="chk-hrstyle-table">
@@ -214,10 +215,15 @@ $(document).ready(function() {
 											<?php endif; ?>
 										</tr>
 									</table>
-
+								</div>
 
 						<?php
 								}  // end of while loop
+						?>
+								<div id="page-nav-content">
+									<div id="page-nav"></div>
+								</div>
+						<?php
 							} // end of if
 							else {
 						?>
@@ -256,7 +262,11 @@ $(document).ready(function() {
 
 <!-- SCRIPTING -->
 <script src="javas.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.4/jquery.simplePagination.min.js" integrity="sha512-J4OD+6Nca5l8HwpKlxiZZ5iF79e9sgRGSf0GxLsL1W55HHdg48AEiKCXqvQCNtA1NOMOVrw15DXnVuPpBm2mPg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="utilities/barangay_select.js"></script>
 <script src="utilities/del_acc_confirmation.js"></script>
+<script src="resources/js/checkout_history.js"></script>
+
 </body>
 </html>
