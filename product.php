@@ -1,12 +1,10 @@
-<?php require("utilities/server.php"); ?>
-<?php require("utilities/process_basket_updates.php"); ?>
 <?php 
-
+	require('utilities/server.php');
+	require("utilities/process_basket_updates.php");
 	if (isset($_GET['id']))
 		Restrict::product_page_access($_GET['id']);
 	Restrict::remove_checkout_sess();
 	Restrict::remove_order_id_sess();
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,25 +32,19 @@
 	<!-- BODY 1. LIST OF ALL PRODUCTS -->
 	<div class="padding-x-110">
 
-
-
 		<header id="product-header">
 			Food Scented Candles
 		<hr><hr>
 		</header>
 
-
-
 		<!-- LIST OF PRODUCTS -->
 		<div id="products">
 			<div class="row" style="text-align: center;">
-
 				<?php 
 					$product_list = Products::select_all();
-					if ($product_list) {
-						while ($product = mysqli_fetch_array($product_list, MYSQLI_ASSOC)) {
+					if ($product_list):
+						while ($product = mysqli_fetch_array($product_list, MYSQLI_ASSOC)):
 				?>
-
 						<div class="col-6 items">
 							<form method="post" action="product.php">
 								<span class="product-pic">
@@ -73,7 +65,7 @@
 											<br>
 										</p>
 										<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>" />
-										<input type="submit" name="add_to_basket" value="Add To Basket" class="bam bamColor" <?php if ($product['stocks'] == 0) { ?> disabled <?php }?> />
+										<input type="submit" name="add_to_basket" value="Add To Basket" class="bam bamColor" <?php if ($product['stocks'] == 0) { ?> disabled <?php } ?> />
 								</div>				
 							</form>
 								<!-- Link For Item Description-->
@@ -85,16 +77,13 @@
 								</span>
 								</div>
 						</div>
-
 				<?php 
-						} //end while
-					} //end if
+						endwhile;
+					endif;
 				?>
 			</div>
 		</div>
-		
-
-
+	
 		<!-- SIDEBAR -->
 		<div id="prod-sidebar">
 			<div id="basket-sidebar">
@@ -103,51 +92,13 @@
 				
 				<?php 
 					if (empty($_SESSION['basket'])) {
-				?>
-						<!-- If there is no order. -->
-						<div style="text-align: center;margin-top: 15px;">
-							<p>Your Basket Is Empty.</p>
-						</div>
-				<?php
+						require("templates/basket/empty_basket.php");
 					} else {
+						// Display the side basket
+						$remove_item = true;
+						require("templates/basket/side_basket.php");
+						// Display the necessary buttons
 				?>
-
-						<!-- If there is order -->
-						<table style="width: 100%; margin: 10px 0;">
-						
-				<?php
-
-						// includes the updating of basket_information
-						require("utilities/process_basket_sync.php");
-
-						foreach ($_SESSION['basket'] as $product_id => $quantity) {
-							$get_products = Products::get_product_info($product_id);
-							if ($get_products) {
-								$product = mysqli_fetch_array($get_products, MYSQLI_ASSOC);
-				?>
-							<tr>
-								<td class="pbasket-td pb_item"><?= $product['name']; ?></td>
-								<td class="pbasket-td pb_num"><?= $quantity; ?></td>
-								<td class="pbasket-td pb_num">P<?= number_format($quantity * $product['price'], 2); ?></td>
-								<form method="post" action="product.php">
-									<td class="pbasket-td pb_ri">
-										<input type="hidden" name="product_id" value="<?= $product_id ?>" />
-										<button type="submit" name="remove_item" style="color:red; font-size: 70%; background-color: #fff; border: none;">
-											Remove Item
-										</button>
-									</td>
-								</form>
-							</tr>
-				<?php
-							} // end of if
-						}	// end of foreach
-				?>
-					
-							<tr>
-								<td colspan="2" align="right" class="pbasket-td pb_total">Total</td>
-								<td class="pbasket-td pb_num">P<?= number_format($_SESSION['subtotal'], 2); ?></td>
-							</tr>
-						</table>
 						<div class="text-center">
 							<span style="text-align: center;">
 								<form method="post" action="product.php">
@@ -158,18 +109,14 @@
 						</div>
 						
 				<?php		
-					} // end else
+					} // endelse
 				?>
 
 			<!-- MY ACCOUNT LINK -->
 			<div class="myacc-sidebar">
-				<?php 
-					if (isset($_SESSION['id'])) {
-				?>
-						<a href="myaccount.php" class="myacc-class">My Account</a>
-				<?php
-					}
-				?>
+				<?php if (isset($_SESSION['id'])) : ?>
+					<a href="myaccount.php" class="myacc-class">My Account</a>
+				<?php endif; ?>
 			</div>
 
 			<!-- CONTACT FORM ADVERTISEMENT -->
@@ -264,6 +211,6 @@
 <!-- FOOTER -->
 <?php require("templates/footer.php"); ?>
 <!-- SCRIPTING -->
-<script src="javas.js"></script>
+<script src="resources/js/javas.js"></script>
 </body>
 </html>

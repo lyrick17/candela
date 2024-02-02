@@ -1,5 +1,5 @@
-<?php include("utilities/server.php"); ?>
-<?php
+<?php 
+	require("utilities/server.php");
 	Restrict::remove_checkout_sess();
 	Restrict::remove_order_id_sess();
 ?>
@@ -22,9 +22,10 @@
 	<!-- FAQ -->
 	<div id="divisions-faq">
 		<header id="Header-FAQs">Frequently Asked Questions</header><!-- FAQs Title-->
-	<div id="faq-body">
-		<hr>
+		<div id="faq-body">
+			<hr>
 			<div id="faq-questions">
+				<!-- loop through the faqs information and display them-->
 				<?php 
 					$faqs = array();
 					$faqsList = file_get_contents('information/faqs.txt');
@@ -38,6 +39,8 @@
 				?>
 
 			</div>
+
+			<!-- FAQ SIDEBAR -->
 			<div id="faq-sidebar">
 				<hr>
 					<section id="faq-sidebar-sec1">
@@ -56,13 +59,15 @@
 					</a>
 				<br><br><hr>
 			</div>
-	</div><!-- Questions-->
-	</div><!-- Body -->
+			<!-- END OF FAQ SIDEBAR -->
+		</div>
+	</div>
+	<!-- END OF FAQS -->
 </div>
 <!-- FOOTER -->
 <?php require("templates/footer.php"); ?>
 
 <!-- SCRIPTING -->		
-<script src="javas.js"></script>
+<script src="resources/js/javas.js"></script>
 </body>
 </html>

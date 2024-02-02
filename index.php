@@ -1,5 +1,5 @@
-<?php require("utilities/server.php"); ?>
 <?php
+	require("utilities/server.php");
 	Restrict::remove_checkout_sess();
 	Restrict::remove_order_id_sess();
 ?>
@@ -42,10 +42,9 @@
 		<h1>Try Out Our Candles!</h1>
 			<?php 
 			// Display up to 3 Products only
-			$product_list = Products::select_all();
-			if ($product_list) {
-				$i = 0;
-				while ($product = mysqli_fetch_assoc($product_list)) {
+			$product_list = Products::select_three();
+			if ($product_list):
+				while ($product = mysqli_fetch_assoc($product_list)):
 			?>
 					<div class="col-4 productDisplay">
 						<span class="product-pic">
@@ -59,18 +58,12 @@
 							</p>
 						</div>
 					</div>
-			<?php
-					$i++;
-				} // end while
-			} else { // if we do not have products saved in database
-			?>
+			<?php endwhile; ?>
+			<?php else: // if we do not have products saved in database  yet, display this message ?>
 				<div class="col-4 productDisplay" style="background-color:#fff;">
 					We are sorry for the inconvenience. We do not have available products as of this moment.
 				</div>
-
-			<?php
-			}	// end else
-			?> 
+			<?php endif; ?> 
 			<div class="moreProduct">
 				<a href="product.php">
 					I Am Ready To Order >>>
@@ -80,7 +73,7 @@
 
 
 	<!-- THIRD CONTENT - Logging In Part -->
-	<?php if (!isset($_SESSION['id'])) { ?>
+	<?php if (!isset($_SESSION['id'])): ?>
 		<div style="display: inline-block; width: 100%;">
 			<div class="col-sm-6 homeimglogin">
 				<img src="images/login.png" height="50%">
@@ -94,12 +87,12 @@
 				<hr>
 			</div>
 		</div>
-	<?php } ?>
+	<?php endif; ?>
 </div>
 
 <!-- FOOTER -->
 <?php require("templates/footer.php"); ?>
 <!-- SCRIPTING -->
-<script src="javas.js"></script>
+<script src="resources/js/javas.js"></script>
 </body>
 </html>

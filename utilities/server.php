@@ -79,6 +79,15 @@ class Products {
         return ($result || mysqli_num_rows($result) > 0) ? $result : false;
     }
 	
+	// select three products in descending order
+	static function select_three() {
+		global $mysqli;
+		
+        $query = 'SELECT * FROM products ORDER by product_id DESC LIMIT 3';
+        $result = @mysqli_query($mysqli, $query);
+        return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+    }
+	
 	// get specific product information
     static function get_product_info($id) {
 		global $mysqli;
@@ -253,11 +262,16 @@ class Formats {
 		}
 	}
 
-	static function display_checkout_info($id, $checkout_info) {
+	static function display_info($id, $info) {
+		
+		// this is used on checkout.php when user already went to 
+		// confirmation.php but went back to checkout.php
 		if (isset($_SESSION['checkout'])) {
 			return $_SESSION['checkout'][$id];
 		}
-		return (isset($_SESSION[$id])) ? $_SESSION[$id] : $checkout_info;
+
+		// general purpose of the function
+		return (isset($_SESSION[$id])) ? $_SESSION[$id] : $info;
 	}
 }
 ?>

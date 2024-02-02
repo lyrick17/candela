@@ -1,6 +1,6 @@
-<?php require('utilities/server.php'); ?>
-<?php require('utilities/process_userconn.php'); ?>
 <?php 
+	require('utilities/server.php');
+	require('utilities/process_userconn.php');
 	Restrict::user("logged");
 	Restrict::remove_checkout_sess();
 	Restrict::remove_order_id_sess();

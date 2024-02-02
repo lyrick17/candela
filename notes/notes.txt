@@ -41,6 +41,10 @@ Further Upgrades to do:
     - once checked out, create session array variable containning   
         all valuable infomation needed on the checkout                  - DONE 1-29-24
 - Use Fetch API on address and contact number change                    - DONE 2-1-24
+- Pagination on MyAccount.php                                           - DONE 2-1-24
+- Clean codes again
+- added side_basket.php  template for product.php, checkouta nd confirm - DONE 2-2-24
+- used endif,  endforeach,  endwhile whenever possible                  - somehow DONE 2-2-24
 - SMTP for:
     - sending contact from
     - register, welcome to Candela

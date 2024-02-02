@@ -1,6 +1,6 @@
-<?php require('utilities/server.php'); ?>
-<?php require('utilities/process_userconn.php'); ?>
-<?php 
+=<?php 
+	require('utilities/server.php');
+	require('utilities/process_userconn.php');
 	Restrict::user("logged");
 	Restrict::remove_checkout_sess();
 	Restrict::remove_order_id_sess();
@@ -35,30 +35,30 @@
 
 						<!-- FIRSTNAME -->
 						<label>First Name / Username:</label><br>
-						<input type="text" name="uName" placeholder="Enter First Name / Username" class="width-600" value="<?php echo $signup['username']; ?>" maxlength="255" />
+						<input type="text" name="uName" placeholder="Enter First Name / Username" class="width-600" value="<?= $signup['username']; ?>" maxlength="255" />
 						<br>
-							<span class="field-validity"><?php echo $signup_err['username']; ?></span>
+							<span class="field-validity"><?= $signup_err['username']; ?></span>
 						<br>
 						
 						<!-- LASTNAME -->
 						<label>Last Name:</label><br>
-						<input type="text" name="LName" placeholder="Enter Last Name" class="width-600" value="<?php echo $signup['lastname']; ?>" maxlength="255" />
+						<input type="text" name="LName" placeholder="Enter Last Name" class="width-600" value="<?= $signup['lastname']; ?>" maxlength="255" />
 						<br>
-							<span class="field-validity"><?php echo $signup_err['lastname']; ?></span>
+							<span class="field-validity"><?= $signup_err['lastname']; ?></span>
 						<br>
 						
 						<!-- EMAIL -->
 						<label>Email:</label><br>
-						<input type="text" name="email" placeholder="Enter Email" class="width-600" value="<?php echo $signup['email']; ?>" maxlength="100" />
+						<input type="text" name="email" placeholder="Enter Email" class="width-600" value="<?= $signup['email']; ?>" maxlength="100" />
 						<br>
-							<span class="field-validity"><?php echo $signup_err['email']; ?></span>
+							<span class="field-validity"><?= $signup_err['email']; ?></span>
 						<br>
 						
 						<!-- CONTACT NUMBER -->
 						<label>Contact Number:</label><em>(optional)</em><br>
-						<input type="text" name="contactnum" placeholder="Must start with '09'" class="width-600" value="<?php echo $signup['contact']; ?>" maxlength="11" />
+						<input type="text" name="contactnum" placeholder="Must start with '09'" class="width-600" value="<?= $signup['contact']; ?>" maxlength="11" />
 						<br>
-							<span class="field-validity"><?php echo $signup_err['contact']; ?></span>
+							<span class="field-validity"><?= $signup_err['contact']; ?></span>
 						<br>
 						
 						
@@ -66,14 +66,14 @@
 						<label>Password:</label><br>
 						<input type="password" name="psw" placeholder="Enter Password" class="width-600" />
 						<br>
-							<span class="field-validity"><?php echo $signup_err['psw']; ?></span>
+							<span class="field-validity"><?= $signup_err['psw']; ?></span>
 						<br>
 						
 						<!-- CONFIRM PASSWORD -->
 						<label>Confirm Password:</label><br>
 							<input type="password" name="rePass" placeholder="Retype Password" class="width-600" />
 						<br>
-							<span class="field-validity"><?php echo $signup_err['repsw']; ?></span>
+							<span class="field-validity"><?= $signup_err['repsw']; ?></span>
 						<br>
 						<hr>
 
@@ -88,7 +88,7 @@
 							data-expired-callback="captchaexpired"
 							data-sitekey="6Lcsa1cpAAAAAJFa7UYI6_xqJYW6PCpKYGcAp90I" name="captcha"></div>
 						<input type="hidden" name="formcaptcha" id="formcaptcha" value="">
-						<span class="field-validity" id="captcha_error"><?php echo $signup_err['captcha']; ?></span>
+						<span class="field-validity" id="captcha_error"><?= $signup_err['captcha']; ?></span>
 						<br>
 						<br>
 
@@ -111,8 +111,8 @@
 <?php require("templates/footer.php"); ?>
 
 <!--JS SCRIPTING-->
-<script src="javas.js"></script>
-<script src="utilities/captcha_validation.js"></script>
+<script src="resources/js/javas.js"></script>
+<script src="resources/js/captcha_validation.js"></script>
 
 </body>
 </html>

@@ -1,6 +1,8 @@
-<?php require("utilities/server.php"); ?>
-<?php Restrict::remove_checkout_sess(); ?>
-<?php Restrict::remove_order_id_sess(); ?>
+<?php
+	require("utilities/server.php");
+	Restrict::remove_checkout_sess();
+	Restrict::remove_order_id_sess();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,6 +63,6 @@
 <?php require("templates/footer.php"); ?>
 
 <!-- SCRIPTING -->
-<script src="javas.js"></script>
+<script src="resources/js/javas.js"></script>
 </body>
 </html>

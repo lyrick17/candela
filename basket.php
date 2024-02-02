@@ -1,7 +1,9 @@
-<?php include("utilities/server.php"); ?>
-<?php require("utilities/process_basket_updates.php"); ?>
-<?php Restrict::remove_checkout_sess(); ?>
-<?php Restrict::remove_order_id_sess(); ?>
+<?php
+	require("utilities/server.php");
+	require("utilities/process_basket_updates.php");
+	Restrict::remove_checkout_sess();
+	Restrict::remove_order_id_sess();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,18 +25,11 @@
 			Your Basket
 		</div>
 			<hr>
-			<!-- PHP NEEDED --><!-- changing its quantity on the basket itself -->
-		<!-- When An Order Has Been Added to Basket -->
+
+			<!-- BASKET CONTENT -->
 				<?php 
 					if (empty($_SESSION['basket'])) {
-				?>
-						<!-- If there is no order. -->
-						<div style="text-align: center;margin-top: 15px;">
-							<p>Your Basket Is Empty.</p>
-							<a href="product.php" class="basket_buttons"><< Keep Shopping</a>
-						</div>
-
-				<?php
+						require("templates/basket/empty_basket.php");
 					} else {
 						// includes the updating of basket_information
 						require("utilities/process_basket_sync.php");
@@ -50,9 +45,9 @@
 									<td class="basket-td bktd4"></td>
 								</tr>
 								<?php 
-									foreach ($_SESSION['basket'] as $product_id => $quantity) {
+									foreach ($_SESSION['basket'] as $product_id => $quantity):
 										$get_products = Products::get_product_info($product_id);
-										if ($get_products) {
+										if ($get_products):
 											$product = mysqli_fetch_array($get_products, MYSQLI_ASSOC);
 											?>
 									<tr>
@@ -73,8 +68,8 @@
 										</form>
 									</tr>
 								<?php
-										} // end of if
-									}	// end of foreach
+										endif;
+									endforeach;
 								?>
 								<tr>
 									<td colspan="4" align="right" class="basket-td bktd4">Total</td>
@@ -83,24 +78,25 @@
 								</tr>
 							</table>
 						</div>
+
 						<div style="text-align: center; margin-top: 15px;">
 							<form method="post" action="basket.php">
-							<a href="product.php" class="basket_buttons"><< Keep Shopping</a>
-							<!--<a href="basket.php?action=update&id=<?php echo $product['id'] ?>" name="update" value="Update Basket" class="basket_buttons">Update Basket</a>-->
+								<a href="product.php" class="basket_buttons"><< Keep Shopping</a>
 								<input type="submit" name="clear_basket" value="Clear Basket" class="basket_buttons" />
 								<a href="checkout.php" class="basket_buttons" name="checkout">Checkout >></a>
 							</form>
 						</div>
 
 				<?php 
-					}
+					} // endelse
 				?>
-
+			<!-- END OF BASKET CONTENT -->
+			
 	</div>
 </div>
 <!-- FOOTER -->
 <?php require("templates/footer.php"); ?>
 <!-- SCRIPTING -->
-<script src="javas.js"></script>
+<script src="resources/js/javas.js"></script>
 </body>
 </html>
