@@ -108,11 +108,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "general") {
 //changing address details in myaccount.php
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "address") {
     // Address of User
+    require("information/barangay_info.php");
+    
     $mydetails['address'] = test_input($mysqli, $_POST["myaddress"]) ?? "";
     $mydetails['barangay'] = test_input($mysqli, $_POST["barangay"]) ?? "";
 
-    if (!$mydetails['address'] || $mydetails['barangay'] == "- Select Your Barangay -") {                  
+
+    if (!$mydetails['address']) {                  
         $notice['address'] = error_messages("address_error");              // user did not complete address, user left empty on address    
+    } elseif (!in_array($mydetails['barangay'], $barangay)) {
+        $notice['address'] = error_messages("barangay_error");             // barangay not valid
     } elseif (($mydetails['address'] != $_SESSION['address']) || ($mydetails['barangay']  != $_SESSION['barangay'])) {
         $address_update_sql = "UPDATE addresses SET user_address = '". $mydetails['address'] ."', barangay = '". $mydetails['barangay'] ."' WHERE user_id = '". $_SESSION['id'] ."'";
         $address_update_sqlresult = @mysqli_query($mysqli, $address_update_sql);

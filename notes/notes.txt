@@ -42,9 +42,23 @@ Further Upgrades to do:
         all valuable infomation needed on the checkout                  - DONE 1-29-24
 - Use Fetch API on address and contact number change                    - DONE 2-1-24
 - Pagination on MyAccount.php                                           - DONE 2-1-24
-- Clean codes again
+- Clean codes again                                                     - DONE NA MATAGAL NA
 - added side_basket.php  template for product.php, checkouta nd confirm - DONE 2-2-24
 - used endif,  endforeach,  endwhile whenever possible                  - somehow DONE 2-2-24
+- CLEAN  FRONT END and mobile responsive (bootstrap 5)
+    - Gray navbar                                                       - DONE 2-12-24
+    - Orange navbar                                                     - DONE 2-15-24 
+    - index.php                                                         - DONE 2-17-24
+    - footer.php                                                        - DONE 2-17-24
+    - modal                                                             - DONE 2-17-24
+    - about us                                                          - DONE 2-18-21-24
+    - faqs                                                              - DONE 2-22-24
+    - contact us                                                        - DONE 2-24-24
+    - products                                                          - DONE 2-25-24
+    - sidebar basket                                                    - DONE 2-25-24
+    - empty sidebar basket                                              - DONE 2-25-24
+    - login                                                             -
+    - signup                                                            -
 - SMTP for:
     - sending contact from
     - register, welcome to Candela

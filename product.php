@@ -30,52 +30,54 @@
 	<?php if (!isset($_GET['id'])) { ?>
 
 	<!-- BODY 1. LIST OF ALL PRODUCTS -->
-	<div class="padding-x-110">
+	<div class="padding-y-1 padding-x-3">
 
-		<header id="product-header">
+		<header id="product-header" class="font-35 fw-bold">
 			Food Scented Candles
 		<hr><hr>
 		</header>
 
 		<!-- LIST OF PRODUCTS -->
-		<div id="products">
-			<div class="row" style="text-align: center;">
+		<div id="products" class="text-center">
+			<div class="row gx-0">
 				<?php 
 					$product_list = Products::select_all();
 					if ($product_list):
 						while ($product = mysqli_fetch_array($product_list, MYSQLI_ASSOC)):
 				?>
-						<div class="col-6 items">
-							<form method="post" action="product.php">
-								<span class="product-pic">
-									<a name="productpage" href="product.php?id=<?= $product['product_id']; ?>">
-										<!-- ITEM PICTURE -->
-										<img name="p_pic" src="<?= $product['image']; ?>" alt="Product" class="img-responsive" />
-									</a>
-								</span>
-								<div class="text-center">
-									<!-- ITEM INFORMATION -->
-									<p class="product-name"><?= $product['name']; ?></p>
-										<p>
-											<span>Price:</span> P<?= $product['price']; ?><br>
-											<input type="number" name="quantity" class="product-quantity" id="product-quantity" max="<?= $product['stocks']; ?>" min="1" value="1" />
-											<span class="font13em" id="quant_num">
-												*quantity needed
-											</span>
-											<br>
-										</p>
-										<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>" />
-										<input type="submit" name="add_to_basket" value="Add To Basket" class="bam bamColor" <?php if ($product['stocks'] == 0) { ?> disabled <?php } ?> />
-								</div>				
-							</form>
+						<div class="col-md-6">
+							<div class="items">
+								<form method="post" action="product.php">
+									<span class="product-pic">
+										<a name="productpage" href="product.php?id=<?= $product['product_id']; ?>">
+											<!-- ITEM PICTURE -->
+											<img name="p_pic" src="<?= $product['image']; ?>" alt="Product"  />
+										</a>
+									</span>
+									<div class="text-center">
+										<!-- ITEM INFORMATION -->
+										<p class="font-20 pt-3"><?= $product['name']; ?></p>
+											<p>
+												<span>Price:</span> P<?= $product['price']; ?><br>
+												<input type="number" name="quantity" class="product-quantity" id="product-quantity" max="<?= $product['stocks']; ?>" min="1" value="1" />
+												<span class="font-13 fst-italic" id="quant_num">
+													*quantity needed
+												</span>
+												<br>
+											</p>
+											<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>" />
+											<input type="submit" name="add_to_basket" value="Add To Basket" class="item-links" <?php if ($product['stocks'] == 0) { ?> disabled <?php } ?> />
+									</div>				
+								</form>
 								<!-- Link For Item Description-->
-								<div style="padding-top: 10px;">
-								<a href="product.php?id=<?= $product['product_id']; ?>" class="bam bamColor">More Info</a>
-									
-								<span style='font-size:18px; font-style:italic;'>
-									<?php Formats::display_stocks_left($product['stocks']); ?>
-								</span>
+								<div>
+									<a href="product.php?id=<?= $product['product_id']; ?>" class="item-links">More Info</a>
+										
+									<span class="font-16 fst-italic">
+										<?php Formats::display_stocks_left($product['stocks']); ?>
+									</span>
 								</div>
+							</div>
 						</div>
 				<?php 
 						endwhile;
@@ -85,10 +87,11 @@
 		</div>
 	
 		<!-- SIDEBAR -->
-		<div id="prod-sidebar">
+		<div id="prod-sidebar" class="mt-4">
 			<div id="basket-sidebar">
 				<hr>
-				<h4><a href="basket.php">Your Basket</a></h4><hr style="margin: 0;">
+				
+				<h4><a href="basket.php">Your Basket</a></h4><hr>
 				
 				<?php 
 					if (empty($_SESSION['basket'])) {
@@ -100,7 +103,7 @@
 						// Display the necessary buttons
 				?>
 						<div class="text-center">
-							<span style="text-align: center;">
+							<span>
 								<form method="post" action="product.php">
 									<input type="submit" name="clear_basket" value="Clear Basket" class="basket_buttons" />
 									<a href="checkout.php" class="basket_buttons" name="checkout">Checkout >></a>
@@ -115,34 +118,35 @@
 			<!-- MY ACCOUNT LINK -->
 			<div class="myacc-sidebar">
 				<?php if (isset($_SESSION['id'])) : ?>
-					<a href="myaccount.php" class="myacc-class">My Account</a>
+					<a href="myaccount.php" class="myaccount-button">My Account</a>
 				<?php endif; ?>
 			</div>
 
 			<!-- CONTACT FORM ADVERTISEMENT -->
-			<div id="psidebar">
-			<hr>
-				<section class="prod-sidebar-sec1">
-					 - - - Insquisitions? - - -<br><br>
-				</section>
-				<center>Don't hesitate to <a href="contact-us.php">Contact Us</a>.<br> We'll give you assistance.<br>
-			<hr>
-				<section class="prod-sidebar-sec1">
-					<center>Don't forget to give us</center>
-				</section>
-				<span id="prod-sidebar-span1">Feedbacks!</span><br>
-				We will lovely receive your feedbacks<br> about our service.
+			<div id="psidebar" class="sidebar-box-1 p-3 text-center">
+				<hr>
+					<section class="font-16 fw-bold">
+						- - - Insquisitions? - - -<br><br>
+					</section>
+					Don't hesitate to <a href="contact-us.php">Contact Us</a>.<br> We'll give you assistance.<br>
+				<hr>
+					<section class="font-16 fw-bold">
+						Don't forget to give us
+					</section>
+					<span class="font-25 fw-bold">Feedbacks!</span><br>
+					We will lovely receive your feedbacks<br> about our service.
 				<br><br>
-					<a href="contact-us.php" class="Snow" >CONTACT US</a>
+					<a href="contact-us.php" class="Snow">CONTACT US</a>
 				<br><br><hr>
 			</div>
+			
 			<!-- REMINDER BOX -->
-				<div id="reminder-box">
-					<h4>Reminder:</h4>
-					Please keep in mind that once you will check out your orders without an account and decided to create one instead, all previous orders will be deleted, as it will create new set of orders for a user with a registered account. <br>
-					We thank you for your cooperation, and we're sorry for the inconvenience.<br>
-					<i>Enjoy Candela!</i>
-				</div>
+			<div id="reminder-box" class="font-15 p-2">
+				<h4 class="fw-bold color-2-green">Reminder:</h4>
+				Please keep in mind that once you will check out your orders without an account and decided to create one instead, all previous orders will be deleted, as it will create new set of orders for a user with a registered account. <br>
+				We thank you for your cooperation, and we're sorry for the inconvenience.<br>
+				<i>Enjoy Candela!</i>
+			</div>
 		</div>
 		<!-- END OF SIDEBAR -->
 
@@ -208,9 +212,13 @@
 </div>
 <!-- END OF BODY-CONTENT -->
 
-<!-- FOOTER -->
+<!-- FOOTER AND BOTTOM HEADER -->
 <?php require("templates/footer.php"); ?>
-<!-- SCRIPTING -->
+<?php require("templates/nav_bottom.php"); ?>
+
+<!-- SCRIPTING -->		
 <script src="resources/js/javas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-=<?php 
+<?php 
 	require('utilities/server.php');
 	require('utilities/process_userconn.php');
 	Restrict::user("logged");
@@ -23,40 +23,40 @@
 	<?php include("templates/modals/modal_terms_conditions.php"); ?>
 	
 	<div class="text-center">
-		<div id="signUpForm">
-			<p id="create-account-header">
+		<div id="signUpForm" class="d-inline-flex flex-column justify-content-center">
+			<p id="create-account-header" class="font-25">
 				Create An Account at Candela
 			</p>
 			<p class="text-center">Please fill up the form to register.</p>
 					
 					<!--FORM-->
-					<form method="post" action="signup-form.php#signUpForm" id="formstyle">
+					<form method="post" action="signup-form.php#signUpForm" id="formstyle" class="text-start pb-4 px-2">
 						<input type="hidden" name="type" value="signup" />
 
 						<!-- FIRSTNAME -->
 						<label>First Name / Username:</label><br>
-						<input type="text" name="uName" placeholder="Enter First Name / Username" class="width-600" value="<?= $signup['username']; ?>" maxlength="255" />
+						<input type="text" name="uName" placeholder="Enter First Name / Username" class="login-text-width" value="<?= $signup['username']; ?>" maxlength="255" />
 						<br>
 							<span class="field-validity"><?= $signup_err['username']; ?></span>
 						<br>
 						
 						<!-- LASTNAME -->
 						<label>Last Name:</label><br>
-						<input type="text" name="LName" placeholder="Enter Last Name" class="width-600" value="<?= $signup['lastname']; ?>" maxlength="255" />
+						<input type="text" name="LName" placeholder="Enter Last Name" class="login-text-width" value="<?= $signup['lastname']; ?>" maxlength="255" />
 						<br>
 							<span class="field-validity"><?= $signup_err['lastname']; ?></span>
 						<br>
 						
 						<!-- EMAIL -->
 						<label>Email:</label><br>
-						<input type="text" name="email" placeholder="Enter Email" class="width-600" value="<?= $signup['email']; ?>" maxlength="100" />
+						<input type="text" name="email" placeholder="Enter Email" class="login-text-width" value="<?= $signup['email']; ?>" maxlength="100" />
 						<br>
 							<span class="field-validity"><?= $signup_err['email']; ?></span>
 						<br>
 						
 						<!-- CONTACT NUMBER -->
 						<label>Contact Number:</label><em>(optional)</em><br>
-						<input type="text" name="contactnum" placeholder="Must start with '09'" class="width-600" value="<?= $signup['contact']; ?>" maxlength="11" />
+						<input type="text" name="contactnum" placeholder="Must start with '09'" class="login-text-width" value="<?= $signup['contact']; ?>" maxlength="11" />
 						<br>
 							<span class="field-validity"><?= $signup_err['contact']; ?></span>
 						<br>
@@ -64,14 +64,14 @@
 						
 						<!-- PASSWORD -->
 						<label>Password:</label><br>
-						<input type="password" name="psw" placeholder="Enter Password" class="width-600" />
+						<input type="password" name="psw" placeholder="Enter Password" class="login-text-width" />
 						<br>
 							<span class="field-validity"><?= $signup_err['psw']; ?></span>
 						<br>
 						
 						<!-- CONFIRM PASSWORD -->
 						<label>Confirm Password:</label><br>
-							<input type="password" name="rePass" placeholder="Retype Password" class="width-600" />
+							<input type="password" name="rePass" placeholder="Retype Password" class="login-text-width" />
 						<br>
 							<span class="field-validity"><?= $signup_err['repsw']; ?></span>
 						<br>
@@ -93,7 +93,7 @@
 						<br>
 
 						<!-- SUBMIT BUTTON -->
-						<input type="submit" name="submitfrm" value="Register" class="width-600" id="registerButton" /><br>
+						<input type="submit" name="submitfrm" value="Register" class="login-text-width" id="registerButton" /><br>
 						
 					</form>
 					<!-- END OF FORM-->
@@ -107,12 +107,14 @@
 </div>
 <!-- END OF CONTENT -->
 
-<!-- FOOTER -->
+<!-- FOOTER AND BOTTOM HEADER -->
 <?php require("templates/footer.php"); ?>
+<?php require("templates/nav_bottom.php"); ?>
 
 <!--JS SCRIPTING-->
 <script src="resources/js/javas.js"></script>
 <script src="resources/js/captcha_validation.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </body>
 </html>

@@ -1,0 +1,80 @@
+
+/* --- FONTS ---------- */
+/*  - lemon
+    - oswald
+    - oswaldreg
+    - consolai
+*/
+@font-face{
+    font-family: lemon; 
+    src: url(fonts/lemontuesday.otf);
+}
+@font-face{
+    font-family: oswald; 
+    src: url(fonts/oswald.ttf);
+}
+@font-face{
+    font-family: oswaldreg; 
+    src: url(fonts/Oswald-Regular.ttf);
+}
+@font-face{
+    font-family: consolai; 
+    src: url(fonts/consolai.ttf);
+}
+/* --- END OF FONTS ---------- */
+
+
+/* --- HTML ELEMENTS ---------- */
+body {margin:0;
+	background-color: #fff;
+	font-family: oswald; /* pwede ring gawing sans-serif */
+	font-size: 16px;
+}
+* {box-sizing: border-box;}
+/* --- END OF HTML ELEMENTS ---------- */
+
+/* ---MODAL--- */
+#myBtn:hover {
+	color: green;
+	cursor: pointer;
+}
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 8% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; /* Could be more or less, depending on screen size */
+
+  font-family: sans-serif;
+  font-size: 20px;
+}
+.modal-content > h2, .mocal-content > h3 {
+	font-weight: bolder;
+}
+.modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.modal-close:hover,
+.modal-close:focus
+ {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+

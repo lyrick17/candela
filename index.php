@@ -22,49 +22,57 @@
 
 
 	<!-- FIRST CONTENT - Front Page Design -->
-	<div class="row padding-x-110">
-		<div id="tagline-description" class="col-sm-6">
-			<div id="tagline">Indulge in the New Faces of Candles<br /></div>
-			<div id="description">Candela provides you new and unique styles of candles with endearming aroma, providing relaxation through its scent.</div>
-			<br><br>
+	<div id="welcome-page" class="row g-0 padding-y-1 padding-x-3">
+
+		<div id="tagline-description" class="col-md-6 order-2 text-center">
+			<div id="tagline" class="font-30">Indulge in the New Faces of Candles<br /></div>
+			<div id="description" class="font-20">Candela provides you new and unique styles of candles with endearming aroma, providing relaxation through its scent.</div>
 			<a href="product.php" class="Onow">ORDER NOW</a>
 		</div>
-		<div id="product-picture" class="col-sm-6">
-			<img src="images/home-ad.png" id="home-candela" alt="Food Candle" width="150%" />
+
+		<div id="product-picture" class="col-md-6 order-1">
+			<img src="images/home-ad.png" id="home-candela" alt="5 New Food Candles! Free Shipping for Every P2,000 Orders!" />
 			<br />
 		</div>
-		<div style="clear: both;"></div>
+
 	</div>
 	
 
 	<!-- SECOND CONTENT - Feature the Items -->
-	<div id="featuredItems" class="row">
+	<div id="featured-items" class="row gx-0">
+
 		<h1>Try Out Our Candles!</h1>
+
 			<?php 
 			// Display up to 3 Products only
 			$product_list = Products::select_three();
 			if ($product_list):
 				while ($product = mysqli_fetch_assoc($product_list)):
 			?>
-					<div class="col-4 productDisplay">
-						<span class="product-pic">
-							<a href="product.php?id=<?= $product['product_id']; ?>">
-								<img class="product-info-img" src="<?= $product['image']; ?>">
-							</a>
-						</span>
-						<div class="text-center">
-							<p class="product-name">
-								<?= $product['name']; ?>
-							</p>
+					<div class="col-lg-4">
+						<div class="display-product">
+							<span class="product-pic">
+								<a href="product.php?id=<?= $product['product_id']; ?>">
+									<img src="<?= $product['image']; ?>">
+								</a>
+							</span>
+							<div class="text-center">
+								<p class="font-20 pt-3 fw-bold">
+									<?= $product['name']; ?>
+								</p>
+							</div>
 						</div>
 					</div>
 			<?php endwhile; ?>
 			<?php else: // if we do not have products saved in database  yet, display this message ?>
-				<div class="col-4 productDisplay" style="background-color:#fff;">
+
+				<div class="col-12 display-product" style="background-color:#fff;">
 					We are sorry for the inconvenience. We do not have available products as of this moment.
 				</div>
+
 			<?php endif; ?> 
-			<div class="moreProduct">
+			
+			<div class="candela-btn-2">
 				<a href="product.php">
 					I Am Ready To Order >>>
 				</a>
@@ -74,25 +82,30 @@
 
 	<!-- THIRD CONTENT - Logging In Part -->
 	<?php if (!isset($_SESSION['id'])): ?>
-		<div style="display: inline-block; width: 100%;">
-			<div class="col-sm-6 homeimglogin">
-				<img src="images/login.png" height="50%">
-			</div>
-			<div class="col-sm-6 homelogin">
-				<hr style="background-color: blue;">
-				<h1>Want to be a Member and Save Your Orders Online?</h1>
-				<a href="signup-form.php" class="Onow">Sign Up Now</a><br>
-				<span>Already a member? <a href="login-form.php">Log In</a> instead.</span><br>
-				We'll be happy to see you join us.
-				<hr>
+		<div id="login-now" class="padding-x-2 padding-y-2"> 
+			<div class="row gx-0">
+				<div class="col-lg-6 order-2 order-lg-1 login-promotion font-30">
+					<hr>
+					<h1>Want to be a Member and Save Your Orders Online?</h1>
+					<a href="signup-form.php" class="Onow">Sign Up Now</a><br>
+					<span>Already a member? <a href="login-form.php">Log In</a> instead.</span><br>
+					We'll be happy to see you join us.
+					<hr>
+				</div>
+				<div class="col-lg-6 order-1 order-lg-2 login-picture">
+					<img src="images/login.png">
+				</div>
 			</div>
 		</div>
 	<?php endif; ?>
 </div>
 
-<!-- FOOTER -->
+<!-- FOOTER AND BOTTOM HEADER -->
 <?php require("templates/footer.php"); ?>
+<?php require("templates/nav_bottom.php"); ?>
+
 <!-- SCRIPTING -->
 <script src="resources/js/javas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

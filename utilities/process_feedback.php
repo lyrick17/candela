@@ -51,17 +51,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $contact['subject'] = test_input($mysqli, $_POST['subject']) ?? "";
 
     if (!$contact['subject']) {
-        $contact_err['subject'] = error_messages("subject_error");     // username is empty
+        $contact_err['subject'] = error_messages("subject_error");     // subject is empty
     } elseif (strlen($contact['subject']) > 255) {
-        $contact_err['subject'] = error_messages("maxchar_error_255");      // username character is over 255
+        $contact_err['subject'] = error_messages("maxchar_error_255");      // subject character is over 255
     }
 
     // Comment
     $contact['comment'] = test_input($mysqli, $_POST['comment']) ?? "";
     if (!$contact['comment']) {
-        $contact_err['comment'] = error_messages("comment_error");     // username is empty
+        $contact_err['comment'] = error_messages("comment_error");     // comment is empty
     } elseif (strlen($contact['comment']) > 255) {
-        $contact_err['comment'] = error_messages("maxchar_error_2000");     // username character is over 255
+        $contact_err['comment'] = error_messages("maxchar_error_2000");     // comment character is over 255
     }
 
 

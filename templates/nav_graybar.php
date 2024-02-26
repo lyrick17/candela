@@ -1,16 +1,20 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-expand-sm padding-x-1 py-1">
 	<div class="container-fluid">
-		<ul class="nav navbar-nav left">
-			<li>0971-697-0022</li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<?php if (isset($_SESSION['id'])) { ?>
-				<li><a href="myaccount.php"><?php echo $_SESSION['username'];?>'s Account</a></li>
-				<li><a href="utilities/logout.php">Log Out</a></li>
-			<?php } else { ?>
-				<li><a href="login-form.php">Log In</a></li>
-				<li><a href="signup-form.php">Create An Account</a></li>
-			<?php } ?>
-		</ul>
+		<!-- Contact Number -->
+		<div class="collapse navbar-collapse navbar-nav">
+			0971-697-0022
+		</div>
+		<!-- Account -->
+		<div class="navbar-nav ms-auto text-end">
+			<ul class="navbar-nav">
+				<?php if (isset($_SESSION['id'])): ?>
+					<li class="m-2"><a href="myaccount.php"><?php echo $_SESSION['username'];?>'s Account</a></li>
+					<li class="m-2"><a href="utilities/logout.php">Log Out</a></li>
+				<?php else: ?>
+					<li class="m-2"><a href="login-form.php">Log In</a></li>
+					<li class="m-2"><a href="signup-form.php">Create An Account</a></li>
+				<?php endif; ?>
+			</ul>
+		</div>
 	</div>
 </nav>
