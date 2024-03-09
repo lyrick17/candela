@@ -57,8 +57,16 @@ Further Upgrades to do:
     - products                                                          - DONE 2-25-24
     - sidebar basket                                                    - DONE 2-25-24
     - empty sidebar basket                                              - DONE 2-25-24
-    - login                                                             -
-    - signup                                                            -
+    - login                                                             - DONE 
+    - signup                                                            - DONE
+    - basket                                                            - DONE 3-9-24
+    - product specific page                                             - DONE 3/9/24
+    - checkout                                                          - DONE 3-9-24
+    - confirmation                                                      -
+    - my account (general info)                                         - DONE 3-9-24
+    - my account (CHECKOUT HISTORY)                                     -
+    - success                                                           -
+    - ONOW and SNOW buttons
 - SMTP for:
     - sending contact from
     - register, welcome to Candela

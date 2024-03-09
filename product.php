@@ -160,48 +160,52 @@
 	<?php } else { // end of if (!isset($_GET['id'])) 
 	 		    $product_info = Products::get_product_info($_GET['id']); 
 	?>
-		<div class="margin-t-40">
-			<div id="product-page">
+		<div class="padding-y-1 padding-x-3">
+			<div>
 
 				<div id="product-nav">
 					<a href="product.php"><< Back To Products</a>
 				</div>
 
-				<div class="product-info">
+				<div class="">
 					<?php $product = mysqli_fetch_array($product_info, MYSQLI_ASSOC); ?>
 
 					<form method="post" action="product.php?id=<?= $product['product_id'] ?>">
-						<!-- ITEM PICTURE -->
-						<img class="product-info-img img-responsive" name="p_pic" src="<?= $product['image'] ?>">
-						
-						<!-- ITEM INFORMATION-->
-						<div class="subproduct-info">
-							<blockquote>
-								<span class="product-header"><p><?= $product['name'] ?></p></span><br>
-									<span class="price"><p>P<?= $product['price'] ?></p></span>	
-									<p>Quantity<br>
-									<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>" />
-									<input type="number" name="quantity" class="product-quantity" id="product-quantity" max="<?= $product['stocks']; ?>" min="1" value="1" width="20px" />
-										<span class="font13em" id="quant_num">
-											*quantity needed
-										</span>
-									</p>
-									<p>
-										<input type="submit" name="add_to_basket" value="Add To Basket" class="bam bamColor" <?php if ($product['stocks'] == 0) { ?> disabled <?php }?> />
-										<span style='font-size:18px; font-style:italic;'>
-											<?php Formats::display_stocks_left($product['stocks']); ?>
-										</span>
-									</p>
-							</blockquote>
+						<div class="row gx-0 py-3">
+							<!-- ITEM PICTURE -->
+							<div class="col-sm-5 text-center">
+								<img class="h-100 specific" name="p_pic" src="<?= $product['image'] ?>">
+							</div>
+							<!-- ITEM MAIN INFORMATION-->
+							<div class="col-sm-7 item-main-info">
+								<blockquote>
+									<span class="product-header"><p><?= $product['name'] ?></p></span><br>
+										<span class="f-20"><p>P<?= $product['price'] ?></p></span>	
+										<p>Quantity<br>
+										<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>" />
+										<input type="number" name="quantity" class="product-quantity" id="product-quantity" max="<?= $product['stocks']; ?>" min="1" value="1" width="20px" />
+											<span class="font-13 fst-italic" id="quant_num">
+												*quantity needed
+											</span>
+										</p>
+										<p>
+											<input type="submit" name="add_to_basket" value="Add To Basket" class="bam bamColor" <?php if ($product['stocks'] == 0) { ?> disabled <?php }?> />
+											<span class="font-16 fst-italic">
+												<?php Formats::display_stocks_left($product['stocks']); ?>
+											</span>
+										</p>
+								</blockquote>
+							</div>
 						</div>
+						
 					</form>
 						<!-- ITEM DISCRIPTION -->
-						<div class="item-description">
+						<div class="item-description sidebar-box-1 font-20">
 							<?= $product['description']; ?>
 						</div>
 
-					<div style="text-align: center;">
-						<a href="product.php" class="basket_buttons" style="font-size: 26px;"><< Keep Shopping</a>
+					<div class="text-center font-25">
+						<a href="product.php" class="basket_buttons"><< Keep Shopping</a>
 					</div>
 				</div>
 			</div><!-- END OF PRODUCT PAGE ID -->
