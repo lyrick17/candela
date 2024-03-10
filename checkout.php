@@ -32,7 +32,7 @@
 				<div id="checkout_form" >
 					<hr>
 					<?php if (!isset($_SESSION['id'])): ?>
-						<p id="checkout_note">
+						<p class="checkout_note">
 							<b>Please Note That</b>: 
 							<i>You will be using a <u>guest checkout</u> option for you're ordering without an account.</i>
 						</p>
@@ -132,7 +132,7 @@
 					<hr>
 					
 					<p class="text-center">Please make sure that you've ordered your choice of items.</p>
-					<p class="red-reminders">Once checked out, the orders cannot be changed.</i></p>
+					<p class="reminders"  style="font-size: 80%;">Once checked out, the orders cannot be changed.</i></p>
 
 					<hr>
 
@@ -165,11 +165,13 @@
 		
 	</div>
 </div>
-<!-- FOOTER -->
+<!-- FOOTER AND BOTTOM HEADER -->
 <?php require("templates/footer.php"); ?>
+<?php require("templates/nav_bottom.php"); ?>
 
 <!-- SCRIPTING -->
 <script src="resources/js/javas.js"></script>
 <script src="resources/js/barangay_select.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

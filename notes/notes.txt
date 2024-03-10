@@ -62,7 +62,7 @@ Further Upgrades to do:
     - basket                                                            - DONE 3-9-24
     - product specific page                                             - DONE 3/9/24
     - checkout                                                          - DONE 3-9-24
-    - confirmation                                                      -
+    - confirmation                                                      - DONE 3/10/24
     - my account (general info)                                         - DONE 3-9-24
     - my account (CHECKOUT HISTORY)                                     -
     - success                                                           -

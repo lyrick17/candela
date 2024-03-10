@@ -54,7 +54,8 @@
 
 
 <h2>Cancellation of Orders</h2>
-<p>An item may be cancelled up until payment has been processed. Once payment has been processed, the buyer is responsible for payment, and it cannot be cancelled.</p>
+<!--<p>An item may be cancelled up until payment has been processed. Once payment has been processed, the buyer is responsible for payment, and it cannot be cancelled.</p>-->
+<p>The buyer is responsible for checking out the items ordered. Once the items are checked out, the orders cannot be cancelled.</p>
 
 
 <h2>No Refund/Return Policy</h2>

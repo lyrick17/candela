@@ -23,7 +23,7 @@
 	<div id="about-section-1" class="padding-y-1 padding-x-3">
 		<div class="row gx-0">
 			<div class="col-lg-6">
-				<div class="py-3">
+				<div class="about-logo py-3">
 					<img src="images/what-is-candela.png" id="about-arrow" class="mx-auto d-block">
 				</div>
 			</div>

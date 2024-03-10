@@ -897,7 +897,7 @@ body {
 }
 
 
-#checkout_note {
+.checkout_note {
 	border-style: solid;
 	border-radius: 5px;
 	border-width: 2px;
@@ -938,14 +938,12 @@ body {
 #checkout-box {
 	font-size: 18px;
 
-}.red-reminders {
-	color: #f93737;
+}
+.reminders {
 	border-style: solid;
 	border-radius: 5px;
 	border-width: 2px;
-	border-color: #f92b2b;
 	padding: 5px;
-	font-size: 80%;
 	text-align: center;
 }
 .less500 {
@@ -976,17 +974,14 @@ body {
 
 
 
-#chkbxs {
-	font-size: 14px;
-	text-align: left;
-	padding: 10px 10px;
+/* CONFIRMATION PAGE ----------------------------------- */
+.checkout-info {
+	border-color: #f99b46;
+	border-width: 4px 2px;
+	border-style: solid;
+	border-radius: 5px;
 }
-
 #captchadiv {
-	padding: 10px;
-	margin: 15px;
-	text-align: center;
-
 	border-radius: 5px;
 	border-style: solid;
 	border-color: black;
@@ -994,6 +989,7 @@ body {
 	background-color: #ececec;
 
 }
+/* END OF CONFIRMATION PAGE ----------------------------------- */
 
 	/* TERMS AND CONDITIONS*/
 	#modal_terms {
