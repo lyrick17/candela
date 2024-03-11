@@ -21,119 +21,124 @@
 	<!-- MODAL CONTENT for Terms and Conditions -->
 	<?php include("templates/modals/modal_terms_conditions.php"); ?>
 	
-	<div style="padding: 20px; margin: 90px 120px 50px 120px;">
+	<div class="padding-x-1 padding-y-1">
 		<form method="post">
 
-		<div style="text-align: center;">
-			<div id="basket-header"> Please Confirm </div>
-			<p style="color: red; font-size: 16px;">We cannot be responsible for incorrect orders and details sent to us.</p>
-			<p style="color: red; font-size: 16px;">Please be reminded that you cannot cancel your orders once checked out.</p>
+		<div class="text-center">
+			<div class="font-40"> Please Confirm </div>
+			<!--<p class="text-danger font-16">We cannot be responsible for incorrect orders and details sent to us.</p>
+			<p class="text-danger font-16">Please be reminded that you cannot cancel your orders once checked out.</p> -->
 		</div>
 
 		<hr>
 
 		<!-- NOTIFY -->
 		<?php if (!isset($_SESSION['username'])): ?>
-		<div style="text-align: center;">
+		<div class="text-center">
 			<p style="font-size: 130%;">You are using <b>Guest Checkout Option</b>.</p>
-			<p style="font-size: 150%;">We deliver your orders on the <b><i>upcoming Friday</i></b> of the week <br>(this means you will receive your order on the following week if you order on Friday).</p>
+			<p style="font-size: 140%;">We deliver your orders on the <b><i>upcoming Friday</i></b> of the week <br>(this means you will receive your order on the following week if you order on Friday).</p>
 		</div>
 		<?php else: ?>
-		<div style="text-align: center;">
-			<p style="font-size: 150%;">We deliver your orders every <b><i>Friday</i></b> of the week.</p>
+		<div class="text-center">
+			<p style="font-size: 140%;">We deliver your orders every <b><i>Friday</i></b> of the week.</p>
 		</div>
 		<?php endif; ?>
 
-		<!-- LEFT SIDE - DETAILS -->
-		<div style="display: inline-block; width: 70%; text-align: center;">
-				<h4><b>Your Details</b></h4>
-				<hr>
-				<p style="color: red; font-size: 16px;">Please make sure you have entered your <b>correct address</b>. We're not responsible for incorrect addresses.</p>
-				<div style="text-align: center; font-size: 18px;">
-					<table style="margin: 0 auto;">
-					<tr>
-						<td class="td-login" style="width: 55%;">First Name:</td>
-						<td class="td-login" style="width: 45%;"><?= $_SESSION['checkout']['username']; ?></td>
-					</tr>
-					<tr>
-						<td class="td-login" style="width: 55%;">Last Name:</td>
-						<td class="td-login" style="width: 45%;"><?= $_SESSION['checkout']['lastname']; ?></td>
-					</tr>
-					<tr>
-						<td class="td-login" style="width: 55%;">E-mail:</td>
-						<td class="td-login" style="width: 45%;"><?= $_SESSION['checkout']['email']; ?></td>
-					</tr>
-					<tr>
-						<td class="td-login" style="width: 55%;">Contact Number:</td>
-						<td class="td-login" style="width: 45%;"><?= $_SESSION['checkout']['contactnumber']; ?></td>
-					</tr>
-					<tr>
-						<td class="td-login" style="width: 55%;">Address:</td>
-						<td class="td-login" style="width: 45%;"><?= $_SESSION['checkout']['address']; ?></td>
-					</tr>
-					<tr>
-						<td class="td-login" style="width: 55%;">Barangay:</td>
-						<td class="td-login" style="width: 45%;"><?= $_SESSION['checkout']['barangay']; ?></td>
-					</tr>
-					<tr>
-						<td class="td-login" style="width: 55%;">City: </td>
-						<td class="td-login" style="width: 45%;">Imus, Cavite</td>
-					</tr>
-					<tr>
-						<td class="td-login" style="width: 55%;">Postal Code: </td>
-						<td class="td-login" style="width: 45%;">4103</td>
-					</tr>
-					</table>
-				</div>
-			<br><br>
-			<span style="text-align: center;">
-				<a href="checkout.php" class="basket_buttons"><< I have to change the details</a>
-			</span>
-		</div>
-		<!-- END OF LEFT SIDE - DETAILS -->
-
-		<!-- RIGHT SIDE - ORDERS -->
-		<div style="display:inline-block; vertical-align: top; text-align: center; width: 25%;">
-			<h4><b>Your Orders</b></h4>
-
-			<hr>
-
-			<div>
-
-				<?php 
-				if (empty($_SESSION['basket'])) {
-					require("templates/basket/empty_basket.php");
-				} else {
-					// Display the side basket
-					require("templates/basket/side_basket.php");
-					// Display the necessary buttons
-				?>
-
-					<div class="text-center">
-						<span style="text-align: center;">
-							<a href="basket.php" class="basket_buttons">I have to update my basket</a>
-						</span>
+		<!-- ROW -->
+		<div class="row gx-0">
+			<!-- LEFT SIDE - DETAILS -->
+			<div class="p-4 my-2 text-center col-lg-8">
+				<div class="checkout-info p-3">
+					<h4><b>Your Details</b></h4>
+					<!--<p class="text-danger font-16">Please make sure you have entered your <b>correct address</b>. We're not responsible for incorrect addresses.</p>-->
+					<div class="text-center font-20">
+						<table class="w-100">
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold">First Name:</td>
+							<td class="col-7 td-login text-start">&nbsp;<?= $_SESSION['checkout']['username']; ?></td>
+						</tr>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >Last Name:</td>
+							<td class="col-7 td-login text-start" >&nbsp;<?= $_SESSION['checkout']['lastname']; ?></td>
+						</tr>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >E-mail:</td>
+							<td class="col-7 td-login text-start" >&nbsp;<?= $_SESSION['checkout']['email']; ?></td>
+						</tr>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >Contact Number:</td>
+							<td class="col-7 td-login text-start" >&nbsp;<?= $_SESSION['checkout']['contactnumber']; ?></td>
+						</tr>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >Address:</td>
+							<td class="col-7 td-login text-start" >&nbsp;<?= $_SESSION['checkout']['address']; ?></td>
+						</tr>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >Barangay:</td>
+							<td class="col-7 td-login text-start" >&nbsp;<?= $_SESSION['checkout']['barangay']; ?></td>
+						</tr>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >City: </td>
+							<td class="col-7 td-login text-start" >&nbsp;Imus, Cavite</td>
+						</tr>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >Postal Code: </td>
+							<td class="col-7 td-login text-start" >&nbsp;4103</td>
+						</tr>
+						</table>
 					</div>
-
-				<?php 
-					// display the shipping fee and the total cost
-					require("templates/basket/shipping_fee.php");
-				} // endelse
-				?>
-
+				<br>
+				<span class="text-center">
+					<a href="checkout.php" class="basket_buttons"><< I have to change the details</a>
+				</span>
+				</div>
 			</div>
+			<!-- END OF LEFT SIDE - DETAILS -->
+
+			<!-- RIGHT SIDE - ORDERS -->
+			<div class="py-4 my-2 text-center col-lg-4">
+				<div class="sidebar-box-2 py-3">
+				<h4><b>Your Orders</b></h4>
+
+
+					<?php 
+					if (empty($_SESSION['basket'])) {
+						require("templates/basket/empty_basket.php");
+					} else {
+						// Display the side basket
+						require("templates/basket/side_basket.php");
+						// Display the necessary buttons
+					?>
+
+						<div class="text-center">
+							<span style="text-align: center;">
+								<a href="basket.php" class="basket_buttons">I have to update my basket</a>
+							</span>
+						</div>
+
+					<?php 
+						// display the shipping fee and the total cost
+						require("templates/basket/shipping_fee.php");
+					} // endelse
+					?>
+
+				</div>
+			</div>
+			<!-- END OF RIGHT SIDE - ORDERS -->
 		</div>
-		<!-- END OF RIGHT SIDE - ORDERS -->
-
 		<!-- TERMS AND CONDITIONS && CAPTCHA -->
-		<div style="text-align: center;margin-top: 20px;">
-			<div id="chkbxs" style="text-align: center;">
-				<input type="checkbox" name="termsConditions" id="checkme" required />
-					I have agreed to the <a id="myBtn"><u>Terms and Conditions</u></a>.<br>
+		<div class="text-center mt-5">
+			<div class="text-center p-3 m-3 reminders">
+				<span>Please make sure you have entered your <b>correct address</b>. We're not responsible for incorrect addresses.</span><br />
+				<span>Please be reminded that you cannot cancel your orders once checked out.</span>
 			</div>
-			<br>
+			<div id="captchadiv" class="p-3 m-3">
+				<br>
+				<div class="text-center">
+					<input type="checkbox" name="termsConditions" id="checkme" required />
+						I have agreed to the <a id="myBtn"><u>Terms and Conditions</u></a>.<br>
+				</div>
 
-			<div id="captchadiv" style="display: inline-block; text-align: center; width: 40%;">
 				<center><div class="g-recaptcha" 
 					data-callback="captchafilled"
 					data-expired-callback="captchaexpired"
@@ -154,7 +159,7 @@
 									</div>
 								</div>
 								<?php else: ?>
-								<input type="submit" name="confirm_checkout" class="basket_buttons" style="font-size:150%;" value="Confirm and Checkout" />
+								<input type="submit" name="confirm_checkout" class="basket_buttons" style="font-size:140%;" value="Confirm and Checkout" />
 					<?php 	endif; 
 						endif; ?>
 				<hr>
@@ -166,10 +171,14 @@
 	</div>
 </div>
 
-<!-- FOOTER -->
+<!-- FOOTER AND BOTTOM HEADER -->
 <?php require("templates/footer.php"); ?>
-<!-- SCRIPTING -->
+<?php require("templates/nav_bottom.php"); ?>
+
+<!-- SCRIPTING -->		
 <script src="resources/js/javas.js"></script>
 <script src="resources/js/captcha_validation.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 </body>
 </html>

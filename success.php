@@ -20,9 +20,9 @@
 	<!-- MODAL CONTENT for Terms and Conditions -->
 	<?php include("templates/modals/modal_terms_conditions.php"); ?>
 
-	<div style="padding: 20px; margin: 90px 20px 10px 20px;">
-		<div style="text-align: center;">
-			<div id="basket-header">
+	<div class="padding-x-1 padding-y-1">
+		<div class="text-center">
+			<div class="font-35 fw-bold">
 				- Thank You for Choosing Us -
 			</div>
 
@@ -42,7 +42,7 @@
 				}
 
 				?>
-				<p>Your Order Id is: <?= $_SESSION['recent_order_id']; ?></p>
+				<h2>Your Order Id is: <?= $_SESSION['recent_order_id']; ?></h2>
 				<p>You've successfully ordered:</p>
 
 
@@ -57,7 +57,7 @@
 						}
 					?>
 				</p>
-				<div class="shipping-fee">
+				<div class="m-4">
 					<span>Shipping Fee: P<?= $order['shipping_fee']; ?></span>
 				</div>
 				<p>For a total of:</p>
@@ -73,12 +73,12 @@
 
 				<p style="font-size: 150%;">
 					<?= $complete_address; ?><br>
-					<span style="font-size: medium;">Imus City, Cavite</span>
+					<span class="font-20">Imus City, Cavite</span>
 				</p>
 
 				<hr>
 
-				<p style="font-size: 20px;">Thank You for choosing Candela! Your order will now be delivered in <b>the upcoming Friday</b> of the week.</p>
+				<p class="font-20">Thank You for choosing Candela! Your order will now be delivered in <b>the upcoming Friday</b> of the week.</p>
 				
 				
 				<hr><br>
@@ -88,7 +88,7 @@
 				<br><a href="contact-us.php" class="lend_feedback">Lend A Feedback</a>
 
 				<!-- CHANGING INFORMATION -->
-				<div style="padding: 30px 0;" >
+				<div class="py-3">
 
 					<hr>
 
@@ -168,9 +168,11 @@
 					<?php endif; ?>
 					
 
-					<div style="margin-top: 50px;">
+					<div class="my-5">
 						<a href="index.php" class="lend_feedback"><< Home</a>
-						<a href="myaccount.php" class="lend_feedback">My Account</a>
+						<?php if (isset($_SESSION['id'])): ?>
+							<a href="myaccount.php" class="lend_feedback">My Account</a>
+						<?php endif; ?>
 					</div>
 
 				</div>
@@ -181,8 +183,12 @@
 </div>
 <!-- FOOTER -->
 <?php require("templates/footer.php"); ?>
+<?php require("templates/nav_bottom.php"); ?>
+
 <!-- SCRIPTING -->
 <script src="resources/js/javas.js"></script>
 <script src="resources/js/fetch_checkout_upd_info.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 </body>
 </html>

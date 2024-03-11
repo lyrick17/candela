@@ -150,13 +150,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'signup') {
             $_SESSION['contactnumber'] = $user_row['contactnumber'];
             $_SESSION['type'] = (int) $user_row['type'];
 
-            $address = Users::get_address($_SESSION['id']);
-
-            if ($address) {
-                $_SESSION['address_id'] = $address['address_id'];
-                $_SESSION['address'] = $address['user_address'];
-                $_SESSION['barangay'] = $address['barangay'];
-            }
+            // Assign address even if they are new
+            $_SESSION['address_id'] = null;
+            $_SESSION['address'] = null;
+            $_SESSION['barangay'] = null;
             
         
         
@@ -215,7 +212,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
                     $_SESSION['address_id'] = $address['address_id'];
                     $_SESSION['address'] = $address['user_address'];
                     $_SESSION['barangay'] = $address['barangay'];
-                } 
+                } else {
+                    $_SESSION['address_id'] = null;
+                    $_SESSION['address'] = null;
+                    $_SESSION['barangay'] = null;
+                }
 
 
                 // unset the basket that the guest user created 

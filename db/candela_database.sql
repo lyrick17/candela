@@ -48,7 +48,7 @@ CREATE TABLE `basket_items` (
 
 CREATE TABLE `checkout_orders` (
   `checkout_id` mediumint PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `user_id` mediumint NOT NULL,
+  `user_id` mediumint,
   `order_id` varchar(255) NOT NULL,
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,

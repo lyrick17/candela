@@ -2,15 +2,28 @@
 *	- HTML elements
 *	- Website Colors
 *	- Padding and Margin
+*	- Website Fonts
 *	- FONTS
 *	- Images
 *	- Buttons
 *   - MODAL
 *	- Navigation
+*	- Footer
 *	- Home
-*
-*
+*	- About
+*	- FAQs
+*	- Contacts
+*	- Products
+*	- Specific Products
+*	- Login and Register
+*	- Basket Page
+*	- My Account Page
+*	- Checkout Page
+*	- Confirmation Page
+*	- Success Page
+*	- More Features
 */
+
 body {
 	margin:0;
 
@@ -127,6 +140,17 @@ body {
 
 
 
+/* WEBSITE FONTS ----------------------------------- */
+@font-face{font-family: lemon;src: url(fonts/lemontuesday.otf);}
+@font-face{font-family: oswald;src: url(fonts/oswald.ttf);}
+@font-face{font-family: oswaldreg;src: url(fonts/Oswald-Regular.ttf);}
+@font-face{font-family: consolai; src: url(consolai.ttf);}
+/* END OF WEBSITE FONTS ----------------------------------- */
+
+
+
+
+
 /* FONTS ----------------------------------- */
 .font-13 {
 	font-size: 13px;
@@ -192,6 +216,7 @@ body {
 	border-style: solid;
 	border-radius: 5px;
 }
+
 /* END OF SIDEBAR ----------------------------------- */
 
 
@@ -319,6 +344,24 @@ body {
 
 
 
+/* FOOTER ----------------------------------- */
+.footer {
+	background-color: #eaeaea;
+	line-height: 2;
+	border-top-color: #a9a9a9;
+	border-top-style: solid;
+	border-top-width: 1px;
+	bottom: 0;
+}
+.fsocial-acc {
+	height: 30px;
+}
+/* END OF FOOTER ----------------------------------- */
+
+
+
+
+
 /* HOME ----------------------------------- */
 
 /* FOR WELCOME SECTION */
@@ -369,7 +412,6 @@ body {
 	text-align: center;
 }
 .login-promotion {
-
 	line-height: 2;
 	letter-spacing: 1px;
 }
@@ -618,6 +660,37 @@ body {
 
 
 
+/* SPECIFIC PRODUCTS ----------------------------------- */
+
+#product-nav {
+	padding: 10px;
+	border-color: #ababab;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 3px;
+}
+.product-header {
+	display: inline-block;
+	font-size: 35px;
+}
+.item-description {
+	margin: 20px;
+	padding: 5%;
+}
+.item-main-info {
+	text-align: center;	
+}
+/* For Small Devices */
+@media (min-width: 576px) {
+	.item-main-info {
+		text-align: left;	
+	}
+}
+/* END OF SPECIFIC PRODUCTS ----------------------------------- */
+
+
+
+
 
 /* LOGIN AND REGISTER ----------------------------------- */
 #formbg {
@@ -707,252 +780,214 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ---BASKET--- */
-
-
-#basket-box {
-	margin:50px 30px 50px 70px;
-	padding: 20px 20px 20px 35px;
-	display: inline-block;
-	font-size: 18px;
-}
-#basket-header {
-	font-size: 33px;
-}
-.basket-body {
-	/*padding-top: 15px;
-	padding-bottom: 15px;*/
-}
+/* BASKET PAGE ----------------------------------- */
 .basket-td {
 	padding: 10px 20px 10px 20px;
 	vertical-align: top;
 
-	border-width: 2.5px;
+	border-width: 1px;
 	border-color: #c4c4c4;
 	border-style: solid;
 }
 .basket_buttons{
 	padding: 4px 10px;
-	background-color: #f99b46;
 	border-width: 1px;
+	background-color: #f99b46;
 	border-color: #f99b46;
 	border-style: solid;
 	border-radius: 5px;
-	color: #000;
-	font-size: 16px;
 }
 .basket_buttons:hover {
 	background-color: #dcdcdc;
 	transition: .3s ease;
 	color: initial;
 }
-
-.bktd1 {width: 24%;}
-.bktd2 {width: 47%;}
-.bktd3 {width: 17%;}
-.bktd4 {width: 13%;}
-
-/* ---PRODUCTSSSSSS--- */
-
-
-#product-page {
-	margin: 0 120px 0 120px;
+.desktop-basket {
+	display: none;
 }
-#product-nav {
-	padding: 10px;
-	border-style: solid;
-	border-width: 2px;
-	border-color: #ababab;
-	border-radius: 3px;
+.mobile-basket {
+	display: block;
 }
-.product-info {
-	margin: 30px 40px;
-}
-.subproduct-info {
-	vertical-align: top;
-	display: inline-block;
-}
-.product-header {
-	display: inline-block;
-	font-size: 35px;
-}
-.price {
-	font-size: 20px;
-}
-.submit-product {
-	text-decoration: none;
-	font-weight: bold; font-size: 18px;
-	letter-spacing: 0px;
-	background-color: #fff;
-	padding: 7px 10px;
-	border-radius: 3px;
-	border-color: #fbd27e;
-	background-color: #f6a708;
-	color: white;
-}
-.submit-product:hover {
-	cursor: pointer;
-	color: black;
-	background-color: #fbd27e;
-	border-color: #f6a708;
-	transition: .3s ease;
-
-}
-.item-description {
-	margin: 20px;
-	padding: 5% 10% 10% 10%;
-	border-style: solid;
-	border-color: #f99b46 #ababab #ababab #ababab;
-	border-width: 3px 2px 2px 2px;
-	border-radius: 3px;
-	font-size: 22px;
-
-}
-
-/* ---SIGNUP---*/
-
-
-
-
-
-#checkout_form > p , #checkout_form > form, #checkout_form > hr {
-	display: inline-block;
-}
-#checkout_form > hr {
-	width: 50%; text-align: left;
-}
-#chkbxs {
-	font-size: 14px;
-	text-align: left;
-	padding: 10px 10px;
-}
-
-#captchadiv {
-	padding: 10px;
-	margin: 15px;
-	text-align: center;
-
-	border-radius: 5px;
-	border-style: solid;
-	border-color: black;
-	border-width: 1px;
-	background-color: #ececec;
-
-}
-
-	/* TERMS AND CONDITIONS*/
-	#modal_terms {
-		border-style: none;
-		background-color: #fff;
-		border-width: none;
-		border-color: none;
-		border-radius: none;
-		margin: 0;
-		padding: 0;
+/* Basket with larger screens */
+@media (min-width: 768px) {
+	.desktop-basket {
+		display: block;
 	}
-
-
-/* ---FEATURES--- */
-
-
-a {
-	text-decoration: none;
-	color: #000; 
-	transition: .3s ease;
-	}/*SOON-TO-BE-EXPELLED*/
-a:hover {
-	color: #f6a708;
-	text-decoration: none;
+	.mobile-basket {
+		display: none;
+	}
 }
-a.Onow:hover , a.Snow:hover , input.Snow:hover {
-	background-color: #fff;
-	border-color:#dedede;
-	cursor: pointer;
-	color: #f6a708;
+/* END OF BASKET PAGE ----------------------------------- */
+
+
+
+
+/* MY ACCOUNT PAGE ----------------------------------- */
+
+/* GENERAL INFORMATION */
+	#accountnav {
+		padding: 10px;
+		border-top-style: solid;
+		border-bottom-style: solid;
+		border-top-width: 2px;
+		border-bottom-width: 2px;
+		border-top-color: #2626e5;
+		border-bottom-color: #2626e5;
+		font-size: 120%;
+	}
+	.tdacc-details {
+		padding: 5px 20px;
+		font-size: 110%;
+	}
+	.savechanges {
+		background-color: #fff;
+		border-color: #ffa200;
+		border-style: solid;
+		border-width: 2px;
+		border-radius: 3px;
+		font-size: 120%;
+		transition: .3s ease;
+		padding: 0 10px;
+		float: right;
+	}
+	.savechanges:hover {
+		border-color: #dbdbdb;
+		background-color: #f99b46;
+		padding: 0 20px;
+	}
+	.field-validity-myaccount , .field-success-myaccount {
+		font-size: 14px;
+	}
+	.field-success-myaccount {
+		color: #00ff0f;
+	}
+	.field-validity-myaccount {
+		color: red;
+	}
+/* CHANGE PASSWORD */
+	.newpass-tr-style {
+		border-color: #239ef9 #239ef9 #fff #239ef9;
+		border-width: 2px 2px 0 2px;
+		border-style: solid;
+		border-radius: 3px;
+	}
+	.confirm-tr-style {
+		border-color: #fff #239ef9 #239ef9 #239ef9;
+		border-width: 0 2px 2px 2px;
+		border-style: solid;
+		border-radius: 3px;
+	}
+/* DELETE ACCOUNT */
+	#deleteacc {
+		font-size: 130%;
+		padding: 10px 40px;
+		color:red;
+		text-decoration: underline;
+		background-color: #fff;
+		transition:.1s ease;
+		border-style: groove;
+		border-color: grey;
+	}
+	#deleteacc:hover {
+		background-color: #f9f9f9;
+		color: #ff3f3f;
+	}
+	.delete_confirmation {
+		padding: 10px;
+		font-size: 40px;
+		color: black;
+	}
+	.delete_confirmation > p {
+		padding: 5px 0;
+	}
+	.delete_confirmation > input {
+		padding: 5px 15px;
+	}
+/* CHECKOUT HISTORY */
+#checkoutHistory_content {
+	padding: 40px;
+	font-size: 130%;
 }
-@font-face{font-family: lemon;src: url(fonts/lemontuesday.otf);}
-@font-face{font-family: oswald;src: url(fonts/oswald.ttf);}
-@font-face{font-family: oswaldreg;src: url(fonts/Oswald-Regular.ttf);}
-@font-face{font-family: consolai; src: url(consolai.ttf);}
-.Onow , .Snow {
-	font-family: oswald; text-decoration: none;
-	font-weight: bolder; font-size: 25px;
-	letter-spacing: 5px;
-	border-radius: 10px;
-	border-color: #f99b46;
-	border-width: 2px;
-	border-style: solid;
-	padding: 10px 40px;
+.chk-hrstyle {
 	background-color: #f99b46;
-	color: #fff;
-	transition: .3s ease;
+	height: 1;
+	width: 50%;
+}
+.chk-hrstyle-table {
+	margin: 2% 5%;
+}
+.chk-hrstyle-table-td {
+	padding: 20px;
 }
 
 
-/* ---FOOTER--- */
-
-
-.footer {
-	background-color: #eaeaea;
-	font-size: 17px;
-	line-height: 2;
-	border-top-color: #a9a9a9;
-	border-top-style: solid;
-	border-top-width: 1px;
-	width: 100%;
-	bottom: 0;
-}
-.fnav {
-	color: black;
-}
-.fsocial-acc {
-	height: 30px;
-}
-
-/* ---CHECKOUT--- */
-#checkout-box {
-	margin:50px 120px;
-	padding: 20px 20px 20px 35px;
+.checkout_note {
+	border-style: solid;
+	border-radius: 5px;
+	border-width: 2px;
+	border-color: #000;
+	width: 80%;
+	padding: 5px;
+	font-size: 90%;
 	display: inline-block;
+}
+
+
+
+.dismiss-request {
+	border-color: #4a6bff;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 3px;
+	padding: 5px;
+}
+.changed-addr-num {
+	padding: 5px;
+	display: inline-block;
+	border-color: #dca551 #fff;
+	border-style: solid;
+	border-width: 3px;
+	border-radius: 3px;
+}
+/* END OF MY ACCOUNT PAGE ----------------------------------- */
+
+
+
+
+
+/* CHECKOUT PAGE ----------------------------------- */
+#checkout-box {
 	font-size: 18px;
+
 }
-#form_checkout {
-	text-align: left;
-	padding: 0px 10px;
-}
-#form_checkout > p {
+.reminders {
+	border-style: solid;
+	border-radius: 5px;
+	border-width: 2px;
+	padding: 5px;
 	text-align: center;
-	font-size: 16px;
 }
-#form_checkout > label {
-	padding-left: 5px;
+.less500 {
+	border-color: #f99b46 #396fc6 #396fc6 #396fc6;
+	border-width: 3px 1px 1px 1px;
+	border-style: solid;
+	padding: 3px 5px;
+	margin: 10px 5px;
+}
+#address_warning {
+	width: 80%;
+	text-align: center;
+}
+#address_warning > p {
+	color: #f93737;
+	border-style: solid;
+	border-radius: 5px;
+	border-width: 2px;
+	border-color: #f92b2b;
+	padding: 5px;
+	font-size: 80%;
+	display: inline-block;
+	text-align: center;
 }
 .blue_button{
 	padding: 5px 20px;
@@ -969,6 +1004,33 @@ a.Onow:hover , a.Snow:hover , input.Snow:hover {
 	border-color: #fbd27e;
 	color: #fff;
 }
+/* END OF CHECKOUT PAGE ----------------------------------- */
+
+
+
+
+
+/* CONFIRMATION PAGE ----------------------------------- */
+.checkout-info {
+	border-color: #f99b46;
+	border-width: 4px 2px;
+	border-style: solid;
+	border-radius: 5px;
+}
+#captchadiv {
+	border-radius: 5px;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	background-color: #ececec;
+}
+/* END OF CONFIRMATION PAGE ----------------------------------- */
+
+
+
+
+
+/* SUCCESS PAGE ----------------------------------- */
 .lend_feedback {
 	font-size: 120%;
 	padding: 5px 15px;
@@ -985,174 +1047,41 @@ a.Onow:hover , a.Snow:hover , input.Snow:hover {
 	color: #000;
 	border-width: 3px;
 }
-form#addr_save > input {
-	padding: 10px;
-	transition: .2s ease;
-	margin: 0 10px;
-}
+/* END OF SUCCESS PAGE ----------------------------------- */
 
-/* ---MYACCOUNT PAGE--- */
-#accountnav {
-	padding: 10px;
-	border-top-style: solid;
-	border-bottom-style: solid;
-	border-top-width: 2px;
-	border-bottom-width: 2px;
-	border-top-color: #2626e5;
-	border-bottom-color: #2626e5;
-	font-size: 120%;
-}
-.acc-content {
-	padding: 20px 40px;
-}
-.subacc-content {
 
-}
-.tdacc-details {
-	padding: 5px 20px;
 
-	font-size: 110%;
-}
-.savechanges {
-	float: right;
-	display: inline-block;
-	border-style: solid;
-	border-color: #ffa200;
-	border-width: 2px;
-	background-color: #fff;
-	border-radius: 3px;
-	font-size: 120%;
+
+
+/* MORE FEATURES ----------------------------------- */
+a {
+	text-decoration: none;
+	color: #000; 
 	transition: .3s ease;
-	padding: 0 10px;
 }
-.savechanges:hover {
-	border-color: #dbdbdb;
-	background-color: #f99b46;
-	padding: 0 20px;
+a:hover {
+	color: #f6a708;
+	text-decoration: none;
 }
-.field-validity-myaccount , .field-success-myaccount {
-	font-size: 14px;
-}
-.field-success-myaccount {
-	color: #00ff0f;
-}
-.field-validity-myaccount {
-	color: red;
-}
-.newpass-tr-style {
-	border-style: solid;
-	border-color: #239ef9 #239ef9 #fff #239ef9;
-	border-width: 2px 2px 0 2px;
-	border-radius: 3px;
-}
-.confirm-tr-style {
-	border-style: solid;
-	border-color: #fff #239ef9 #239ef9 #239ef9;
-	border-width: 0 2px 2px 2px;
-	border-radius: 3px;
-}
-#deleteacc {
-	font-size: 130%;
-	padding: 10px 40px;
-	color:red;
-	text-decoration: underline;
+a.Onow:hover , a.Snow:hover , input.Snow:hover {
 	background-color: #fff;
-	transition:.1s ease;
-	border-style: groove;
-	border-color: grey;
-}
-#deleteacc:hover {
-	background-color: #f9f9f9;
-	color: #ff3f3f;
-}
-#checkoutHistory {
-	margin: 60px 0 0 0;
-}
-#checkoutHistory_content {
-	padding: 40px;
-	font-size: 130%;
-}
-.chk-hrstyle {
-	background-color: #f99b46;
-	height: 1;
-	width: 50%;
-}
-.chk-hrstyle-table {
-	margin: 2% 5%;
-}
-.chk-hrstyle-table-td {
-	padding: 20px;
-}
-.delete_confirmation {
-	padding: 10px;
-	font-size: 40px;
-	color: black;
-}
-.delete_confirmation > p {
-	padding: 5px 0;
-}
-.delete_confirmation > input {
-	padding: 5px 15px;
+	border-color:#dedede;
+	cursor: pointer;
+	color: #f6a708;
 }
 
-#checkout_note {
-	border-style: solid;
-	border-radius: 5px;
+.Onow , .Snow {
+	font-family: oswald; text-decoration: none;
+	font-weight: bolder; font-size: 25px;
+	letter-spacing: 5px;
+	border-radius: 10px;
+	border-color: #f99b46;
 	border-width: 2px;
-	border-color: #000;
-	width: 80%;
-	padding: 5px;
-	font-size: 90%;
-	display: inline-block;
-}
-#address_warning {
-	width: 80%;
-	text-align: center;
-}
-.shipping-fee {
-	margin: 30px;
-}
-#address_warning > p {
-	color: #f93737;
 	border-style: solid;
-	border-radius: 5px;
-	border-width: 2px;
-	border-color: #f92b2b;
-	padding: 5px;
-	width: 80%;
-	font-size: 80%;
-	display: inline-block;
+	padding: 10px 40px;
+	background-color: #f99b46;
+	color: #fff;
+	transition: .3s ease;
 }
-.red-reminders {
-	color: #f93737;
-	border-style: solid;
-	border-radius: 5px;
-	border-width: 2px;
-	border-color: #f92b2b;
-	padding: 5px;
-	font-size: 80%;
-	text-align: center;
-}
-.less500 {
-	border-color: #f99b46 #396fc6 #396fc6 #396fc6;
-	border-width: 3px 1px 1px 1px;
-	border-style: solid;
-	padding: 3px 5px;
-	margin: 8px 5px;
-	text-align: center;
-}
-.dismiss-request {
-	border-color: #4a6bff;
-	border-style: solid;
-	border-width: 2px;
-	border-radius: 3px;
-	padding: 5px;
-}
-.changed-addr-num {
-	padding: 5px;
-	display: inline-block;
-	border-color: #dca551 #fff;
-	border-style: solid;
-	border-width: 3px;
-	border-radius: 3px;
-}
+/* END OF MORE FEATURES ----------------------------------- */
+

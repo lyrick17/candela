@@ -40,15 +40,15 @@ $(document).ready(function() {
 	<!-- Modal content for Delete Account -->
 	<?php include("templates/modals/modal_del_acc_confirmation.php"); ?>
 
-	<div class="margin-t-90">
-		<div id="product-page">
+	<div class="padding-x-2 padding-y-1">
+		<div id="">
 			<div id="accountnav">
 				<a href="myaccount.php#accountnav">Your Account Details</a> /
 				<a href="myaccount.php#checkoutHistory">Checkout History</a> /
 				<a href="myaccount.php#deleteAccount">Delete Account</a>
 			</div>
-			<div class="acc-content">
-				<div class="subacc-content">
+			<div class="p-3">
+				<div>
 
 					<!-- Form for GENERAL INFORMATION -->
 					<h1><?= $_SESSION['username']; ?>'s Account</h1>
@@ -104,7 +104,7 @@ $(document).ready(function() {
 							<tr>
 							<td class="tdacc-details">Current Address:</td>
 							<td class="tdacc-details">
-							<textarea name="myaddress" style="width: 150%;"><?= $_SESSION['address'];?></textarea>
+							<textarea name="myaddress"><?= $_SESSION['address'];?></textarea>
 						</td>
 						</tr>
 						<tr>
@@ -122,9 +122,9 @@ $(document).ready(function() {
 						</tr>
 					</table>
 						<input type="submit" name="newchanges" value="Update Address" class="savechanges" />
-					
-					</form>
 
+					</form>
+<br>
 
 					<hr>
 
@@ -161,7 +161,7 @@ $(document).ready(function() {
 				<hr>
 
 				<!-- Display the Checkout History -->
-				<div id="checkoutHistory">
+				<div id="checkoutHistory" class="mt-5">
 					<h1>My Checkout History</h1>
 					<hr>
 					<div id="checkoutHistory_content">
