@@ -2,15 +2,28 @@
 *	- HTML elements
 *	- Website Colors
 *	- Padding and Margin
+*	- Website Fonts
 *	- FONTS
 *	- Images
 *	- Buttons
 *   - MODAL
 *	- Navigation
+*	- Footer
 *	- Home
-*
-*
+*	- About
+*	- FAQs
+*	- Contacts
+*	- Products
+*	- Specific Products
+*	- Login and Register
+*	- Basket Page
+*	- My Account Page
+*	- Checkout Page
+*	- Confirmation Page
+*	- Success Page
+*	- More Features
 */
+
 body {
 	margin:0;
 
@@ -36,17 +49,6 @@ body {
 	color: #13c62e;
 }
 /* END OF WEBSITE COLORS ----------------------------------- */
-
-
-
-
-
-/* WEBSITE FONTS ----------------------------------- */
-@font-face{font-family: lemon;src: url(fonts/lemontuesday.otf);}
-@font-face{font-family: oswald;src: url(fonts/oswald.ttf);}
-@font-face{font-family: oswaldreg;src: url(fonts/Oswald-Regular.ttf);}
-@font-face{font-family: consolai; src: url(consolai.ttf);}
-/* END OF WEBSITE FONTS ----------------------------------- */
 
 
 
@@ -133,6 +135,17 @@ body {
 	}
 }
 /* END OF PADDING AND MARGIN ----------------------------------- */
+
+
+
+
+
+/* WEBSITE FONTS ----------------------------------- */
+@font-face{font-family: lemon;src: url(fonts/lemontuesday.otf);}
+@font-face{font-family: oswald;src: url(fonts/oswald.ttf);}
+@font-face{font-family: oswaldreg;src: url(fonts/Oswald-Regular.ttf);}
+@font-face{font-family: consolai; src: url(consolai.ttf);}
+/* END OF WEBSITE FONTS ----------------------------------- */
 
 
 
@@ -1070,4 +1083,5 @@ a.Onow:hover , a.Snow:hover , input.Snow:hover {
 	color: #fff;
 	transition: .3s ease;
 }
+/* END OF MORE FEATURES ----------------------------------- */
 
