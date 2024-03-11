@@ -52,38 +52,38 @@
 					<h4><b>Your Details</b></h4>
 					<!--<p class="text-danger font-16">Please make sure you have entered your <b>correct address</b>. We're not responsible for incorrect addresses.</p>-->
 					<div class="text-center font-20">
-						<table>
-						<tr>
-							<td class="td-login text-end fw-bold" style="width: 40%;">First Name:</td>
-							<td class="td-login text-start" style="width: 60%;">&nbsp;<?= $_SESSION['checkout']['username']; ?></td>
+						<table class="w-100">
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold">First Name:</td>
+							<td class="col-7 td-login text-start">&nbsp;<?= $_SESSION['checkout']['username']; ?></td>
 						</tr>
-						<tr>
-							<td class="td-login text-end fw-bold" style="width: 40%;">Last Name:</td>
-							<td class="td-login text-start" style="width: 60%;">&nbsp;<?= $_SESSION['checkout']['lastname']; ?></td>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >Last Name:</td>
+							<td class="col-7 td-login text-start" >&nbsp;<?= $_SESSION['checkout']['lastname']; ?></td>
 						</tr>
-						<tr>
-							<td class="td-login text-end fw-bold" style="width: 40%;">E-mail:</td>
-							<td class="td-login text-start" style="width: 60%;">&nbsp;<?= $_SESSION['checkout']['email']; ?></td>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >E-mail:</td>
+							<td class="col-7 td-login text-start" >&nbsp;<?= $_SESSION['checkout']['email']; ?></td>
 						</tr>
-						<tr>
-							<td class="td-login text-end fw-bold" style="width: 40%;">Contact Number:</td>
-							<td class="td-login text-start" style="width: 60%;">&nbsp;<?= $_SESSION['checkout']['contactnumber']; ?></td>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >Contact Number:</td>
+							<td class="col-7 td-login text-start" >&nbsp;<?= $_SESSION['checkout']['contactnumber']; ?></td>
 						</tr>
-						<tr>
-							<td class="td-login text-end fw-bold" style="width: 40%;">Address:</td>
-							<td class="td-login text-start" style="width: 60%;">&nbsp;<?= $_SESSION['checkout']['address']; ?></td>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >Address:</td>
+							<td class="col-7 td-login text-start" >&nbsp;<?= $_SESSION['checkout']['address']; ?></td>
 						</tr>
-						<tr>
-							<td class="td-login text-end fw-bold" style="width: 40%;">Barangay:</td>
-							<td class="td-login text-start" style="width: 60%;">&nbsp;<?= $_SESSION['checkout']['barangay']; ?></td>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >Barangay:</td>
+							<td class="col-7 td-login text-start" >&nbsp;<?= $_SESSION['checkout']['barangay']; ?></td>
 						</tr>
-						<tr>
-							<td class="td-login text-end fw-bold" style="width: 40%;">City: </td>
-							<td class="td-login text-start" style="width: 60%;">&nbsp;Imus, Cavite</td>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >City: </td>
+							<td class="col-7 td-login text-start" >&nbsp;Imus, Cavite</td>
 						</tr>
-						<tr>
-							<td class="td-login text-end fw-bold" style="width: 40%;">Postal Code: </td>
-							<td class="td-login text-start" style="width: 60%;">&nbsp;4103</td>
+						<tr class="row">
+							<td class="col-5 td-login text-end fw-bold" >Postal Code: </td>
+							<td class="col-7 td-login text-start" >&nbsp;4103</td>
 						</tr>
 						</table>
 					</div>

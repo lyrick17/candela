@@ -27,7 +27,7 @@
 
 		<div id="faq-body" class="row gx-lg-3 gx-0">
 
-			<div class="col-lg-8 py-3">
+			<div class="col-lg-7 col-xl-8 py-3">
 				<div>
 					<!-- loop through the faqs information and display them-->
 					<?php 
@@ -45,7 +45,7 @@
 			</div>
 
 			<!-- FAQ SIDEBAR -->
-			<div class="col-lg-4 py-3 mx-auto">
+			<div class="col-lg-5 col-xl-4 py-3 mx-auto">
 				<div id="faq-sidebar" class="sidebar-box-1">
 				<hr>
 					<section class="font-20 text-center fw-bold">

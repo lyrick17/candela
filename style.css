@@ -41,6 +41,17 @@ body {
 
 
 
+/* WEBSITE FONTS ----------------------------------- */
+@font-face{font-family: lemon;src: url(fonts/lemontuesday.otf);}
+@font-face{font-family: oswald;src: url(fonts/oswald.ttf);}
+@font-face{font-family: oswaldreg;src: url(fonts/Oswald-Regular.ttf);}
+@font-face{font-family: consolai; src: url(consolai.ttf);}
+/* END OF WEBSITE FONTS ----------------------------------- */
+
+
+
+
+
 /* PADDING AND MARGIN ----------------------------------- */
 
 /* For Even Smaller Devices */
@@ -908,9 +919,6 @@ body {
 	display: inline-block;
 }
 
-.shipping-fee {
-	margin: 30px;
-}
 
 
 .dismiss-request {
@@ -968,6 +976,21 @@ body {
 	display: inline-block;
 	text-align: center;
 }
+.blue_button{
+	padding: 5px 20px;
+	background-color: #29799e;
+	border-width: 1px;
+	border-color: #267295;
+	border-style: solid;
+	border-radius: 5px;
+	color: #fff;
+	transition: all .2s ease;
+}
+.blue_button:hover {
+	background-color: #f99b46;
+	border-color: #fbd27e;
+	color: #fff;
+}
 /* END OF CHECKOUT PAGE ----------------------------------- */
 
 
@@ -987,89 +1010,14 @@ body {
 	border-color: black;
 	border-width: 1px;
 	background-color: #ececec;
-
 }
 /* END OF CONFIRMATION PAGE ----------------------------------- */
 
-	/* TERMS AND CONDITIONS*/
-	#modal_terms {
-		border-style: none;
-		background-color: #fff;
-		border-width: none;
-		border-color: none;
-		border-radius: none;
-		margin: 0;
-		padding: 0;
-	}
-
-
-/* ---FEATURES--- */
-
-
-a {
-	text-decoration: none;
-	color: #000; 
-	transition: .3s ease;
-	}/*SOON-TO-BE-EXPELLED*/
-a:hover {
-	color: #f6a708;
-	text-decoration: none;
-}
-a.Onow:hover , a.Snow:hover , input.Snow:hover {
-	background-color: #fff;
-	border-color:#dedede;
-	cursor: pointer;
-	color: #f6a708;
-}
-@font-face{font-family: lemon;src: url(fonts/lemontuesday.otf);}
-@font-face{font-family: oswald;src: url(fonts/oswald.ttf);}
-@font-face{font-family: oswaldreg;src: url(fonts/Oswald-Regular.ttf);}
-@font-face{font-family: consolai; src: url(consolai.ttf);}
-.Onow , .Snow {
-	font-family: oswald; text-decoration: none;
-	font-weight: bolder; font-size: 25px;
-	letter-spacing: 5px;
-	border-radius: 10px;
-	border-color: #f99b46;
-	border-width: 2px;
-	border-style: solid;
-	padding: 10px 40px;
-	background-color: #f99b46;
-	color: #fff;
-	transition: .3s ease;
-}
 
 
 
 
-/* ---CHECKOUT--- */
-
-#form_checkout {
-	text-align: left;
-	padding: 0px 10px;
-}
-#form_checkout > p {
-	text-align: center;
-	font-size: 16px;
-}
-#form_checkout > label {
-	padding-left: 5px;
-}
-.blue_button{
-	padding: 5px 20px;
-	background-color: #29799e;
-	border-width: 1px;
-	border-color: #267295;
-	border-style: solid;
-	border-radius: 5px;
-	color: #fff;
-	transition: all .2s ease;
-}
-.blue_button:hover {
-	background-color: #f99b46;
-	border-color: #fbd27e;
-	color: #fff;
-}
+/* SUCCESS PAGE ----------------------------------- */
 .lend_feedback {
 	font-size: 120%;
 	padding: 5px 15px;
@@ -1086,8 +1034,40 @@ a.Onow:hover , a.Snow:hover , input.Snow:hover {
 	color: #000;
 	border-width: 3px;
 }
-form#addr_save > input {
-	padding: 10px;
-	transition: .2s ease;
-	margin: 0 10px;
+/* END OF SUCCESS PAGE ----------------------------------- */
+
+
+
+
+
+/* MORE FEATURES ----------------------------------- */
+a {
+	text-decoration: none;
+	color: #000; 
+	transition: .3s ease;
 }
+a:hover {
+	color: #f6a708;
+	text-decoration: none;
+}
+a.Onow:hover , a.Snow:hover , input.Snow:hover {
+	background-color: #fff;
+	border-color:#dedede;
+	cursor: pointer;
+	color: #f6a708;
+}
+
+.Onow , .Snow {
+	font-family: oswald; text-decoration: none;
+	font-weight: bolder; font-size: 25px;
+	letter-spacing: 5px;
+	border-radius: 10px;
+	border-color: #f99b46;
+	border-width: 2px;
+	border-style: solid;
+	padding: 10px 40px;
+	background-color: #f99b46;
+	color: #fff;
+	transition: .3s ease;
+}
+

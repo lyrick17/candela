@@ -64,9 +64,17 @@ Further Upgrades to do:
     - checkout                                                          - DONE 3-9-24
     - confirmation                                                      - DONE 3/10/24
     - my account (general info)                                         - DONE 3-9-24
-    - my account (CHECKOUT HISTORY)                                     -
-    - success                                                           -
-    - ONOW and SNOW buttons
+    - my account (CHECKOUT HISTORY)                                     - TO BE REMOVED 
+    - success                                                           - DONE 3-11-24
+    - ONOW and SNOW buttons                                             - OKI, DONT TOUCH IT
+    
+- Features to Be added:
+    - Current orders to be shipped, delivered
+    - Checkout History and Basket on Front page when user is signed in  - 
+    - picture of products in basket in checkout, confirmation, success  -
+    - remove checkout history on MyAccount
+- Admin Features:     
+    - 
 - SMTP for:
     - sending contact from
     - register, welcome to Candela
@@ -74,12 +82,4 @@ Further Upgrades to do:
     - order is on the way
     - order is delivered
     - deleted an account
-- admin panels
 
-
-Specifications:
-For Registration:
-- Username and Lastname -   must be atmost 255 characters.
-- Email                 -   must be valid, unique per account, atmost 100 characters.
-- Contact number        -   must start at 09, and then 11 digits only.
-- Password              -   must be atleast 8 characters.
