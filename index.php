@@ -23,17 +23,33 @@
 
 	<!-- FIRST CONTENT - Front Page Design -->
 	<div id="welcome-page" class="row g-0 padding-y-1 padding-x-3">
+		
+		<!-- 1. The Usual Front-Page Design -->
+		<!-- 2. New User, no order Design -->
+		<!-- 3. Basket filled, not ordered yet -->
+		<!-- 4. Order processing design -->
+		<!-- 5. User has History of Orders online -->
 
-		<div id="tagline-description" class="col-md-6 order-2 text-center">
-			<div id="tagline" class="font-30">Indulge in the New Faces of Candles<br /></div>
-			<div id="description" class="font-20">Candela provides you new and unique styles of candles with endearming aroma, providing relaxation through its scent.</div>
-			<a href="product.php" class="Onow">ORDER NOW</a>
-		</div>
+		<?php if (!isset($_SESSION['id'])): ?>
+			<div id="tagline-description" class="col-md-6 order-2 text-center">
+				<div id="tagline" class="font-30">Indulge in the New Faces of Candles<br /></div>
+				<div id="description" class="font-20">Candela provides you new and unique styles of candles with endearming aroma, providing relaxation through its scent.</div>
+				<a href="product.php" class="Onow">ORDER NOW</a>
+			</div>
+		<?php else: ?>
+			<div id="tagline-description" class="col-md-6 order-2 text-center">
+				<div id="tagline" class="font-30">Do Not Miss out Candela's Aroma<br /></div>
+				<div id="description" class="font-20">Fill your home with a beautiful scent of Candela's Aroma. We offer the best candles with eye-catching food designs.</div>
+				<a href="product.php" class="Onow">GRAB YOURS NOW</a>
+			</div>
+		<?php endif; ?>
 
-		<div id="product-picture" class="col-md-6 order-1">
+		<div id="product-picture" class="col-md-6 order-1 text-center">
 			<img src="images/home-ad.png" id="home-candela" alt="5 New Food Candles! Free Shipping for Every P2,000 Orders!" />
 			<br />
 		</div>
+
+
 
 	</div>
 	

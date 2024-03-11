@@ -97,7 +97,7 @@
 
 			<!-- RIGHT SIDE - ORDERS -->
 			<div class="py-4 my-2 text-center col-lg-4">
-				<div class="sidebar-box-2 py-3">
+				<div class="sidebar-box-2 py-5">
 				<h4><b>Your Orders</b></h4>
 
 

@@ -1,7 +1,7 @@
-<div class="shipping-fee">
+<div class="shipping-fee p-4">
     <?php if ($total < 2000): ?>
             Shipping Fee : P50.00<br>
-            <span style="float: right;">
+            <span style="float: right;" class="p-2">
                 <?php 
                 $shippingfee = 50;
                 $subtotal = $total + $shippingfee; 
