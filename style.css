@@ -385,6 +385,39 @@ body {
 	padding: 20px;
 }
 
+/* FOR MY ORDER SECTION */
+@media (min-width: 0px) {
+	.recent-order-img {
+		width: 90%;
+		height: auto;
+	}
+}
+@media (min-width: 992px) {
+	.recent-order-img {
+		width: 50%;
+		height: auto;
+	}
+}
+.order-buttons {
+	padding: 4px 10px;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 5px;
+	background-color: #dcdcdc;
+	border-color: #dcdcdc;
+
+}
+.order-buttons.active {
+	background-color: #f99b46;
+	border-color: #f99b46;
+}
+
+.order-buttons:hover {
+	background-color: #f99b46;
+	transition: .3s ease;
+	color: initial;
+}
+
 /* FOR FEATURED PRODUCT SECTION */
 #featured-items {
 	color: #000;

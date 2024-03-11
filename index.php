@@ -30,27 +30,85 @@
 		<!-- 4. Order processing design -->
 		<!-- 5. User has History of Orders online -->
 
-		<?php if (!isset($_SESSION['id'])): ?>
-			<div id="tagline-description" class="col-md-6 order-2 text-center">
-				<div id="tagline" class="font-30">Indulge in the New Faces of Candles<br /></div>
-				<div id="description" class="font-20">Candela provides you new and unique styles of candles with endearming aroma, providing relaxation through its scent.</div>
-				<a href="product.php" class="Onow">ORDER NOW</a>
-			</div>
-		<?php else: ?>
+		<?php if (isset($_SESSION['id'])):
+				$orders = Orders::get_all_orders($_SESSION['id']);
+				if ($orders):
+		?>
+					<div id="tagline-description" class="col-lg-9 text-center">
+						<div id="tagline" class="font-30">My Orders<br /></div>
+						<div id="order-buttons">
+							<button class="order-buttons active">Recent Orders</button>
+							<button class="order-buttons">To Receive</button>
+							<button class="order-buttons">Delivered</button>
+						</div>
+		<?php		while($order = mysqli_fetch_array($orders, MYSQLI_ASSOC)): 
+						$timestamp = strtotime($order['checked_out']);
+						$items = json_decode($order['products'], true);
+						$items = array_filter($items);
+		?>
+			<!-- user is logged in, and has recent orders -->
+							<hr />
+							<div class="row gx-0">
+								<div class="col-6 text-start">Order Number: <i><?= $order['order_id']; ?></i></div>
+								<div class="col-6 text-end">Status: <?= $order['delivered']; ?></div>
+							</div>
+							<div class="row gx-0">
+								<div class="col-6 text-start">Order Date: <i><?= date('m/d/Y H:i:s', $timestamp); ?> , <?= date('l', $timestamp); ?></i></div>
+								<div class="col-6 text-end">Total: P<?= $order['total']; ?></div>
+							</div>
+							<div class="items">
+							<?php 
+								foreach ($items as $product_id => $quantity):
+									$product = Products::get_product_info($product_id);
+									if (!$product) continue; // suppressing the error, must be revised
+									$product = mysqli_fetch_array($product, MYSQLI_ASSOC);
+									$product_total = $product['price'] * $quantity;
+							?>
+									<div class="row gx-0">
+										<div class="col"><img src="<?= $product['image'];?>" class="recent-order-img"/></div>
+										<div class="col text-start">
+											<b class="font-20"><?= $product['name']; ?></b><br />
+											P<?= $product['price']; ?><br />
+											Quantity: <?= $quantity; ?>
+										</div>
+										<div class="col font-20">
+											Total Amount:<br />
+											P<?= $product_total ?>
+										</div>
+									</div>
+									<hr>
+							<?php endforeach; ?>
+								
+							</div> <!-- end of product row -->
+		<?php 		endwhile; ?>
+					</div>
+					<div id="product-picture" class="col-lg-3 text-center">
+						Hello<br />
+					</div>
+		<?php 	else: ?>
+			<!-- user is logged in, and has no pending orders -->
 			<div id="tagline-description" class="col-md-6 order-2 text-center">
 				<div id="tagline" class="font-30">Do Not Miss out Candela's Aroma<br /></div>
 				<div id="description" class="font-20">Fill your home with a beautiful scent of Candela's Aroma. We offer the best candles with eye-catching food designs.</div>
 				<a href="product.php" class="Onow">GRAB YOURS NOW</a>
 			</div>
+			<div id="product-picture" class="col-md-6 order-1 text-center">
+				<img src="images/home-ad.png" id="home-candela" alt="5 New Food Candles! Free Shipping for Every P2,000 Orders!" />
+				<br />
+			</div>
+		<?php 	endif; ?>
+		<?php else: ?>
+		<!-- user is not logged in -->
+			<div id="tagline-description" class="col-md-6 order-2 text-center">
+				<div id="tagline" class="font-30">Indulge in the New Faces of Candles<br /></div>
+				<div id="description" class="font-20">Candela provides you new and unique styles of candles with endearming aroma, providing relaxation through its scent.</div>
+				<a href="product.php" class="Onow">ORDER NOW</a>
+			</div>
+			<div id="product-picture" class="col-md-6 order-1 text-center">
+				<img src="images/home-ad.png" id="home-candela" alt="5 New Food Candles! Free Shipping for Every P2,000 Orders!" />
+				<br />
+			</div>
 		<?php endif; ?>
-
-		<div id="product-picture" class="col-md-6 order-1 text-center">
-			<img src="images/home-ad.png" id="home-candela" alt="5 New Food Candles! Free Shipping for Every P2,000 Orders!" />
-			<br />
-		</div>
-
-
-
 	</div>
 	
 

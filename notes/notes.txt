@@ -70,14 +70,18 @@ Further Upgrades to do:
     
 - Features to Be added:
     - Current orders to be shipped, delivered
-    - Checkout History and Basket on Front page when user is signed in  - 
+    - Checkout History on Front page when user is signed in  - 
     - picture of products in basket in checkout, confirmation, success  -
     - remove checkout history on MyAccount
     - notes on delivered in checkout_orders
-        - Order Placed
-        - Product Prepared
-        - Out for Delivery
+        - Recent orders
+        - To Receive
+            - Product Prepared
+            - Out for Delivery
         - Delivered
+        - Delivered
+    - Quantity FetchAPI on basket page
+    - 
 - Admin Features:     
     - 
 - SMTP for:
