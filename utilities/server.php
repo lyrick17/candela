@@ -208,6 +208,18 @@ class Orders {
 		return ($result) ? $result : false;
 	
 	}
+	
+	// get all not delivered orders of a specific user
+	static function get_recent_orders($user_id) {
+		global $mysqli;
+		$user_id = test_input($mysqli, $user_id) ?? "";
+
+		$query = "SELECT * FROM checkout_orders WHERE user_id = '$user_id' AND delivered NOT LIKE 'delivered' OR delivered IS NULL ORDER BY checkout_id DESC";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? $result : false;
+	
+	}
 
 	// get the recent order of a specific user
 	static function get_order($order_id) {

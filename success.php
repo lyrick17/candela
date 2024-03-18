@@ -45,25 +45,28 @@
 				<h2>Your Order Id is: <?= $_SESSION['recent_order_id']; ?></h2>
 				<p>You've successfully ordered:</p>
 
-
-				<p style="font-size: 150%;">
-					<?php 
-						foreach ($items as $product_id => $quantity) {
-							$product = Products::get_product_info($product_id);
-							if (!$product) continue;
-							$product = mysqli_fetch_array($product, MYSQLI_ASSOC);
-							$product_total = $product['price'] * $quantity;
-								echo $quantity . " <b>" . $product['name'] . "/s</b> : P" . $product_total . "<br>";
-						}
-					?>
-				</p>
+				<div class="w-100">
+					<div class="sidebar-box-3 font-25 mx-auto d-inline-block p-5">
+				<?php 
+					foreach ($items as $product_id => $quantity):
+						$product = Products::get_product_info($product_id);
+						if (!$product) continue;
+						$product = mysqli_fetch_array($product, MYSQLI_ASSOC);
+						$product_total = $product['price'] * $quantity;
+				?>
+							<hr>
+							<img src="<?= $product['image'] ?>"  alt="<?= $product['name'] ?>" height="100"><br />
+							<?php echo $quantity . " <b>" . $product['name'] . "/s</b> : P" . $product_total . "<br>";?>
+				<?php endforeach; ?>
+					</div>
+				</div>
 				<div class="m-4">
 					<span>Shipping Fee: P<?= $order['shipping_fee']; ?></span>
 				</div>
 				<p>For a total of:</p>
 
 
-				<p style="font-size: 150%;">
+				<p class="font-35">
 					P<?= $order['total']; ?>
 				</p>
 
@@ -71,7 +74,7 @@
 				<p>To be delivered at:</p>
 
 
-				<p style="font-size: 150%;">
+				<p class="font-35">
 					<?= $complete_address; ?><br>
 					<span class="font-20">Imus City, Cavite</span>
 				</p>
@@ -90,7 +93,6 @@
 				<!-- CHANGING INFORMATION -->
 				<div class="py-3">
 
-					<hr>
 
 					<?php if (isset($_SESSION['id'])): ?>
 						<!-- Changing Address -->
@@ -163,8 +165,7 @@
 						</div>
 						<div id="change_contactnumber_success" style="display:none;">
 							<p class="changed-addr-num"><b>Contact Number</b> has been successfully changed.</p>
-						</div>
-						<hr>		
+						</div>	
 					<?php endif; ?>
 					
 

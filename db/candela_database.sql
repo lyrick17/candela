@@ -12,7 +12,7 @@ CREATE TABLE `users` (
 CREATE TABLE `addresses` (
   `address_id` mediumint PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` mediumint NOT NULL,
-  `address` text NOT NULL,
+  `user_address` text NOT NULL,
   `barangay` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL
 );
