@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             // 1. Create an Order_id 
             // 2. Get the Total Order
             // 3. using session basket, create a json string that would store it in the database
-            // 4. Insert all information in checkout_orders table in db
+            // 4. Insert all information in checkout_orders table in db (inclluding delivery message)
             // 5. if step 4 is successful, update the stocks in products table
             // 6. remove the basket records in database if user is set
             // 7. unset all  session checkout and baskets
@@ -59,10 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
             // 4.
             if (isset($_SESSION['id'])) {
+                $delivered = "Order Placed";
                 $orders_stmt = mysqli_prepare($mysqli, "INSERT INTO `checkout_orders` 
-                                (user_id, order_id, firstname, lastname, email, contactnumber, address, barangay, products, shipping_fee, total) 
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                mysqli_stmt_bind_param($orders_stmt, "issssssssis", 
+                                (user_id, order_id, firstname, lastname, email, contactnumber, address, barangay, products, shipping_fee, total, delivered) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                mysqli_stmt_bind_param($orders_stmt, "issssssssiss", 
                     $_SESSION['id'],
                     $order_id,
                     $_SESSION['checkout']['username'],
@@ -73,13 +74,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     $_SESSION['checkout']['barangay'],
                     $json_basket,
                     $shipping_fee,
-                    $total_order);
+                    $total_order,
+                    $delivered);
                     
             } else {
                 $orders_stmt = mysqli_prepare($mysqli, "INSERT INTO `checkout_orders` 
-                                (order_id, firstname, lastname, email, contactnumber, address, barangay, products, shipping_fee, total) 
+                                (order_id, firstname, lastname, email, contactnumber, address, barangay, products, shipping_fee, total, delivered) 
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                mysqli_stmt_bind_param($orders_stmt, "ssssssssis",
+                mysqli_stmt_bind_param($orders_stmt, "ssssssssiss",
                     $order_id,
                     $_SESSION['checkout']['username'],
                     $_SESSION['checkout']['lastname'],
@@ -89,7 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     $_SESSION['checkout']['barangay'],
                     $json_basket,
                     $shipping_fee,
-                    $total_order);
+                    $total_order,
+                    $delivered);
                 
             }
             $result = mysqli_stmt_execute($orders_stmt);

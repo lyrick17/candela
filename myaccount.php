@@ -162,66 +162,9 @@ $(document).ready(function() {
 
 				<!-- Display the Checkout History -->
 				<div id="checkoutHistory" class="mt-5">
-					<h1>My Checkout History</h1>
+					<h3>My Checkout History</h3>
 					<hr>
-					<div id="checkoutHistory_content">
-						<?php 
-							$user_orders = Orders::get_all_orders($_SESSION['id']);
-							if ($user_orders):
-								while ($order = mysqli_fetch_array($user_orders)):
-									$timestamp = strtotime($order['checked_out']);
-									$order = Orders::get_order($order['order_id']);
-									if ($order) {
-										$items = json_decode($order['products'], true);
-										$items = array_filter($items);
-									} else {
-										// the process hasnt processed well
-									}
-						?>
-								<div class="paginate">
-									<hr class="chk-hrstyle">
-									<p>Ordered last: <?= date('m/d/Y H:i:s', $timestamp); ?> , <?= date('l', $timestamp); ?></p>
-									<table class="chk-hrstyle-table">
-										<tr>
-											<td class="chk-hrstyle-table-td">
-											<?php 
-											foreach ($items as $product_id => $quantity) {
-												$product = Products::get_product_info($product_id);
-												if (!$product) continue;
-												$product = mysqli_fetch_array($product, MYSQLI_ASSOC);
-												$product_total = $product['price'] * $quantity;
-													echo $quantity . " <b>" . $product['name'] . "/s</b> : P" . $product_total . "<br>";
-											}
-											?>
-											</td>
-											<td class="chk-hrstyle-table-td">
-												Shipping Fee: P<?= $order['shipping_fee']; ?>
-											</td>
-											<td class="chk-hrstyle-table-td">
-												A Total of: P<?= $order['total']; ?>
-											</td>
-											<td class="chk-hrstyle-table-td">
-												<span class="field-success-myaccount"><?= $order['delivered']; ?></span>
-											</td>
-											<?php if ($order['delivered'] != "") : ?>
-											<td class="chk-hrstyle-table-td">
-												<a href="myaccount.php?action=deletechk&id=<?= $order['checkout_id'] ?>" style="color:red;"> Delete Recorded Orders</span>
-											</td>
-											<?php endif; ?>
-										</tr>
-									</table>
-								</div>
-
-							<?php endwhile; ?>
-								<div id="page-nav-content">
-									<div id="page-nav"></div>
-								</div>
-						<?php else: ?>
-								<p> You haven't checked out.</p>
-								<a href="product.php" class="basket_buttons"><< Keep Shopping</a>
-								<a href="basket.php" class="basket_buttons">Go To My Basket</a>
-						<?php endif; ?>
-					</div>
+					<a href="index.php" class="basket_buttons">Go to Checkout History</a>
 				</div>
 
 				<!-- Form for DELETE ACCOUNT-->

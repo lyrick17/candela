@@ -6,6 +6,7 @@
 		</div>
 		
 		<div id="navbar-expand" class="justify-content-center">
+			<a href="index.php" class="navi">Home</a>
 			<a href="product.php" class="navi">Product</a>
 			<a href="faqs.php" class="navi">FAQs</a>
 			<a href="about.php" class="navi">About</a>

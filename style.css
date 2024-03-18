@@ -417,6 +417,11 @@ body {
 	transition: .3s ease;
 	color: initial;
 }
+.order-status {
+	background-color: #f7d5b8;
+	padding: 5px 20px;
+	border-radius: 20px;
+}
 
 /* FOR FEATURED PRODUCT SECTION */
 #featured-items {
