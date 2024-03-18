@@ -216,6 +216,12 @@ body {
 	border-style: solid;
 	border-radius: 5px;
 }
+.sidebar-box-3 {
+	border-color: #eaeaea #f99b46;
+	border-width: 2px 7px;
+	border-style: solid;
+	border-radius: 5px;
+}
 
 /* END OF SIDEBAR ----------------------------------- */
 

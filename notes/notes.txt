@@ -80,8 +80,8 @@ Further Upgrades to do:
         - Delivered                                                     - DONE 3-18-24
             - Delivered                                                 - DONE 3-18-24
     - Quantity FetchAPI on basket page (used GET variable instead)      - DONE 3-18-24
-    - picture of products in basket in checkout, confirmation, success  - 
-    -  limit number of products in side-basket                          -
+    - picture of products in basket in checkout, confirmation, success  - DONE 3-18-24
+    -  limit number of products in side-basket                          -   
     - 
 - Admin Features:     
     - 

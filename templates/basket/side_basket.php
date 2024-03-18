@@ -6,10 +6,19 @@
             $product = mysqli_fetch_array($get_products, MYSQLI_ASSOC);
 ?>
             <tr class="row p-2">
-                <td class="pbasket-td col-5"><?= $product['name'] ?></td>
+                
+                <?php if (isset($remove_item) && $remove_item): // this is displayed WITHOUT picture ?>
+                    <td class="pbasket-td col-5"><?= $product['name'] ?></td>
+                <?php else: // this is displayed WITH picture ?>
+                    <td class="pbasket-td col-4 text-center"><img src="<?= $product['image'] ?>"  alt="<?= $product['name'] ?>" height="75"></td>
+                    <td class="pbasket-td col-3"><?= $product['name'] ?></td>
+                <?php  endif; ?>
+
                 <td class="pbasket-td col-2"><?= $quantity ?></td>
+
                 <td class="pbasket-td col-3">P<?= number_format($quantity * $product['price'], 2) ?></td>
-                <?php if (isset($remove_item) && $remove_item): ?>
+                
+                <?php if (isset($remove_item) && $remove_item): // this is displayed WITHOUT picture ?>
                 <form method="post" action="product.php">
                     <td class="pbasket-td col-2">
                         <input type="hidden" name="product_id" value="<?= $product_id ?>" />
