@@ -106,8 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 }
                 
                 // 6.
-                $remove_basket = mysqli_prepare($mysqli, "DELETE FROM `basket_items` WHERE product_id = ? AND user_id = ?");
-                mysqli_stmt_bind_param($remove_basket, "ii", $product_id, $_SESSION['id']);
+                $remove_basket = mysqli_prepare($mysqli, "DELETE FROM `basket_items` WHERE user_id = ?");
+                mysqli_stmt_bind_param($remove_basket, "i", $_SESSION['id']);
                 mysqli_stmt_execute($remove_basket);
                 
                 

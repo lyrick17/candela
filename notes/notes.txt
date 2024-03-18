@@ -80,11 +80,30 @@ Further Upgrades to do:
         - Delivered                                                     - DONE 3-18-24
             - Delivered                                                 - DONE 3-18-24
     - Quantity FetchAPI on basket page (used GET variable instead)      - DONE 3-18-24
-    - picture of products in basket in checkout, confirmation, success  - DONE 3-18-24
-    -  limit number of products in side-basket                          -   
-    - 
+    - picture of products in basket in checkout, confirmation, success  - DONE 3-18-24 
 - Admin Features:     
+    - admin panel
+        - day, and if friday, show message, time to deliver orders
+        - recent orders categorized with their status
+            - button to go to checkout management
+        - list of products, and their stocks
+            - button to go to product management
+    - admin checkout management
+        - able to  view orders
+        - able to cancel orders 
+            (changes status to cancelled, brings back stocks)
+        - mark status per order
+    - admin product management
+        - able to add product
+        - able to change product information
+        - able to add stocks
+    - admin, list of Users
+        - able to change user information,
+        - able to delete Users
     - 
+
+    
+-  limit number of products in side-basket                          -   
 - SMTP for:
     - sending contact from
     - register, welcome to Candela
