@@ -161,8 +161,8 @@
 										$product_total = $product['price'] * $quantity;
 								?>
 										<div class="row gx-0">
-											<div class="col" ><img src="<?= $product['image'];?>" class="recent-order-img" /></div>
-											<div class="col text-start">
+											<div class="col-md-4" ><img src="<?= $product['image'];?>" class="recent-order-img-admin" /></div>
+											<div class="col-md-8 text-start px-2">
 												<b class="font-20"><?= $product['name']; ?></b><br />
 												P<?= $product['price']; ?><br />
 												Quantity: <?= $quantity; ?> <br />

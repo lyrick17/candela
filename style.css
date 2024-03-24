@@ -401,9 +401,13 @@ body {
 		width: 90%;
 		height: auto;
 	}
+	.recent-order-img-admin {
+		width: 35%;
+		height: auto;
+	}
 }
 @media (min-width: 992px) {
-	.recent-order-img {
+	.recent-order-img, .recent-order-img-admin {
 		width: 35%;
 		height: auto;
 	}
