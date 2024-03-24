@@ -30,19 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         if ($_POST['orders'] == 1 && $status == "Order Placed") {
-            echo "c2";
             continue;
         } elseif ($_POST['orders'] == 2 && $status == "Product Prepared") {
-            echo "c3";
             continue;
         } elseif ($_POST['orders'] == 3 && $status == "Out for Delivery") {
-            echo "c4";
             continue;
         } elseif ($_POST['orders'] == 4 && $status == "Delivered") {
-            echo "c5";
             continue;
         } elseif ($_POST['orders'] == 5 && $status == "Cancelled") {
-            echo "c6";
             continue;
         }
         $update = Orders::update_status($order_id, $status);
