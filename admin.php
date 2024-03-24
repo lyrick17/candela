@@ -1,5 +1,6 @@
 <?php
 	require("utilities/server.php");
+	require("utilities/admin_update_status.php");
 	Restrict::remove_checkout_sess();
 	Restrict::remove_order_id_sess();
 ?>
@@ -65,6 +66,20 @@
 										<a href="admin.php?orders=4" class="order-buttons">Delivered</a>
 							<?php endif; ?>
 						</div>
+						<?php if (isset($_GET['orders'])): ?>
+							<form action="admin.php?orders=<?=$_GET['orders']?>" method="post" id="status-form">
+						<?php else: ?>
+							<form action="admin.php" method="post" id="status-form">
+						<?php endif; ?>
+							<?php if (isset($_GET['orders'])): ?>
+								<input type="hidden" name="orders" value="<?= $_GET['orders']; ?>" />
+							<?php else: ?>
+								<input type="hidden" name="orders" value="1" />
+							<?php endif; ?>
+							<div class="text-end px-3">
+								<span class="<?= $color ?>"><?= $status_change ?></span>
+								<input type="submit" value="Save Changes" class="btn btn-success" />
+							</div>
 		<?php		
 					// $_GET['orders'] = 1 -> recent orders
 					// $_GET['orders'] = 2 -> product prepared
@@ -109,73 +124,72 @@
 			<!-- user is logged in, and has recent orders -->
 							<div class="paginate">
 							<hr />
-								<div class="items">
-									<div class="px-2">
-										<div class="text-start py-1 font-25"><b>O/N:</b> <i><?= $order['order_id']; ?></i></div>
-										<div class="text-start py-1 font-25"><b>Addr:</b> <u><?= $order['address'] ?></u></div>
-									</div>
-									<div class="row gx-0 px-2">
-										<div class="col-md-6">
-											
-											<div class="text-start py-1"><b>Name:</b> <?= $order['firstname'] . " " . $order['lastname'] ?></div>
-											<div class="text-start py-1"><b>Email:</b> <?= $order['email'] ?></div>
-											<div class="text-start py-1"><b>Contact:</b> <?= $order['contactnumber'] ?></div>
+									<div class="items">
+										<div class="px-2">
+											<div class="text-start py-1 font-25"><b>O/N:</b> <i><?= $order['order_id']; ?></i></div>
+											<div class="text-start py-1 font-25"><b>Addr:</b> <u><?= $order['address'] ?></u></div>
 										</div>
-										<div class="col-md-6">
-											
-											<div class="text-start py-1"><b>Order Date:</b> <i><?= date('m/d/Y H:i:s', $timestamp); ?> , <?= date('l', $timestamp); ?></i></div>
-											<div class="text-start py-1">
-												<form method="post" id="<?= $order['order_id']; ?>">
-													<?php 
-														$current_order = 0;
-														if ($order['order_id'] == "Order Placed") $current_order = 1;
-														if ($order['delivered'] == "Product Prepared") $current_order = 2;
-														if ($order['delivered'] == "Out for Delivery") $current_order = 3;
-														if ($order['delivered'] == "Delivered") $current_order = 4;
-														?>
-													<b>Status:</b> 
-													<select>
-														<option <?php if ($current_order == 1) echo 'selected="selected"'; ?>>Order Placed</option>
-														<option <?php if ($current_order == 2) echo 'selected="selected"'; ?>>Product Prepared</option>
-														<option <?php if ($current_order == 3) echo 'selected="selected"'; ?>>Out for Delivery</option>
-														<option <?php if ($current_order == 4) echo 'selected="selected"'; ?>>Delivered</option>
-													</select>
-												</form>
+										<div class="row gx-0 px-2">
+											<div class="col-md-6">
+												
+												<div class="text-start py-1"><b>Name:</b> <?= $order['firstname'] . " " . $order['lastname'] ?></div>
+												<div class="text-start py-1"><b>Email:</b> <?= $order['email'] ?></div>
+												<div class="text-start py-1"><b>Contact:</b> <?= $order['contactnumber'] ?></div>
 											</div>
-											<div class="text-start py-1">
-												<b>Total Amount:</b> 
-												<span class="order-status">P<?= $order['total']; ?></span>
-												<?php if ($order['shipping_fee'] == 50): echo "with P50 shipping fee"; endif; ?>
-											</div>
-										</div>
-									</div>
-									<div class="row gx-0 px-2">
-									</div>
-								
-									<hr />
-								<?php 
-									foreach ($items as $product_id => $quantity):
-										$product = Products::get_product_info($product_id);
-										if (!$product) continue; // suppressing the error, must be revised
-										$product = mysqli_fetch_array($product, MYSQLI_ASSOC);
-										$product_total = $product['price'] * $quantity;
-								?>
-										<div class="row gx-0">
-											<div class="col-md-4" ><img src="<?= $product['image'];?>" class="recent-order-img-admin" /></div>
-											<div class="col-md-8 text-start px-2">
-												<b class="font-20"><?= $product['name']; ?></b><br />
-												P<?= $product['price']; ?><br />
-												Quantity: <?= $quantity; ?> <br />
-												Total Amount: <b>P<?= $product_total ?></b>
-											</div>
-											<div class="col font-20">
+											<div class="col-md-6">
+												
+												<div class="text-start py-1"><b>Order Date:</b> <i><?= date('m/d/Y H:i:s', $timestamp); ?> , <?= date('l', $timestamp); ?></i></div>
+												<div class="text-start py-1">
+														<?php 
+															$current_order = 0;
+															if ($order['order_id'] == "Order Placed") $current_order = 1;
+															if ($order['delivered'] == "Product Prepared") $current_order = 2;
+															if ($order['delivered'] == "Out for Delivery") $current_order = 3;
+															if ($order['delivered'] == "Delivered") $current_order = 4;
+															?>
+														<b>Status:</b> 
+														<select name="<?= $order['order_id']; ?>">
+															<option <?php if ($current_order == 1) echo 'selected="selected"'; ?>>Order Placed</option>
+															<option <?php if ($current_order == 2) echo 'selected="selected"'; ?>>Product Prepared</option>
+															<option <?php if ($current_order == 3) echo 'selected="selected"'; ?>>Out for Delivery</option>
+															<option <?php if ($current_order == 4) echo 'selected="selected"'; ?>>Delivered</option>
+														</select>
+												</div>
+												<div class="text-start py-1">
+													<b>Total Amount:</b> 
+													<span class="order-status">P<?= $order['total']; ?></span>
+													<?php if ($order['shipping_fee'] == 50): echo "with P50 shipping fee"; endif; ?>
+												</div>
 											</div>
 										</div>
-										<hr>
-								<?php endforeach; ?>
-								</div> <!-- end of product row items -->
+										<div class="row gx-0 px-2">
+										</div>
+									
+										<hr />
+									<?php 
+										foreach ($items as $product_id => $quantity):
+											$product = Products::get_product_info($product_id);
+											if (!$product) continue; // suppressing the error, must be revised
+											$product = mysqli_fetch_array($product, MYSQLI_ASSOC);
+											$product_total = $product['price'] * $quantity;
+									?>
+											<div class="row gx-0">
+												<div class="col-md-4" ><img src="<?= $product['image'];?>" class="recent-order-img-admin" /></div>
+												<div class="col-md-8 text-start px-2">
+													<b class="font-20"><?= $product['name']; ?></b><br />
+													P<?= $product['price']; ?><br />
+													Quantity: <?= $quantity; ?> <br />
+													Total Amount: <b>P<?= $product_total ?></b>
+												</div>
+												<div class="col font-20">
+												</div>
+											</div>
+											<hr>
+									<?php endforeach; ?>
+									</div> <!-- end of product row items -->				
 							</div> <!-- end of paginate -->
 		<?php 		endwhile; ?>
+					</form>
 		<?php 		if ($displayed_orders == 0): ?>
 						<hr />
 

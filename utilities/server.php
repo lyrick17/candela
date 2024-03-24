@@ -273,6 +273,18 @@ class Orders {
 		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
 
+	// update status of a specific order
+	static function update_status($order_id, $status) {
+		global $mysqli;
+		$order_id = test_input($mysqli, $order_id) ?? "";
+		$status = test_input($mysqli, $status) ?? "";
+
+		$query = "UPDATE checkout_orders SET delivered = '$status' WHERE order_id = '$order_id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	}
+
 }
 
 // Other repeatable codes for the website 
