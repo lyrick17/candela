@@ -266,7 +266,7 @@
 			
 			<div class="candela-btn-2">
 				<a href="product.php">
-					I Am Ready To Order >>>
+					I Am Ready To Order
 				</a>
 			</div>
 	</div>

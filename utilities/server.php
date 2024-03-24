@@ -198,6 +198,17 @@ class Basket {
 class Orders {
 	
 	// get all orders of a specific user
+	static function get_orders_admin() {
+		global $mysqli;
+
+		$query = "SELECT * FROM checkout_orders ORDER BY checkout_id DESC";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? $result : false;
+	
+	}
+
+	// get all orders of a specific user
 	static function get_all_orders($user_id) {
 		global $mysqli;
 		$user_id = test_input($mysqli, $user_id) ?? "";

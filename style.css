@@ -48,6 +48,10 @@ body {
 .color-2-green {
 	color: #13c62e;
 }
+
+.bg-color-2 {
+	background-color: #e89b00;
+}
 /* END OF WEBSITE COLORS ----------------------------------- */
 
 
@@ -406,6 +410,7 @@ body {
 }
 .order-buttons {
 	padding: 4px 10px;
+	margin-top: 10px;
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 5px;

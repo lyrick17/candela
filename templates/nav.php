@@ -11,6 +11,9 @@
 			<a href="faqs.php" class="navi">FAQs</a>
 			<a href="about.php" class="navi">About</a>
 			<a href="contact-us.php" class="navi">Contact Us</a>
+			<?php if (isset($_SESSION['type']) && $_SESSION['type'] == 1): ?>
+				<a href="admin.php" class="navi">Admin</a>
+			<?php endif; ?>
 		</div>
 		
 		<!-- BASKET -->
