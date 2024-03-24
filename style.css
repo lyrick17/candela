@@ -404,7 +404,7 @@ body {
 }
 @media (min-width: 992px) {
 	.recent-order-img {
-		width: 50%;
+		width: 35%;
 		height: auto;
 	}
 }

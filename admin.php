@@ -110,17 +110,46 @@
 							<div class="paginate">
 							<hr />
 								<div class="items">
-									<div>
-										<h3><?= $order['address'] ?></h3>
-										<p>
+									<div class="px-2">
+										<div class="text-start py-1 font-25"><b>O/N:</b> <i><?= $order['order_id']; ?></i></div>
+										<div class="text-start py-1 font-25"><b>Addr:</b> <u><?= $order['address'] ?></u></div>
 									</div>
 									<div class="row gx-0 px-2">
-										<div class="col-6 text-start py-1"><b>Order Number:</b> <i><?= $order['order_id']; ?></i></div>
-										<div class="col-6 text-end py-1"><b>Status:</b> <span class="order-status"><?= $order['delivered']; ?></span></div>
+										<div class="col-md-6">
+											
+											<div class="text-start py-1"><b>Name:</b> <?= $order['firstname'] . " " . $order['lastname'] ?></div>
+											<div class="text-start py-1"><b>Email:</b> <?= $order['email'] ?></div>
+											<div class="text-start py-1"><b>Contact:</b> <?= $order['contactnumber'] ?></div>
+										</div>
+										<div class="col-md-6">
+											
+											<div class="text-start py-1"><b>Order Date:</b> <i><?= date('m/d/Y H:i:s', $timestamp); ?> , <?= date('l', $timestamp); ?></i></div>
+											<div class="text-start py-1">
+												<form method="post" id="<?= $order['order_id']; ?>">
+													<?php 
+														$current_order = 0;
+														if ($order['order_id'] == "Order Placed") $current_order = 1;
+														if ($order['delivered'] == "Product Prepared") $current_order = 2;
+														if ($order['delivered'] == "Out for Delivery") $current_order = 3;
+														if ($order['delivered'] == "Delivered") $current_order = 4;
+														?>
+													<b>Status:</b> 
+													<select>
+														<option <?php if ($current_order == 1) echo 'selected="selected"'; ?>>Order Placed</option>
+														<option <?php if ($current_order == 2) echo 'selected="selected"'; ?>>Product Prepared</option>
+														<option <?php if ($current_order == 3) echo 'selected="selected"'; ?>>Out for Delivery</option>
+														<option <?php if ($current_order == 4) echo 'selected="selected"'; ?>>Delivered</option>
+													</select>
+												</form>
+											</div>
+											<div class="text-start py-1">
+												<b>Total Amount:</b> 
+												<span class="order-status">P<?= $order['total']; ?></span>
+												<?php if ($order['shipping_fee'] == 50): echo "with P50 shipping fee"; endif; ?>
+											</div>
+										</div>
 									</div>
 									<div class="row gx-0 px-2">
-										<div class="col-6 text-start py-1"><b>Order Date:</b> <i><?= date('m/d/Y H:i:s', $timestamp); ?> , <?= date('l', $timestamp); ?></i></div>
-										<div class="col-6 text-end py-1"><b>Total:</b> <span class="order-status">P<?= $order['total']; ?></span></div>
 									</div>
 								
 									<hr />
@@ -136,11 +165,10 @@
 											<div class="col text-start">
 												<b class="font-20"><?= $product['name']; ?></b><br />
 												P<?= $product['price']; ?><br />
-												Quantity: <?= $quantity; ?>
+												Quantity: <?= $quantity; ?> <br />
+												Total Amount: <b>P<?= $product_total ?></b>
 											</div>
 											<div class="col font-20">
-												Total Amount:<br />
-												P<?= $product_total ?>
 											</div>
 										</div>
 										<hr>
