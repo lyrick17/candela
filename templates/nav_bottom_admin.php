@@ -10,6 +10,12 @@
                     <a href="admin.php" class="navi">Dashboard</a>
 				</li>
                 <li>
+                    <a href="admin-products.php" class="navi">Products</a>
+				</li>
+                <li>
+                    <a href="admin-feedbacks.php" class="navi">Feedbacks</a>
+				</li>
+                <li>
                 <a href="index.php" class="navi">View Site</a>
 				</li>
             </ul>

@@ -83,16 +83,16 @@ Further Upgrades to do:
     - picture of products in basket in checkout, confirmation, success  - DONE 3-18-24 
 - Admin Features:     
     - admin panel
-        - day, and if friday, show message, time to deliver orders
-        - recent orders categorized with their status
-            - button to go to checkout management
+        - day, and if friday, show message, time to deliver orders      - DONE 3-28-24
+        - recent orders categorized with their status                   - DONE 3-28-24
+            - button to go to checkout management                       
         - list of products, and their stocks
             - button to go to product management
-    - admin checkout management
-        - able to  view orders
-        - able to cancel orders 
-            (changes status to cancelled, brings back stocks)
-        - mark status per order
+    - admin checkout management                                         - DONE 3-28-24
+        - able to  view orders                                          - DONE 3-28-24
+        - able to cancel orders                                         - DONE 3-28-24
+        (changes status to cancelled, brings back stocks)               - DONE 3-28-24
+        - mark status per order                                         - DONE 3-28-24
     - admin product management
         - able to add product
         - able to change product information
@@ -100,7 +100,7 @@ Further Upgrades to do:
     - admin, list of Users
         - able to change user information,
         - able to delete Users
-    - 
+    - admin, lisst of contact feedbacks,  just tables
 
     
 -  limit number of products in side-basket                          -   

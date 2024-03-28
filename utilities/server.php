@@ -110,6 +110,17 @@ class Products {
         
         return ($result && mysqli_num_rows($result) > 0) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
+
+	static function revert_stocks($id, $quantity) {
+		global $mysqli;
+		$id = test_input($mysqli, $id);
+		$quantity = test_input($mysqli, $quantity);
+
+		$query = "UPDATE products SET stocks = stocks + $quantity WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	}
 	
 	
 }
@@ -279,6 +290,17 @@ class Orders {
 		$order_id = test_input($mysqli, $order_id) ?? "";
 		$status = test_input($mysqli, $status) ?? "";
 
+		// revert the stocks if the order is cancelled
+		if ($status == "Cancelled") {
+			$order = Orders::get_order($order_id);
+			if ($order) {
+				$products = json_decode($order['products'], true);
+				foreach ($products as $product_id => $quantity) {
+					Products::revert_stocks($product_id, $quantity);
+				}
+			}
+		}
+			
 		$query = "UPDATE checkout_orders SET delivered = '$status' WHERE order_id = '$order_id'";
 		$result = @mysqli_query($mysqli, $query);
 

@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $order_id = test_input($mysqli, $order_id);
         $status = test_input($mysqli, $status);
-        echo $status;
         $status_messages = ['Order Placed', 'Product Prepared', 'Out for Delivery', 'Delivered', 'Cancelled'];
         if (!in_array($status, $status_messages)) {
             $color = 'text-danger';
