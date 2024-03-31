@@ -56,7 +56,7 @@
 									<div class="text-center py-3">
 										<!-- ITEM INFORMATION -->
 										<p class="font-20 pt-3 fw-bold"><?= $product['name']; ?></p>
-											<span class="text-success"></span>
+											<span id="change-message"></span>
 											<div class="row gx-0 py-2">
 												<div class="col-4 text-end">Price:</div>
 												<div class="col-8 text-start"><input type="number" name="products" class="product-quantity" min="1" value="<?= $product['price']; ?>" /></div>
