@@ -36,8 +36,10 @@
 		?>
 					<div id="tagline-description" class="col-lg-12 text-center">
 						<div id="tagline" class="font-30 m-2">Admin Dashboard<br /></div>
-						<div id="order-buttons">
+						<div id="order-buttons" class="">
+							<div class="row w-50 mx-auto">
 							<?php require("templates/admin/order_dashboard/order_buttons.php"); ?>
+							</div>
 						</div>
 						<?php if (isset($_GET['orders'])): ?>
 							<form action="admin.php?orders=<?=$_GET['orders']?>" method="post" id="status-form">
