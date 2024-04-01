@@ -1,5 +1,5 @@
 <?php 
-require("utilities/server.php"); // this file is called from FetchAPI, so we need to require the server
+
 $changes = 0;
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // product_id
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (!preg_match('/^[0-9.]+$/', $price) || !preg_match('/^[0-9.]+$/', $stocks)) {
         $response = ['error' => 1, 'type' => "error"];
         exit(json_encode($response));
-    } elseif (strlen($price) > 10 || (int) $stocks > 32,767) {
+    } elseif (strlen($price) > 10 || (int) $stocks > 32767) {
         $response = ['error' => 2, 'type' => "error"];
         exit(json_encode($response));
     }
@@ -24,11 +24,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $product = mysqli_fetch_array($product_info, MYSQLI_ASSOC);
         if ($product['price'] != $price) {
             // Update Price
-            $changes++;
+            $upd_price = Products::update_price($product_id, $price);
+            if ($upd_price) {
+                $changes++;
+            } else {
+                $response = ['error' => 3, 'type' => "error"];
+                exit(json_encode($response));
+            }
         }
         if ($product['stocks'] != $stocks) {
             // Update Stocks
-            $changes++;
+            $upd_stocks = Products::update_stocks($product_id, $stocks);
+            if ($upd_stocks) {
+                $changes++;
+            } else {
+                $response = ['error' => 3, 'type' => "error"];
+                exit(json_encode($response));
+            }
         }
     } else {
         $response = ['error' => 3, 'type' => "error"];

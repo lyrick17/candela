@@ -121,6 +121,30 @@ class Products {
 
 		return $result;
 	}
+
+	static function update_price($id, $newprice) {
+		global $mysqli;
+		$id = test_input($mysqli, $id);
+		$newprice = test_input($mysqli, $newprice);
+
+		$query = "UPDATE products SET price = $newprice WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	
+	}
+	
+	static function update_stocks($id, $newstocks) {
+		global $mysqli;
+		$id = test_input($mysqli, $id);
+		$newstocks = test_input($mysqli, $newstocks);
+
+		$query = "UPDATE products SET stocks = $newstocks WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	
+	}
 	
 	
 }
