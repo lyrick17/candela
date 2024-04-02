@@ -81,34 +81,59 @@ Further Upgrades to do:
             - Delivered                                                 - DONE 3-18-24
     - Quantity FetchAPI on basket page (used GET variable instead)      - DONE 3-18-24
     - picture of products in basket in checkout, confirmation, success  - DONE 3-18-24 
+
 - Admin Features:     
     - admin panel
         - day, and if friday, show message, time to deliver orders      - DONE 3-28-24
         - recent orders categorized with their status                   - DONE 3-28-24
-            - button to go to checkout management                       
-        - list of products, and their stocks
-            - button to go to product management
+        - list of products, and their stocks                            - DONE 4-1-24
+
     - admin checkout management                                         - DONE 3-28-24
         - able to  view orders                                          - DONE 3-28-24
         - able to cancel orders                                         - DONE 3-28-24
         (changes status to cancelled, brings back stocks)               - DONE 3-28-24
         - mark status per order                                         - DONE 3-28-24
+
     - admin product management
-        - able to add product
-        - able to change product information
-        - able to add stocks
-    - admin, list of Users
-        - able to change user information,
-        - able to delete Users
-    - admin, lisst of contact feedbacks,  just tables
+        - search bar for products                                       -
+        - pagination, 9 products per page                               -
+        - able to add product                                           - 
+            - add picture, name, price, stocks, desc                    - 
+            - upload picture in folders
+        - able to display all products                                  - DONE 3-##-24
+        - able to change product information                            - 
+            - Change prices and stocks                                  - DONE 3-31-24
+                - Updates all user basket information when they loggedin- 
+            - Able to view specific product page                        -
+                - change all information available                      -
+        - able to delete product                                        -
+            - delete the picture of product as well                     -
 
-    
--  limit number of products in side-basket                          -   
+    - admin, list of Users    
+        - search bar for users                                          -
+        - pagination, 10 users per page                                 -
+        - view all users                                                - 
+            - change their password to default                          -
+        - delete user                                                   -
+        
+    - admin, list of contact feedbacks,  just tables                    -
+        - search bar for feedbacks                                      -
+        - pagination, 5 feedbacks per page                              -
+
+    - admin, nav                                                        -
+        - DASHBOARD                                                     - DONE
+        - PRODUCTS                                                      - DONE
+        - FEEDBACK                                                      - DONE
+        - USERS                                                         -
+        - VIEW SITE                                                     - DONE
+        - LOGOUT                                                        - DONE
+
+
+-  limit number of products in side-basket                              -   
 - SMTP for:
-    - sending contact from
-    - register, welcome to Candela
-    - basket checked out
-    - order is on the way
-    - order is delivered
-    - deleted an account
-
+    - sending contact from                                              -
+    - register, welcome to Candela                                      -
+    - basket checked out                                                -
+    - order is on the way                                               -
+    - order is delivered                                                -
+    - deleted an account                                                -
