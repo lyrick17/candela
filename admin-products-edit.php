@@ -26,41 +26,38 @@
 	<!-- 2. SPECIFIC PRODUCT PAGE WITH PRODUCT INFORMATION -->
 	
 	<!-- BODY 2. SPECIFIC PRODUCT PAGE WITH PRODUCT INFORMATION -->
-	
+	<?php if(isset($_GET['id'])): ?>
+		<?php  $product_info = Products::get_product_info($_GET['id']); ?>
 		<div class="padding-y-1 padding-x-3">
 			<div>
 
 				<div id="product-nav">
-					<a href="product.php"><< Back To Products</a>
+					<a href="admin-products.php"><< Back To Products</a>
 				</div>
 
 				<div class="">
 					<?php $product = mysqli_fetch_array($product_info, MYSQLI_ASSOC); ?>
 
-					<form method="post" action="admin-products.php" class="form-products">
+					<form method="post" action="admin-products-edit.php">
 						<div class="row gx-0 py-3">
 							<!-- ITEM PICTURE -->
 							<div class="col-sm-5 text-center">
-								<img class="h-100 specific" name="p_pic" src="<?= $product['image'] ?>">
+								<img class="h-100 specific" name="p_pic" src="<?= $product['image'] ?>"><br />
 							</div>
 							<!-- ITEM MAIN INFORMATION-->
-							<div class="col-sm-7 item-main-info">
-								<blockquote>
-									<span class="product-header"><p><?= $product['name'] ?></p></span><br>
-										<span class="f-20"><p>P<?= $product['price'] ?></p></span>	
-										<p>Quantity<br>
-										<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>" />
-										<input type="number" name="quantity" class="product-quantity" id="product-quantity" max="<?= $product['stocks']; ?>" min="1" value="1" width="20px" />
-											<span class="font-13 fst-italic" id="quant_num">
-												*quantity needed
-											</span>
-										</p>
-										<p>
-											<input type="submit" name="add_to_basket" value="Add To Basket" class="bam bamColor" <?php if ($product['stocks'] == 0) { ?> disabled <?php }?> />
-											<span class="font-16 fst-italic">
-												<?php Formats::display_stocks_left($product['stocks']); ?>
-											</span>
-										</p>
+							<div class="col-sm-7 item-main-info font-25">
+								<blockquote class="row">
+									<div class="col-2">ID:</div>
+									<div class="col-10"><input type="text" name="id" value="<?= $product['product_id'] ?>" disabled/></div>
+									
+									<div class="col-2">Name:</div>
+									<div class="col-10"><input type="text" name="name" value="<?= $product['name'] ?>" /></div>
+									
+									<div class="col-2">Price:</div>
+									<div class="col-10"><input type="text" name="price" value="<?= $product['price'] ?>" /></div>
+									
+									<div class="col-2">Stocks:</div>
+									<div class="col-10"><input type="number" name="stocks" value="<?= $product['stocks'] ?>" /></div>
 								</blockquote>
 							</div>
 						</div>
@@ -68,15 +65,17 @@
 					</form>
 						<!-- ITEM DISCRIPTION -->
 						<div class="item-description sidebar-box-1 font-20">
-							<?= $product['description']; ?>
+							<div class="font-25 text-center">Description:</div>
+							<textarea name="description" style="width: 100%; height: 30vh; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"><?= $product['description']; ?></textarea>
 						</div>
 
 					<div class="text-center font-25">
-						<a href="product.php" class="basket_buttons"><< Keep Shopping</a>
+						<a href="admin-products.php" class="basket_buttons">Back to Products Page</a>
 					</div>
 				</div>
 			</div><!-- END OF PRODUCT PAGE ID -->
 		</div>
+	<?php endif; ?>
 	<!-- END OF BODY 2. -->
 
 </div>

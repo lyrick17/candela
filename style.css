@@ -33,7 +33,9 @@ body {
 * {
 	box-sizing: border-box;
 }
-
+textarea {
+	resize: both;
+}
 
 
 

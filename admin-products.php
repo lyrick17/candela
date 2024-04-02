@@ -47,6 +47,9 @@
 						<div class="col-md-6 col-lg-4">
 							<div class="items">
 								<form method="post" action="admin-products.php" class="form-products">
+									<span class="font-16 fst-italic">
+										<?php Formats::display_stocks_left($product['stocks']); ?><br />
+									</span>
 									<span class="product-pic">
 										<a name="productpage" href="product.php?id=<?= $product['product_id']; ?>">
 											<!-- ITEM PICTURE -->
@@ -70,11 +73,7 @@
 								</form>
 								<!-- Link For Item Description-->
 								<div>
-									<a href="admin-products.php?id=<?= $product['product_id']; ?>" class="item-links">Change Details</a>
-										
-									<span class="font-16 fst-italic">
-										<?php Formats::display_stocks_left($product['stocks']); ?>
-									</span>
+									<a href="admin-products-edit.php?id=<?= $product['product_id']; ?>" class="item-links">Change Details</a>
 								</div>
 							</div>
 						</div>
@@ -82,6 +81,11 @@
 						endwhile;
 					endif;
 				?>
+				<div class="d-flex justify-content-center py-2">
+					<div id="page-nav-content">
+						<div id="page-nav"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	
@@ -139,7 +143,7 @@
 						</div>
 
 					<div class="text-center font-25">
-						<a href="product.php" class="basket_buttons"><< Keep Shopping</a>
+						<a href="admin-products-edit.php" class="basket_buttons"><< Keep Shopping</a>
 					</div>
 				</div>
 			</div><!-- END OF PRODUCT PAGE ID -->
@@ -158,6 +162,8 @@
 <script src="resources/js/admin_products.js"></script>
 <script src="resources/js/javas.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.4/jquery.simplePagination.min.js" integrity="sha512-J4OD+6Nca5l8HwpKlxiZZ5iF79e9sgRGSf0GxLsL1W55HHdg48AEiKCXqvQCNtA1NOMOVrw15DXnVuPpBm2mPg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="resources/js/product_pagination.js"></script>
 </body>
 </html>

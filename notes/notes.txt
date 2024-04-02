@@ -95,16 +95,16 @@ Further Upgrades to do:
         - mark status per order                                         - DONE 3-28-24
 
     - admin product management
-        - search bar for products                                       -
-        - pagination, 9 products per page                               -
+        - search bar for products                                       - 
+        - pagination, 9 products per page                               - DONE 4-2-24
         - able to add product                                           - 
             - add picture, name, price, stocks, desc                    - 
             - upload picture in folders
         - able to display all products                                  - DONE 3-##-24
         - able to change product information                            - 
             - Change prices and stocks                                  - DONE 3-31-24
-                - Updates all user basket information when they loggedin- 
-            - Able to view specific product page                        -
+                - Updates all user basket information when they loggedin- DONE apparently it's working
+            - Able to view specific product page                        - DONE 4-2-24
                 - change all information available                      -
         - able to delete product                                        -
             - delete the picture of product as well                     -
