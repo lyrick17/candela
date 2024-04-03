@@ -54,7 +54,7 @@
 									<tr>
 										<form method="POST" action="basket.php">
 											<td class="basket-td">
-												<img src="<?= $product['image']; ?>">
+												<img class="product-200" src="<?= $product['image']; ?>">
 											</td>
 											<td class="basket-td"><i><?= $product['name']; ?></i><br></td>
 											<td class="basket-td">P<?= $product['price']; ?></td>

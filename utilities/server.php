@@ -1,5 +1,6 @@
 <?php 
 // This file will contain most of the general processes that the website need
+
 require("conn/db_connection.php");
 require("sanitize_input.php");
 
@@ -100,6 +101,7 @@ class Products {
         return ($result && mysqli_num_rows($result) > 0) ? $result : false;
     }
 
+	// get the stocks of the product
 	static function get_stocks($id) {
 		global $mysqli;
         if (!isset($id)) return false;
@@ -111,6 +113,7 @@ class Products {
         return ($result && mysqli_num_rows($result) > 0) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
 
+	// when admin cancels orders, quantities ordered will be reverted into stocks
 	static function revert_stocks($id, $quantity) {
 		global $mysqli;
 		$id = test_input($mysqli, $id);
@@ -122,6 +125,7 @@ class Products {
 		return $result;
 	}
 
+	// update price of a specific product
 	static function update_price($id, $newprice) {
 		global $mysqli;
 		$id = test_input($mysqli, $id);
@@ -134,6 +138,7 @@ class Products {
 	
 	}
 	
+	// update stocks of a specific product
 	static function update_stocks($id, $newstocks) {
 		global $mysqli;
 		$id = test_input($mysqli, $id);
@@ -146,7 +151,42 @@ class Products {
 	
 	}
 	
-	
+	// upload a file, whether new or old
+	static function upload_file($id, $file) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+
+		// create a filepath for the image, as well as it's new filename
+		$path = "images/products/";
+		$extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+		$filepath = $path . "product_" . $id . "." . $extension;
+		UploadFiles::verify_folder($path);
+		// move the file onto the server's folder, and update the database	
+		UploadFiles::delete_file($id);	
+		move_uploaded_file($file['tmp_name'], $filepath);
+
+
+
+		$query = "UPDATE products SET image = '$filepath' WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	}
+
+	// update a specific product
+	static function update_product($id, $name, $price, $stocks, $description) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+		$name = test_input($mysqli, $name) ?? "";
+		$price = test_input($mysqli, $price) ?? "";
+		$stocks = test_input($mysqli, $stocks) ?? "";
+		$description = test_input($mysqli, $description) ?? "";
+
+		$query = "UPDATE products SET name = '$name', price = '$price', stocks = '$stocks', description = '$description' WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	}
 }
 
 
@@ -287,7 +327,7 @@ class Orders {
 
 		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
-
+	// get the address of an order id
 	static function get_address($order_id) {
 		global $mysqli;
 		$order_id = test_input($mysqli, $order_id) ?? "";
@@ -297,7 +337,7 @@ class Orders {
 
 		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
-
+	// get the contact number of a specific order
 	static function get_contact_number($order_id) {
 		global $mysqli;
 		$order_id = test_input($mysqli, $order_id) ?? "";
@@ -335,6 +375,7 @@ class Orders {
 
 // Other repeatable codes for the website 
 class Formats {
+	// for alerting user if stocks are low
 	static function display_stocks_left($stocks) {
 		if ($stocks <= 15) {
 			echo $stocks . "stock/s left";
@@ -353,6 +394,32 @@ class Formats {
 
 		// general purpose of the function
 		return (isset($_SESSION[$id])) ? $_SESSION[$id] : $info;
+	}
+}
+
+class UploadFiles {
+	// verify folder if it exists
+	static function verify_folder($path) {
+		if (!is_dir($path)) {
+			mkdir($path, 0777, true);
+		}
+	}
+
+	// delete a file in images/products/
+	static function delete_file($id) {
+		$path = "images/products/";
+		$filename = "product_" . $id;
+		
+		// construct the full file path
+		$filepath = $path . $filename . ".*";
+		$files = glob($filepath);
+		foreach ($files as $file) {
+			// check if the file exists then delete if so
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
+		
 	}
 }
 ?>

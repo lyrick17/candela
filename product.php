@@ -174,7 +174,7 @@
 						<div class="row gx-0 py-3">
 							<!-- ITEM PICTURE -->
 							<div class="col-sm-5 text-center">
-								<img class="h-100 specific" name="p_pic" src="<?= $product['image'] ?>">
+								<img class="product-200"  name="p_pic" src="<?= $product['image'] ?>">
 							</div>
 							<!-- ITEM MAIN INFORMATION-->
 							<div class="col-sm-7 item-main-info">
