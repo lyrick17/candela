@@ -1,5 +1,5 @@
 <?php 
-
+// For updates on Prices and Stocks
 $changes = 0;
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // product_id
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $product_info = Products::get_product_info($product_id);
 
     // Add error handling, on prices, etc etc, limit
-    if (!preg_match('/^[0-9.]+$/', $price) || !preg_match('/^[0-9.]+$/', $stocks)) {
+    if (!preg_match('/^[0-9.]+$/', $price) || !preg_match('/^[0-9]+$/', $stocks)) {
         $response = ['error' => 1, 'type' => "error"];
         exit(json_encode($response));
     } elseif (strlen($price) > 10 || (int) $stocks > 32767) {

@@ -26,34 +26,33 @@ function update(e) {
         if (data.error == 0) {
             document.getElementById(message_id).innerHTML = "Changes saved.";
             document.getElementById(message_id).style.color = "green";
-            
-            // add a timer to remove the Changes Saved. message
-            setTimeout(() => {
-                document.getElementById(message_id).innerHTML = "";
-                document.getElementById(message_id).style.color = "";
-            }, 3000);
-
+        
         } else {
-            error_message(data.error); // display error message
+            error_message(data.error, message_id); // display error message
         }
+        // add a timer to remove the Changes Saved. message
+        setTimeout(() => {
+            document.getElementById(message_id).innerHTML = "";
+            document.getElementById(message_id).style.color = "";
+        }, 3000);
     });
 
 }
 
 
-function error_message(number) {
+function error_message(number, message_id) {
     switch (number)  {
         case 1:
-            document.getElementById('change-message').innerHTML = "Digits only.";
-            document.getElementById('change-message').style.color = "red";
+            document.getElementById(message_id).innerHTML = "Digits only.";
+            document.getElementById(message_id).style.color = "red";
             break;
         case 2:
-            document.getElementById('change-message').innerHTML = "Invalid amount.";
-            document.getElementById('change-message').style.color = "red";
+            document.getElementById(message_id).innerHTML = "Invalid amount.";
+            document.getElementById(message_id).style.color = "red";
             break;
         case 3:
-            document.getElementById('change-message').innerHTML = "Update Error. Contact Developers.";
-            document.getElementById('change-message').style.color = "red";
+            document.getElementById(message_id).innerHTML = "Update Error. Contact Developers.";
+            document.getElementById(message_id).style.color = "red";
             break;
         case 4:
             break;
