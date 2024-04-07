@@ -213,6 +213,31 @@ class Products {
 // MySQLi User Functions
 class Users {
 
+	// get all user information to display for admin
+	static function select_all() {
+		global $mysqli;
+		
+		$query = 'SELECT * FROM users ORDER by user_id ASC';
+		$result = @mysqli_query($mysqli, $query);
+		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+	}
+
+	static function select_search($like) {
+		global $mysqli;
+		
+		$like = test_input($mysqli, $like);
+
+		$query = "SELECT * FROM users WHERE user_id LIKE '%$like%' OR 
+												username LIKE '%$like%' OR
+												lastname LIKE '%$like%' OR
+												email LIKE '%$like%' OR
+												contactnumber LIKE '%$like%' OR
+												registered_date LIKE '%$like%' OR
+												type LIKE '%$like%' ORDER by user_id ASC";
+		$result = @mysqli_query($mysqli, $query);
+		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+	
+	}
 	// get all information of a specific user
 	static function get_all_info($email) {
 		global $mysqli;
@@ -257,7 +282,6 @@ class Users {
     	$result = @mysqli_query($mysqli, $query);
 		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
-	
 	
 }
 

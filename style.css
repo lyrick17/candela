@@ -1176,3 +1176,7 @@ a.Onow:hover , a.Snow:hover , input.Snow:hover {
 		width: 20vw;
 	}
 }
+
+#user-table td {
+	padding: 10px;
+}
