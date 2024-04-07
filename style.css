@@ -204,7 +204,7 @@ textarea {
 }
 .product-200 {
 	width: 200px;
-	height: 200px;
+	height: auto;
 }
 /* END OF IMAGES ----------------------------------- */
 
@@ -1150,3 +1150,29 @@ a.Onow:hover , a.Snow:hover , input.Snow:hover {
 }
 /* END OF MORE FEATURES ----------------------------------- */
 
+/* ADMIN ----------------------------------- */
+.textarea-edit {
+	width: 100%; 
+	height: 30vh; 
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box; 
+	box-sizing: border-box;
+}
+
+.search-text-width {
+	width: 85wv;
+}
+
+/* For Medium Devices */
+@media (min-width: 768px) {
+	.search-text-width {
+		width: 30vw;
+	}
+}
+
+/* For Large Devices */
+@media screen and (min-width: 992px) {
+	.search-text-width {
+		width: 20vw;
+	}
+}

@@ -1,6 +1,6 @@
 <?php 
 	require('utilities/server.php');
-	require("utilities/admin_update_product_2.php");
+	require("utilities/admin_update_product_3.php");
 
 	Restrict::remove_checkout_sess();
 	Restrict::remove_order_id_sess();
@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Edit Product - Admin</title>
+	<title>Add Product - Admin</title>
 	<?php require("templates/head.php"); ?>
 </head>
 
@@ -21,53 +21,52 @@
 	<!-- MODAL CONTENT for Terms and Conditions -->
 	<?php include("templates/modals/modal_terms_conditions.php"); ?>
 	
-	<!-- TWO BODY SECTIONS -->
-	<!-- 2. SPECIFIC PRODUCT PAGE WITH PRODUCT INFORMATION -->
-	
-	<!-- BODY 2. SPECIFIC PRODUCT PAGE WITH PRODUCT INFORMATION -->
-	<?php if(isset($_GET['id'])): ?>
-		<?php  $product_info = Products::get_product_info($_GET['id']); ?>
+	<!-- 1. ADD PRODUCT FORM -->
 		<div class="padding-y-1 padding-x-3">
 			<div>
-
 				<div id="product-nav">
 					<a href="admin-products.php"><< Back To Products</a>
 				</div>
+				<div class="text-center font-30 fw-bold py-3 ">
+                        Add a New Candela Product
+				</div>
 
-				<?php if ($product_info): ?>
 				<div>
-					<?php $product = mysqli_fetch_array($product_info, MYSQLI_ASSOC); ?>
-						<form method="post" enctype="multipart/form-data" action="admin-products-edit.php?id=<?=$_GET['id']?>">
+						<form method="post" enctype="multipart/form-data" action="admin-products-add.php">
 							<div class="row gx-0 py-3">
 								<!-- ITEM PICTURE -->
 								<div class="col-md-5 text-center px-5 px-md-3 ">
 									<div class="sidebar-box-4 mx-md-5 py-2 rounded overflow-hidden shadow-lg"> 
-										<img class="" id="product-pic" name="p_pic" src="<?= $product['image'] ?>" style="height: 20vh;" >
+										<img class="" id="product-pic" name="p_pic" src="" style="height: 20vh;" >
 										<br />
 										<input type="file" id="file-input" name="userfile" style="opacity: 0;" />
-										<label for="file-input" class="btn btn-secondary my-1" role="button">Change Image</label>
+										<label for="file-input" class="btn btn-secondary my-1" role="button">Add Product Image</label>
+                                        <span class="text-danger">*</span>
 										<br />
 										<span><i>*make sure the image dimension is 200x200pixels</i></span>
-										<!--<span>Image URL: <input type="text" name="image" value="<?= $product['image'] ?>" /></span>-->
 									</div>
 								</div>
 								<!-- ITEM MAIN INFORMATION-->
 								<div class="col-md-7 item-main-info font-25">
 									<blockquote class="row">
-										<div class="col-md-2">ID:</div>
-										<div class="col-md-10">
-											<input type="text" name="" value="<?= $product['product_id'] ?>" disabled />
-											<input type="hidden" name="product_id" value="<?= $product['product_id'] ?>" />
-										</div>
 										
-										<div class="col-md-2">Name:</div>
-										<div class="col-md-10"><input type="text" name="name" value="<?= $product['name'] ?>" maxlength="255" /></div>
+										<div class="col-md-2">
+                                            Name:
+                                            <span class="text-danger">*</span>
+                                        </div>
+										<div class="col-md-10"><input type="text" name="name" value="" maxlength="255" /></div>
 										
-										<div class="col-md-2">Price:</div>
-										<div class="col-md-10"><input type="text" name="price" value="<?= $product['price'] ?>" maxlength="10" /></div>
+										<div class="col-md-2">
+                                            Price:
+                                            <span class="text-danger">*</span>
+                                        </div>
+										<div class="col-md-10"><input type="text" name="price" value="" maxlength="10" /></div>
 										
-										<div class="col-md-2">Stocks:</div>
-										<div class="col-md-10"><input type="number" name="stocks" value="<?= $product['stocks'] ?>" /></div>
+										<div class="col-md-2">
+                                            Stocks:
+                                            <span class="text-danger">*</span>
+                                        </div>
+										<div class="col-md-10"><input type="number" name="stocks" value="" /></div>
 										
 										<div class="col-md-2"></div>
 										<div class="col-md-10 font-16 text-danger">
@@ -86,46 +85,21 @@
 							
 							<!-- ITEM DISCRIPTION -->
 							<div class="item-description sidebar-box-1 font-20">
-								<div class="font-25 text-center">Description:</div>
-								<textarea name="description" class="textarea-edit"><?= $product['description']; ?></textarea>
+								<div class="font-25 text-center">
+                                    Description:
+                                    <span class="text-danger">*</span>
+                                </div>
+								<textarea name="description" class="textarea-edit"></textarea>
 								<hr />
-								<div class="font-16">
-									Last Modified: <b><?= date("l, j F Y, g:i A", strtotime($product['product_added_date'])); ?></b>
-									
-								</div>
 							</div>
 							
 							<div class="text-center font-25 py-2">
 								<input type="submit" name="save" class="btn btn-success font-25" value="Save Changes" />
 							</div>
 						</form>
-
-					<div class="text-center font-25 py-2">
-						<a href="admin-products.php" class="basket_buttons">Back to Products Page</a>
-					</div>
 				</div>
-				<?php else: ?>
-					<div class="text-center font-20 py-5">
-						This page has been accessed incorrectly.<br />
-						There is no existing product with id: <b><?=$_GET['id']?></b>.<br /></div>
-					<div class="text-center font-25 py-2">
-						<a href="admin-products.php" class="basket_buttons">Back to Products Page</a>
-					</div>
-				<?php endif; ?>
 			</div><!-- END OF PRODUCT PAGE ID -->
 		</div>
-	<?php else: ?>
-		<div class="padding-y-1 padding-x-3">
-			<div id="product-nav">
-				<a href="admin-products.php"><< Back To Products</a>
-				<span class="text-success fw-bold"><?= $success_msg; ?></span>
-			</div>
-			<div class="text-center font-20 py-5">This page has been accessed incorrectly.<br /> Please go back to the products page.</div>
-			<div class="text-center font-25 py-2">
-				<a href="admin-products.php" class="basket_buttons">Back to Products Page</a>
-			</div>
-		</div>
-	<?php endif; ?>
 	<!-- END OF BODY 2. -->
 
 </div>

@@ -80,6 +80,20 @@ class Products {
         return ($result || mysqli_num_rows($result) > 0) ? $result : false;
     }
 	
+	static function select_search($like) {
+		global $mysqli;
+		
+		$like = test_input($mysqli, $like);
+
+		$query = "SELECT * FROM products WHERE product_id LIKE '%$like%' OR 
+												name LIKE '%$like%' OR
+												price LIKE '%$like%' OR
+												stocks LIKE '%$like%' OR
+												description LIKE '%$like%' ORDER by product_id ASC";
+		$result = @mysqli_query($mysqli, $query);
+		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+	}
+
 	// select three products in descending order
 	static function select_three() {
 		global $mysqli;
@@ -174,7 +188,7 @@ class Products {
 	}
 
 	// update a specific product
-	static function update_product($id, $name, $price, $stocks, $description) {
+	static function product_modify($process, $id, $name, $price, $stocks, $description) {
 		global $mysqli;
 		$id = test_input($mysqli, $id) ?? "";
 		$name = test_input($mysqli, $name) ?? "";
@@ -182,8 +196,14 @@ class Products {
 		$stocks = test_input($mysqli, $stocks) ?? "";
 		$description = test_input($mysqli, $description) ?? "";
 
-		$query = "UPDATE products SET name = '$name', price = '$price', stocks = '$stocks', description = '$description' WHERE product_id = '$id'";
-		$result = @mysqli_query($mysqli, $query);
+		if ($process == "update") {
+			$query = "UPDATE products SET name = '$name', price = '$price', stocks = '$stocks', description = '$description' WHERE product_id = '$id'";
+			$result = @mysqli_query($mysqli, $query);
+		} elseif ($process == "create") {
+			$query = "INSERT INTO products (name, price, stocks, description) VALUES ('$name', '$price', '$stocks', '$description')";
+			$result = @mysqli_query($mysqli, $query);
+			return $result;
+		}
 
 		return $result;
 	}
@@ -371,6 +391,32 @@ class Orders {
 		return $result;
 	}
 
+}
+
+class Feedbacks {
+	static function select_all() {
+		global $mysqli;
+		
+		$query = 'SELECT * FROM contacts ORDER by contact_id DESC';
+		$result = @mysqli_query($mysqli, $query);
+		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+	}
+
+	static function select_search($like) {
+		global $mysqli;
+		
+		$like = test_input($mysqli, $like);
+
+		$query = "SELECT * FROM contacts WHERE contact_id LIKE '%$like%' OR 
+												user_id LIKE '%$like%' OR
+												name LIKE '%$like%' OR
+												email LIKE '%$like%' OR
+												contactnumber LIKE '%$like%' OR
+												subject LIKE '%$like%' OR
+												comment LIKE '%$like%' ORDER by contact_id DESC";
+		$result = @mysqli_query($mysqli, $query);
+		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+	}
 }
 
 // Other repeatable codes for the website 

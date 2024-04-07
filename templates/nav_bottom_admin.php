@@ -16,7 +16,10 @@
                     <a href="admin-feedbacks.php" class="navi">Feedbacks</a>
 				</li>
                 <li>
-                <a href="index.php" class="navi">View Site</a>
+                    <a href="admin-users.php" class="navi">Users</a>
+				</li>
+                <li>
+                    <a href="index.php" class="navi">View Site</a>
 				</li>
             </ul>
         </div>

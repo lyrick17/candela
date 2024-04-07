@@ -95,20 +95,20 @@ Further Upgrades to do:
         - mark status per order                                         - DONE 3-28-24
 
     - admin product management
-        - search bar for products                                       - 
+        - search bar for products                                       - DONE 4-7-24
         - pagination, 9 products per page                               - DONE 4-2-24
-        - able to add product                                           - 
-            - add picture, name, price, stocks, desc                    - 
+        - able to add product                                           - DONE 4-7-24
+            - add picture, name, price, stocks, desc                    - DONE 4-7-24
             - upload picture in folders                                 - DONE 4/3/24
-            - able to resize picture in 200x200 only in website         - 
+            - able to resize picture in 200x200 only in website         - --------------hirap
         - able to display all products                                  - DONE 3-##-24
         - able to change product information                            - DONE 4-3-24
             - Change prices and stocks                                  - DONE 3-31-24
                 - Updates all user basket information when they loggedin- DONE apparently it's working
             - Able to view specific product page                        - DONE 4-2-24
                 - change all information available                      - DONE 4/3/24
-        - able to delete product                                        -
-            - delete the picture of product as well                     -
+        - able to delete product                                        - 
+            - delete the picture of product as well                     - 
 
     - admin, list of Users    
         - search bar for users                                          -
@@ -117,18 +117,24 @@ Further Upgrades to do:
             - change their password to default                          -
         - delete user                                                   -
         
-    - admin, list of contact feedbacks,  just tables                    -
-        - search bar for feedbacks                                      -
-        - pagination, 5 feedbacks per page                              -
+    - admin, list of contact feedbacks,  just tables                    - DONE 4-7-24
+        - search bar for feedbacks                                      - DONE 4-7-24
+        - pagination, 5 feedbacks per page - 9 FEEDBACKS                - DONE 4-7-24
 
-    - admin, nav                                                        -
+    - admin, nav                                                        - DONE 4-7-24
         - DASHBOARD                                                     - DONE
         - PRODUCTS                                                      - DONE
         - FEEDBACK                                                      - DONE
-        - USERS                                                         -
+        - USERS                                                         - DONE
         - VIEW SITE                                                     - DONE
         - LOGOUT                                                        - DONE
-
+    - Admin, mga huling gagawin kasi maraming kalikot       
+        - Able to Delete product
+            - only hides the product from users
+            - cannot be ordered by user
+            - cant delete product if it was ordered already
+                - different section in admin-products
+            - can delete the product if no orders were made
 
 -  limit number of products in side-basket                              -   
 - SMTP for:

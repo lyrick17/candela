@@ -5,6 +5,7 @@
 		Restrict::product_page_access($_GET['id']);
 	Restrict::remove_checkout_sess();
 	Restrict::remove_order_id_sess();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,14 +34,32 @@
 		<header id="product-header" class="font-35 fw-bold text-center">
 			Candela Products<br />
 		</header>
-		<div class="text-center"><a href="#" class="item-links">Add a Product</a></div>
-		<hr><hr>
+		<div class="text-center"><a href="admin-products-add.php" class="basket_buttons font-20" name="checkout">Add a Product</a></div>
+		<hr />
+		<div class="px-3 py-1">
+			<form action="admin-products.php" method="get" id="search-product">
+				<input type="text" class="search-text-width py-1 my-1" placeholder="Search a Product..." name="search" maxlength="255">
+				<input type="submit" value="Search" class="btn btn-success my-1">
+				<a href="admin-products.php" class="btn btn-danger my-1">Clear Search</a>
+			</form>
+		</div>
+		<hr />
 
 		<!-- LIST OF PRODUCTS -->
 		<div id="" class="text-center">
+			<?php if (isset($_GET['search'])): ?>
+				<div class="text-center font-20">
+					Search Results for: <span class="font-25"><?= $_GET['search']; ?></span>
+				</div>
+			<?php endif; ?>
 			<div class="row gx-0">
 				<?php 
-					$product_list = Products::select_all();
+					if (isset($_GET['search'])) {
+						$product_list = Products::select_search($_GET['search']);
+					} else {
+						$product_list = Products::select_all();
+					}
+						
 					if ($product_list):
 						while ($product = mysqli_fetch_array($product_list, MYSQLI_ASSOC)):
 				?>		
@@ -62,13 +81,13 @@
 											<span id="change-message<?= $product['product_id']; ?>"></span>
 											<div class="row gx-0 py-2">
 												<div class="col-4 text-end">Price:</div>
-												<div class="col-8 text-start"><input type="text" name="price" class="product-quantity" min="1" value="<?= $product['price']; ?>" /></div>
+												<div class="col-8 text-start"><input type="text" name="price" class="product-quantity" value="<?= $product['price']; ?>" /></div>
 												<div class="col-4 text-end">Stocks:</div>
-												<div class="col-8 text-start"><input type="number" name="stocks" class="product-quantity" min="1" value="<?= $product['stocks']; ?>" /></div>
+												<div class="col-8 text-start"><input type="number" name="stocks" class="product-quantity" value="<?= $product['stocks']; ?>" /></div>
 											</div>
 											<!-- PRODUCT ID AND SUBMIT BUTTON -->
 											<input type="hidden" name="product_id" value="<?= $product['product_id']; ?>" />
-											<input type="submit" name="add_to_basket" value="Save Changes" class="btn btn-success" <?php if ($product['stocks'] == 0) { ?> disabled <?php } ?> />
+											<input type="submit" name="add_to_basket" value="Save Changes" class="btn btn-success" />
 									</div>				
 								</form>
 								<!-- Link For Item Description-->

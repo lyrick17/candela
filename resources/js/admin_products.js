@@ -3,6 +3,9 @@
 const forms = document.querySelectorAll('form');
 
 forms.forEach(form => {
+    if (form.id === 'search-product') {
+        return; // ignore the form with id 'search'
+    }
     form.addEventListener('submit', update);
 });
 
@@ -26,7 +29,6 @@ function update(e) {
         if (data.error == 0) {
             document.getElementById(message_id).innerHTML = "Changes saved.";
             document.getElementById(message_id).style.color = "green";
-        
         } else {
             error_message(data.error, message_id); // display error message
         }
@@ -41,20 +43,16 @@ function update(e) {
 
 
 function error_message(number, message_id) {
-    switch (number)  {
-        case 1:
-            document.getElementById(message_id).innerHTML = "Digits only.";
-            document.getElementById(message_id).style.color = "red";
-            break;
-        case 2:
-            document.getElementById(message_id).innerHTML = "Invalid amount.";
-            document.getElementById(message_id).style.color = "red";
-            break;
-        case 3:
-            document.getElementById(message_id).innerHTML = "Update Error. Contact Developers.";
-            document.getElementById(message_id).style.color = "red";
-            break;
-        case 4:
-            break;
+    if (number === 1) {
+        document.getElementById(message_id).innerHTML = "Digits only.";
+        document.getElementById(message_id).style.color = "red";
+    } else if (number === 2) {
+        document.getElementById(message_id).innerHTML = "Invalid amount.";
+        document.getElementById(message_id).style.color = "red";
+    } else if (number === 3) {
+        document.getElementById(message_id).innerHTML = "Update Error. Contact Developers.";
+        document.getElementById(message_id).style.color = "red";
+    } else if (number === 4) {
+        // do nothing
     }
 }

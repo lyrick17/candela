@@ -9,6 +9,7 @@
             <a href="admin.php" class="navi">Dashboard</a>
             <a href="admin-products.php" class="navi">Products</a>
             <a href="admin-feedbacks.php" class="navi">Feedbacks</a>
+            <a href="admin-users.php" class="navi">Users</a>
 			<a href="index.php" class="navi">View Site</a>
 		</div>
 		
