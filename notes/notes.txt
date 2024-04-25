@@ -111,11 +111,11 @@ Further Upgrades to do:
             - delete the picture of product as well                     - 
 
     - admin, list of Users    
-        - search bar for users                                          -
-        - pagination, 10 users per page                                 -
-        - view all users                                                - 
-            - change their password to default                          -
-        - delete user                                                   -
+        - search bar for users                                          - DONE 4-25-24
+        - pagination, 10 users per page                                 - DONE 4-25-24
+        - view all users                                                - DONE 4-25-24
+            - change their password to default                          - 
+        - delete user                                                   - 
         
     - admin, list of contact feedbacks,  just tables                    - DONE 4-7-24
         - search bar for feedbacks                                      - DONE 4-7-24

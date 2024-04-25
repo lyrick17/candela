@@ -217,27 +217,46 @@ class Users {
 	static function select_all() {
 		global $mysqli;
 		
-		$query = 'SELECT * FROM users ORDER by user_id ASC';
+		$query = 'SELECT u.user_id, username, lastname, email, contactnumber, registration_date, user_address, barangay, type
+					FROM users u LEFT JOIN addresses a ON u.user_id = a.user_id ORDER by user_id ASC';
 		$result = @mysqli_query($mysqli, $query);
 		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
 	}
 
+	// get user info based on the search value
 	static function select_search($like) {
 		global $mysqli;
 		
 		$like = test_input($mysqli, $like);
 
-		$query = "SELECT * FROM users WHERE user_id LIKE '%$like%' OR 
-												username LIKE '%$like%' OR
-												lastname LIKE '%$like%' OR
-												email LIKE '%$like%' OR
-												contactnumber LIKE '%$like%' OR
-												registered_date LIKE '%$like%' OR
-												type LIKE '%$like%' ORDER by user_id ASC";
+		$query = "SELECT u.user_id, username, lastname, email, contactnumber, registration_date, user_address, barangay, type
+					FROM users u INNER JOIN addresses a 
+					ON u.user_id = a.user_id WHERE u.user_id LIKE '%$like%' OR 
+												u.username LIKE '%$like%' OR
+												u.lastname LIKE '%$like%' OR
+												u.email LIKE '%$like%' OR
+												u.contactnumber LIKE '%$like%' OR
+												u.registration_date LIKE '%$like%' OR
+												a.user_address LIKE '%$like%' OR
+												a.barangay LIKE '%$like%' ORDER by user_id ASC";
 		$result = @mysqli_query($mysqli, $query);
 		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
 	
 	}
+
+	// get specific user info based on id
+	static function select_info($id) {
+		global $mysqli;
+
+		$id = test_input($mysqli, $id);
+
+		$query = "SELECT u.user_id, username, lastname, email, contactnumber, registration_date, user_address, barangay, type
+					FROM users u LEFT JOIN addresses a 
+					ON u.user_id = a.user_id WHERE u.user_id = $id";
+		$result = @mysqli_query($mysqli, $query);
+		return ($result && mysqli_num_rows($result) > 0) ? $result : false;
+	}
+
 	// get all information of a specific user
 	static function get_all_info($email) {
 		global $mysqli;
@@ -282,6 +301,8 @@ class Users {
     	$result = @mysqli_query($mysqli, $query);
 		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
+
+	
 	
 }
 
