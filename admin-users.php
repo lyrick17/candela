@@ -149,7 +149,7 @@
 							</div>							
 						</div>
 					<?php endif; ?>
-					<div class="px-5 w-75 mx-auto sidebar-box-red-1 py-5">
+					<div class="px-5 mx-auto sidebar-box-red-1 py-5">
 
 						<!-- FORM CONTACT-US -->
 						<form method="post" action="admin-users.php?id=<?=$_GET['id']?>">
