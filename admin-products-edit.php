@@ -5,6 +5,7 @@
 	Restrict::remove_checkout_sess();
 	Restrict::remove_order_id_sess();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,6 @@
 <?php require("templates/nav_admin.php"); ?>
 <!-- BODY CONTENT -->
 <div class="body-content">
-
 	<!-- MODAL CONTENT for Terms and Conditions -->
 	<?php include("templates/modals/modal_terms_conditions.php"); ?>
 	
@@ -26,6 +26,7 @@
 	
 	<!-- BODY 2. SPECIFIC PRODUCT PAGE WITH PRODUCT INFORMATION -->
 	<?php if(isset($_GET['id'])): ?>
+		
 		<?php  $product_info = Products::get_product_info($_GET['id']); ?>
 		<div class="padding-y-1 padding-x-3">
 			<div>

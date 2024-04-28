@@ -76,7 +76,7 @@
 						<?php if ($user_list):
 								while ($user = mysqli_fetch_array($user_list, MYSQLI_ASSOC)):
 						?>
-							<tr class="">
+							<tr class="paginate">
 								<td>
 									<?php if ($user['type'] == 0): ?>
 										<a href="admin-users.php?id=<?= $user['user_id'] ?>" class="btn btn-secondary">
@@ -131,10 +131,28 @@
 				</div>
 				<!-- SECOND CONTENT - Admin Dashboard -->
 				<div class="padding-x-4 py-4">
-					<div class="px-5 w-75 mx-auto sidebar-box-1 py-5">
+					<?php if ($errors > 0 || $specialerrors > 0): ?>
+						<div class="px-5 w-75 mx-auto sidebar-box-red-2 my-2 py-2">
+							<div class="font-20 text-center text-danger">
+								<?php foreach($errormsg as $msg): ?>
+									<?= $msg ?><br />
+								<?php endforeach; ?>
+							</div>							
+						</div>
+					<?php endif; ?>
+					<?php if (!empty($successfulupdate)): ?>
+						<div class="px-5 w-75 mx-auto sidebar-box-green-2 my-2 py-2">
+							<div class="font-20 text-center text-success">
+								<?php foreach($successfulupdate as $msg): ?>
+									<?= $msg ?><br />
+								<?php endforeach; ?>
+							</div>							
+						</div>
+					<?php endif; ?>
+					<div class="px-5 w-75 mx-auto sidebar-box-red-1 py-5">
 
 						<!-- FORM CONTACT-US -->
-						<form method="post" action="admin-users.php">
+						<form method="post" action="admin-users.php?id=<?=$_GET['id']?>">
 
 							<div class="row gx-0">
 								<div class="col-md-4 py-2">
@@ -213,10 +231,20 @@
 									<input type="text" class="contact-input" value="<?= date('F j, Y g:i A', strtotime($user['registration_date'])) ?>" disabled>
 								</div>
 								
+								<div class="col-md-4 py-2"></div>
+								<div class="col-md-8"></div>
+
+								<div class="col-md-4 py-2">
+									<span class="font-25">Admin Password:</span>
+								</div>
+								<div class="col-md-8">
+									<input type="password" name="adminpass" class="contact-input">
+								</div>
+								
 								<div class="col-md-4 py-2">
 								</div>
 								<div class="col-md-8">
-									<input type="submit" name="usersubmit" class="w-100 p-1 font-20 myaccount-button" value="Edit">
+									<input type="submit" name="usersubmit" class="w-100 p-1 font-20 btn btn-danger" value="Edit">
 								</div>
 
 							</div>
