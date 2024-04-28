@@ -40,7 +40,7 @@
 		<hr />
 		<div class="px-3 py-1">
 			<form action="admin-users.php" method="get" id="search-product">
-				<input type="text" class="search-text-width py-1 my-1" placeholder="Search a Feedback..." name="search" maxlength="255">
+				<input type="text" class="search-text-width py-1 my-1" placeholder="Search a User..." name="search" maxlength="255">
 				<input type="submit" value="Search" class="btn btn-success my-1">
 				<a href="admin-users.php" class="btn btn-danger my-1">Clear Search</a>
 			</form>

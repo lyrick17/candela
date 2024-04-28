@@ -230,7 +230,7 @@ class Users {
 		$like = test_input($mysqli, $like);
 
 		$query = "SELECT u.user_id, username, lastname, email, contactnumber, registration_date, user_address, barangay, type
-					FROM users u INNER JOIN addresses a 
+					FROM users u LEFT JOIN addresses a 
 					ON u.user_id = a.user_id WHERE u.user_id LIKE '%$like%' OR 
 												u.username LIKE '%$like%' OR
 												u.lastname LIKE '%$like%' OR
