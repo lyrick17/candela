@@ -151,6 +151,7 @@
                             <?php else: ?>
                                 <form method="post" action="admin-users-delete.php?id=<?=$_GET['id']?>">
                                     <div class="py-1">
+                                        <span class="text-danger"><?= $delete_error; ?></span><br />
                                         <span class="font-20">Admin Password:</span>
                                         <input type="password" name="adminpass" class="contact-input">
                                         <input type="hidden" name="user_id" value="<?=$user['user_id']?>">

@@ -115,7 +115,7 @@ Further Upgrades to do:
         - pagination, 10 users per page                                 - DONE 4-25-24
         - view all users                                                - DONE 4-25-24
             - change their password to default                          - 
-        - delete user                                                   - 
+        - delete user                                                   - DONE 5-1-24
         - admin able to edit user info                                  - DONE 5/1/24
         
     - admin, list of contact feedbacks,  just tables                    - DONE 4-7-24
@@ -130,12 +130,13 @@ Further Upgrades to do:
         - VIEW SITE                                                     - DONE
         - LOGOUT                                                        - DONE
     - Admin, mga huling gagawin kasi maraming kalikot       
-        - Able to Delete product                    
+        - Able to Delete product                                        -
             - only hides the product from users
             - cannot be ordered by user
             - cant delete product if it was ordered already
                 - different section in admin-products
             - can delete the product if no orders were made
+        - change their password to default                              - 
 
 -  limit number of products in side-basket                              -   
 - SMTP for:
@@ -145,3 +146,6 @@ Further Upgrades to do:
     - order is on the way                                               -
     - order is delivered                                                -
     - deleted an account                                                -
+
+
+alter table checkout_orders drop constraint checkout_orders_ibfk_1;
