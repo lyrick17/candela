@@ -153,6 +153,7 @@
                                     <div class="py-1">
                                         <span class="font-20">Admin Password:</span>
                                         <input type="password" name="adminpass" class="contact-input">
+                                        <input type="hidden" name="user_id" value="<?=$user['user_id']?>">
                                     </div>
                                     <div class="py-1">
                                         <input type="submit" name="usersubmit" class="w-100 p-1 font-20 btn btn-danger" value="Delete Account">
