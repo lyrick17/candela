@@ -201,9 +201,24 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     }
                 }
                 // address update
-                if ($edit['address'] != $user['user_address']) {
-
-                    // add an option to insert if address not yet existing
+                if ($user['user_address'] == '' &&  $edit['address'] != '') {
+                    // user does not have an address yet
+                    if ($user['barangay'] == '') {
+                        // user does not have address db yet
+                        $address_update_sql = "INSERT INTO addresses (user_id, user_address) VALUES ('". $edit['id'] ."', '". $edit['address'] ."')";
+                    } else {
+                        // user has address db already
+                        $address_update_sql = "UPDATE addresses SET user_address = '". $edit['address'] ."' WHERE user_id = '". $edit['id'] ."'";
+                    }
+                    $address_update_sqlresult = @mysqli_query($mysqli, $address_update_sql);
+                    if ($address_update_sqlresult) {
+                        array_push($successfulupdate, success_messages("admin_address_edit_successful"));
+                        $user['user_address'] = $edit['address'];
+                    } else {
+                        $updateerrors++;
+                    }
+                } elseif ($edit['address'] != $user['user_address']) {
+                    // user has an address and admin wants to change it
                     $address_update_sql = "UPDATE addresses SET user_address = '". $edit['address'] ."' WHERE user_id = '". $edit['id'] ."'";
                     $address_update_sqlresult = @mysqli_query($mysqli, $address_update_sql);
                     if ($address_update_sqlresult) {
@@ -213,28 +228,31 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     }
                 }
 
+
                 // barangay update
-                if ($user['barangay'] == '') {
-                    if ($edit['barangay'] != "- Select Your Barangay -") {
-                        
-                        // Change this into insert
+                if ($user['barangay'] == '' && $edit['barangay'] != "- Select Your Barangay -") {
+                    if ($user['user_address'] == '') {
+                        // user alr has no db info of address
+                        $barangay_update_sql = "INSERT INTO addresses (user_id, barangay) VALUES ('". $edit['id'] ."', '". $edit['barangay'] ."')";
+                    } else {
+                        // user alr has db info of address
                         $barangay_update_sql = "UPDATE addresses SET barangay = '". $edit['barangay'] ."' WHERE user_id = '". $edit['id'] ."'";
-                        $barangay_update_sqlresult = @mysqli_query($mysqli, $barangay_update_sql);
-                        if ($barangay_update_sqlresult) {
-                            array_push($successfulupdate, success_messages("admin_barangay_edit_successful"));
-                        } else {
-                            $updateerrors++;
-                        }
                     }
-                } else {
-                    if ($edit['barangay'] != $user['barangay']) {
-                        $barangay_update_sql = "UPDATE addresses SET barangay = '". $edit['barangay'] ."' WHERE user_id = '". $edit['id'] ."'";
-                        $barangay_update_sqlresult = @mysqli_query($mysqli, $barangay_update_sql);
-                        if ($barangay_update_sqlresult) {
-                            array_push($successfulupdate, success_messages("admin_barangay_edit_successful"));
-                        } else {
-                            $updateerrors++;
-                        }
+                    $barangay_update_sqlresult = @mysqli_query($mysqli, $barangay_update_sql);
+                    if ($barangay_update_sqlresult) {
+                        array_push($successfulupdate, success_messages("admin_barangay_edit_successful"));
+                        $user['barangay'] = $edit['barangay'];
+                    } else {
+                        $updateerrors++;
+                    }
+
+                } elseif ($edit['barangay'] != $user['barangay'] && $edit['barangay'] != "- Select Your Barangay -") {
+                    $barangay_update_sql = "UPDATE addresses SET barangay = '". $edit['barangay'] ."' WHERE user_id = '". $edit['id'] ."'";
+                    $barangay_update_sqlresult = @mysqli_query($mysqli, $barangay_update_sql);
+                    if ($barangay_update_sqlresult) {
+                        array_push($successfulupdate, success_messages("admin_barangay_edit_successful"));
+                    } else {
+                        $updateerrors++;
                     }
                 }
 

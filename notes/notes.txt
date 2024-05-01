@@ -116,6 +116,7 @@ Further Upgrades to do:
         - view all users                                                - DONE 4-25-24
             - change their password to default                          - 
         - delete user                                                   - 
+        - admin able to edit user info                                  - DONE 5/1/24
         
     - admin, list of contact feedbacks,  just tables                    - DONE 4-7-24
         - search bar for feedbacks                                      - DONE 4-7-24

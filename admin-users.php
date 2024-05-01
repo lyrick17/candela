@@ -92,7 +92,12 @@
 								<td><?= $user['contactnumber'] ?></td>
 								<td><?= $user['user_address'] ?></td>
 								<td><?= $user['barangay'] ?></td>
-								<td><button class="btn btn-danger">Delete</button></td>
+								<td>
+									<?php if ($user['type'] == 0): ?>
+										<a href="admin-users-delete.php?id=<?= $user['user_id'] ?>" class="btn btn-danger">Delete</a>
+									<?php endif; ?>
+									
+								</td>
 							</tr>
 						<?php 	endwhile;
 							  endif; ?>
@@ -254,24 +259,7 @@
 				</div>
 			</div>
 		<?php else: ?>
-			<div id="welcome-page" class="padding-y-1 padding-x-3">
-				<header id="product-header" class="font-35 fw-bold text-center">
-					Candela Users<br />
-				</header>
-				<div class="font-25 text-center">
-					ID: <?= $_GET['id'] ?>
-				</div>
-				
-				<hr />
-				<div id="product-nav">
-					<a href="admin-users.php"><< Back To Candela Users</a>
-				</div>
-				<div class="text-center font-20 py-5">This page has been accessed incorrectly.<br /> Please go back to the users page.</div>
-				<div class="text-center font-25 py-2">
-					<a href="admin-users.php" class="basket_buttons">Back to Candela Users Page</a>
-				</div>
-			</div>
-
+			<?php require("templates/admin/wrong_access/candela_users.php"); ?>
 	<?php 	endif; 
 		endif; ?>
 </div>
