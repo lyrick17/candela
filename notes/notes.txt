@@ -129,16 +129,16 @@ Further Upgrades to do:
         - USERS                                                         - DONE
         - VIEW SITE                                                     - DONE
         - LOGOUT                                                        - DONE
+
     - Admin, mga huling gagawin kasi maraming kalikot       
         - Able to Delete product                                        -
-            - only hides the product from users
-            - cannot be ordered by user
-            - cant delete product if it was ordered already
-                - different section in admin-products
-            - can delete the product if no orders were made
+            - only hides the product from users when ordered once       -                 
+            - can delete the product if no orders were made             -
         - change their password to default                              - 
+    - limit number of products in side-Basket
 
--  limit number of products in side-basket                              -   
+
+    
 - SMTP for:
     - sending contact from                                              -
     - register, welcome to Candela                                      -

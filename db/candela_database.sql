@@ -62,11 +62,7 @@ CREATE TABLE `checkout_orders` (
   `delivered` varchar(255) NOT NULL
 );
 
-ALTER TABLE `contacts` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
 ALTER TABLE `basket_items` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
-ALTER TABLE `checkout_orders` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 ALTER TABLE `addresses` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
