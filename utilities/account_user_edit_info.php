@@ -23,6 +23,9 @@ $mydetails = array("firstname" => "",
                     "address" => "",
                     "barangay" => "");
 
+if (!isset($_POST['type'])) {
+    $_POST['type'] = "";
+}
 //changing general account details in myaccount.php
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "general") {
     
@@ -209,15 +212,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "deleteaccount") {
 }
 
 // process when user agreed on deleting the account
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['Sure'])) {
-    $delete_user_chk = mysqli_query($mysqli, "DELETE FROM checkout_orders WHERE user_id = '". $_SESSION['id'] ."' AND delivered = 'Delivered' ") or die("Unable to delete orders");
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['Sure']) && $_SESSION['type'] != 1) {
+    
+
+    //$delete_user_chk = mysqli_query($mysqli, "DELETE FROM checkout_orders WHERE user_id = '". $_SESSION['id'] ."' AND delivered = 'Delivered' ") or die("Unable to delete orders");
     $delete_user_bas = mysqli_query($mysqli, "DELETE FROM basket_items WHERE user_id = '". $_SESSION['id'] ."'") or die("Unable to delete basket");
     $delete_user_acc = mysqli_query($mysqli, "DELETE FROM addresses WHERE user_id = '". $_SESSION['id'] ."'") or die("Unable to delete information");
-    $delete_user_acc = mysqli_query($mysqli, "DELETE FROM contacts WHERE user_id = '". $_SESSION['id'] ."'") or die("Unable to delete information");
     $delete_user_acc2 = mysqli_query($mysqli, "DELETE FROM users WHERE user_id = '". $_SESSION['id'] ."'") or die("Unable to delete information");
     echo "<script> alert('We're Sorry To See You Go.'); </script>";
     
-    header("location: logout.php");
+    header("location: utilities/logout.php");
 } elseif (isset($_POST['Nope'])) {
     unset($_POST['deleteAcc']);
     header("location: myaccount.php");

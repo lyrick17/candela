@@ -130,7 +130,7 @@ Further Upgrades to do:
         - VIEW SITE                                                     - DONE
         - LOGOUT                                                        - DONE
     - Admin, mga huling gagawin kasi maraming kalikot       
-        - Able to Delete product
+        - Able to Delete product                    
             - only hides the product from users
             - cannot be ordered by user
             - cant delete product if it was ordered already

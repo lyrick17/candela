@@ -159,7 +159,6 @@ $(document).ready(function() {
 
 
 				<hr>
-
 				<!-- Display the Checkout History -->
 				<div id="checkoutHistory" class="mt-5">
 					<h3>My Checkout History</h3>
@@ -168,20 +167,33 @@ $(document).ready(function() {
 				</div>
 
 				<!-- Form for DELETE ACCOUNT-->
+				<hr>
 				<div id="deleteAccount">
-					<hr>
-					<form method="post" action="myaccount.php#deleteAccount"><!-- SOON CHANGE TO A HREF -->
-						
-						<input type="hidden" name="type" value="deleteaccount"/>
-						<section style="padding: 15px;">
-							<input type="hidden" name="confirm" id="confirm_delete_account" value="<?= $deletevalue; ?>"/>
-							<span style="font-size: 90%;">Password:</span> &nbsp;
-							<input type="password" name="mypassword" value="" id="myoldpass" /><br>
-							<span class="field-validity-myaccount"><?= $notice['deleteaccount']; ?></span>
+					<h4 class="text-danger">Delete Account</h4>
+					
+					<?php if ($_SESSION['type'] == 1): ?>
+						<h4 class="">This is an Admin Account</h4>
+						<p>Admin accounts cannot be deleted.</p>
+					<?php else: ?>
 
-						</section>
-						<input type="submit" name="deleteAcc" value="Delete Account" id="deleteacc" /><br>
-					</form>
+						<?php if (mysqli_num_rows(Orders::get_recent_orders($_SESSION['id'])) > 0): ?>
+							<p>You cannot delete your account if you have pending orders.</p>
+							<a href="index.php" class="basket_buttons">Go to Recent Orders</a>
+						<?php else: ?>
+						<form method="post" action="myaccount.php#deleteAccount"><!-- SOON CHANGE TO A HREF -->
+							
+							<input type="hidden" name="type" value="deleteaccount"/>
+							<section style="padding: 15px;">
+								<input type="hidden" name="confirm" id="confirm_delete_account" value="<?= $deletevalue; ?>"/>
+								<span style="font-size: 90%;">Password:</span> &nbsp;
+								<input type="password" name="mypassword" value="" id="myoldpass" /><br>
+								<span class="field-validity-myaccount"><?= $notice['deleteaccount']; ?></span>
+
+							</section>
+							<input type="submit" name="deleteAcc" value="Delete Account" id="deleteacc" /><br>
+						</form>
+						<?php endif; ?>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>
