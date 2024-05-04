@@ -9,7 +9,7 @@ $error = array(
             "file" => "");
 $success_msg = "";
 $errors = 0;
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save'])) {
     
     $file = $_FILES['userfile'];
     $id = test_input($mysqli, $_POST['product_id']);
@@ -93,6 +93,69 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             } else {
                 $success_msg = "Failed to save changes.";
             }*/
+    }
+}
+
+
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete'])) {
+    $adminpass = $_POST['adminpass'];
+    $adminerror = 0;
+    if (!$adminpass) {
+        echo "<script>alert(" + error_messages("psw_error_1") + ")</script>";
+        $adminerror++;
+    } else {
+
+        $pass = Users::get_password($_SESSION['id']);
+
+        if ($pass) {
+            $hashed_pass = $pass['password'];
+            if (!password_verify($adminpass, $hashed_pass)) {
+                echo "<script>alert('" + error_messages("psw_error_6") + "')</script>";
+                $adminerror++;
+            }
+        } else {
+            echo "<script>alert('" + error_messages("system_error") + "')</script>";
+            $adminerror++;
+        }
+
+    }
+
+    if ($adminerror == 0) {
+        $id = test_input($mysqli, $_GET['id']);
+        $ordered = test_input($mysqli, $_POST['ordered']);
+        $hide = test_input($mysqli, $_POST['hide']);
+        if ($ordered == 1) {
+            if ($hide == 0) {
+                $hide_product = Products::update_hide($id);
+                if ($hide_product) {
+                    echo "<script>alert('Product successfully hidden.')</script>";
+                    echo "<script>window.location.href='admin-products.php'</script>";  
+                    exit();
+                } else {
+                    echo "<script>alert('Failed to hide product.')</script>";
+                }
+            } else {
+                $unhide_product = Products::update_unhide($id);
+                if ($unhide_product) {
+                    echo "<script>alert('Product now available to customers.')</script>";
+                    echo "<script>window.location.href='admin-products.php'</script>";  
+                    exit();
+                } else {
+                    echo "<script>alert('Failed to unhide product.')</script>";
+                }
+            }
+        } else {
+            $delete = Products::delete($id);
+            if ($delete) {
+                echo "<script>alert('Product successfully removed.')</script>";
+                echo "<script>window.location.href='admin-products.php'</script>";  
+                exit();
+            } else {
+                echo "<script>alert('Failed to remove product.')</script>";
+            
+            }
+        }
     }
 }
 

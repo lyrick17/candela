@@ -22,6 +22,9 @@ foreach ($_SESSION['basket'] as $product_id => $quantity) {
     // 1.
     $productsql_result = Products::get_product_info($product_id);
 
+    // must sync hidden products or not
+    // consider the get_product_info transitioning to get_product_info_hide
+
     if (!$productsql_result) continue; // if product can't be selected, discontinue process
 
     $product = mysqli_fetch_array($productsql_result, MYSQLI_ASSOC);

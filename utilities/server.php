@@ -25,9 +25,9 @@ class Restrict {
 	}
 	
 	// check if Get ID is being used correctly or not in product.php
-	static function product_page_access($product_id) {
+	static function product_page_access($product_id, $hide) {
 		global $mysqli;
-		$product_info = Products::get_product_info($product_id); 
+		$product_info = Products::get_product_info_hide($product_id, $hide); 
 		if (!$product_info) {
 			header("Location: product.php");
 			exit();
@@ -72,33 +72,36 @@ class Restrict {
 class Products {
 	
 	// select all products in ascending order
-	static function select_all() {
+	static function select_all($hide) {
 		global $mysqli;
 		
-        $query = 'SELECT * FROM products ORDER by product_id ASC';
+        $query = "SELECT * FROM products WHERE hide = $hide ORDER by product_id ASC";
         $result = @mysqli_query($mysqli, $query);
         return ($result || mysqli_num_rows($result) > 0) ? $result : false;
     }
 	
-	static function select_search($like) {
+	
+	// select all products that have been searched
+	static function select_search($like, $hide) {
 		global $mysqli;
 		
 		$like = test_input($mysqli, $like);
 
-		$query = "SELECT * FROM products WHERE product_id LIKE '%$like%' OR 
+		$query = "SELECT * FROM products WHERE hide = $hide AND 
+												(product_id LIKE '%$like%' OR 
 												name LIKE '%$like%' OR
 												price LIKE '%$like%' OR
 												stocks LIKE '%$like%' OR
-												description LIKE '%$like%' ORDER by product_id ASC";
+												description LIKE '%$like%') ORDER by product_id ASC";
 		$result = @mysqli_query($mysqli, $query);
 		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
 	}
 
-	// select three products in descending order
+	// select three products in descending order, not including hidden products
 	static function select_three() {
 		global $mysqli;
 		
-        $query = 'SELECT * FROM products ORDER by product_id DESC LIMIT 3';
+        $query = 'SELECT * FROM products WHERE hide = 0 ORDER BY product_id DESC LIMIT 3';
         $result = @mysqli_query($mysqli, $query);
         return ($result || mysqli_num_rows($result) > 0) ? $result : false;
     }
@@ -115,6 +118,19 @@ class Products {
         return ($result && mysqli_num_rows($result) > 0) ? $result : false;
     }
 
+	// get specific product info considering its hidden feature
+	static function get_product_info_hide($id, $hide) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+		$hide = test_input($mysqli, $hide) ?? "";
+
+		$query = "SELECT * FROM products WHERE product_id = '$id' AND hide = $hide";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result && mysqli_num_rows($result) > 0) ? $result : false;
+	
+	}
+
 	// get the stocks of the product
 	static function get_stocks($id) {
 		global $mysqli;
@@ -125,6 +141,28 @@ class Products {
         $result = @mysqli_query($mysqli, $query);
         
         return ($result && mysqli_num_rows($result) > 0) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
+	}
+
+	// get ordered status of a product
+	static function status($id) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+
+		$query = "SELECT ordered FROM products WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
+	}
+
+	// get hide status of a product
+	static function hide_status($id) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+
+		$query = "SELECT hide FROM products WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
 
 	// when admin cancels orders, quantities ordered will be reverted into stocks
@@ -204,6 +242,39 @@ class Products {
 			$result = @mysqli_query($mysqli, $query);
 			return $result;
 		}
+
+		return $result;
+	}
+
+	// hide the product
+	static function update_hide($id) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+
+		$query = "UPDATE products SET hide = 1 WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	}
+
+	// unhide the product
+	static function update_unhide($id) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+
+		$query = "UPDATE products SET hide = 0 WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	}
+
+	// delete the product 
+	static function delete($id) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+
+		$query = "DELETE FROM products WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
 
 		return $result;
 	}

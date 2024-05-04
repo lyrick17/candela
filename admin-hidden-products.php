@@ -21,23 +21,24 @@
 	<!-- MODAL CONTENT for Terms and Conditions -->
 	<?php include("templates/modals/modal_terms_conditions.php"); ?>
 	
-	<!-- TWO BODY SECTIONS -->
-	<!-- 1. LIST OF ALL PRODUCTS -->
-	<!-- 2. SPECIFIC PRODUCT PAGE WITH PRODUCT INFORMATION -->
-
 	<!-- BODY 1. LIST OF ALL PRODUCTS -->
 	<div class="padding-y-1 padding-x-3">
 
 		<header id="product-header" class="font-35 fw-bold text-center">
-			Candela Products<br />
+			Hidden Candela Products<br />
 		</header>
-		<div class="text-center"><a href="admin-products-add.php" class="basket_buttons font-20" name="checkout">Add a Product</a></div>
+		<div class="text-center">
+            Here are the products that have been pulled out but was ordered before.
+        </div>
+        <div class="text-center py-2">
+            <a href="admin-products.php" class="basket_buttons font-20" name="checkout">Back to Main Products</a>
+        </div>
 		<hr />
 		<div class="px-3 py-1">
-			<form action="admin-products.php" method="get" id="search-product">
+			<form action="admin-hidden-products.php" method="get" id="search-product">
 				<input type="text" class="search-text-width py-1 my-1" placeholder="Search a Product..." name="search" maxlength="255">
 				<input type="submit" value="Search" class="btn btn-success my-1">
-				<a href="admin-products.php" class="btn btn-danger my-1">Clear Search</a>
+				<a href="admin-hidden-products.php" class="btn btn-danger my-1">Clear Search</a>
 			</form>
 		</div>
 		<hr />
@@ -52,9 +53,9 @@
 			<div class="row gx-0">
 				<?php 
 					if (isset($_GET['search'])) {
-						$product_list = Products::select_search($_GET['search'], 0);
+						$product_list = Products::select_search($_GET['search'], 1);
 					} else {
-						$product_list = Products::select_all(0);
+						$product_list = Products::select_all(1);
 					}
 						
 					if ($product_list):
@@ -107,13 +108,12 @@
 
 		<hr />
 		<div class="text-center">
-			<a href="admin-hidden-products.php" class="btn btn-primary">View Hidden Products</a>
+			<a href="admin-products.php" class="btn btn-primary">Back to Main Products</a>
 		</div>
 		<hr />
 	
 	
 	</div>
-	<!-- END OF BODY 1. -->
 
 </div>
 <!-- END OF BODY-CONTENT -->

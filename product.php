@@ -2,7 +2,7 @@
 	require('utilities/server.php');
 	require("utilities/process_basket_updates.php");
 	if (isset($_GET['id']))
-		Restrict::product_page_access($_GET['id']);
+		Restrict::product_page_access($_GET['id'], 0);
 	Restrict::remove_checkout_sess();
 	Restrict::remove_order_id_sess();
 ?>
@@ -41,7 +41,7 @@
 		<div id="products" class="text-center">
 			<div class="row gx-0">
 				<?php 
-					$product_list = Products::select_all();
+					$product_list = Products::select_all(0);
 					if ($product_list):
 						while ($product = mysqli_fetch_array($product_list, MYSQLI_ASSOC)):
 				?>
@@ -158,7 +158,7 @@
 
 	<!-- BODY 2. SPECIFIC PRODUCT PAGE WITH PRODUCT INFORMATION -->
 	<?php } else { // end of if (!isset($_GET['id'])) 
-	 		    $product_info = Products::get_product_info($_GET['id']); 
+	 		    $product_info = Products::get_product_info_hide($_GET['id'], 0); 
 	?>
 		<div class="padding-y-1 padding-x-3">
 			<div>

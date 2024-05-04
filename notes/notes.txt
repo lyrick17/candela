@@ -128,13 +128,22 @@ Further Upgrades to do:
         - FEEDBACK                                                      - DONE
         - USERS                                                         - DONE
         - VIEW SITE                                                     - DONE
+        - MY ACCOUNT                                                    -
         - LOGOUT                                                        - DONE
 
     - Admin, mga huling gagawin kasi maraming kalikot       
-        - Able to Delete product                                        -
-            - only hides the product from users when ordered once       -                 
-            - can delete the product if no orders were made             -
-        - change their password to default                              - 
+        - Admin account page                                            -
+        - Able to Delete product                                        - somehow DONE 5-4-24
+            - only hides the product from users when ordered once       - somehow DONE 5-4-24
+                - add hide column in products                           - DONE 5-4-24             
+                - functionality of changing hide column                 - DONE 5-4-24
+                - functionality of unhiding the product                 - DONE 5-4-24
+            - can delete the product if no orders were made             - DONE 5-4-24
+            - add hide section in the products                          - DONE 5-4-24
+            - modify all product selection  to exclude hidden ones      - DONE 5-4-24 needs more testing
+        - basket always checks if product is available                  - 
+            - notifies user if some products are pulled out             - 
+        - change their password to default                              -  
     - limit number of products in side-Basket
 
 

@@ -236,9 +236,9 @@
 									<input type="text" class="contact-input" value="<?= date('F j, Y g:i A', strtotime($user['registration_date'])) ?>" disabled>
 								</div>
 								
+								<hr />
 								<div class="col-md-4 py-2"></div>
 								<div class="col-md-8"></div>
-
 								<div class="col-md-4 py-2">
 									<span class="font-25">Admin Password:</span>
 								</div>

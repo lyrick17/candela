@@ -20,7 +20,7 @@
 <div class="body-content">
 	<!-- MODAL CONTENT for Terms and Conditions -->
 	<?php include("templates/modals/modal_terms_conditions.php"); ?>
-	
+
 	<!-- TWO BODY SECTIONS -->
 	<!-- 2. SPECIFIC PRODUCT PAGE WITH PRODUCT INFORMATION -->
 	
@@ -92,8 +92,8 @@
 								<hr />
 								<div class="font-16">
 									Last Modified: <b><?= date("l, j F Y, g:i A", strtotime($product['product_added_date'])); ?></b>
-									
 								</div>
+								<hr />
 							</div>
 							
 							<div class="text-center font-25 py-2">
@@ -105,6 +105,33 @@
 						<a href="admin-products.php" class="basket_buttons">Back to Products Page</a>
 					</div>
 				</div>
+
+				<div class="item-description sidebar-box-1 font-20">
+					<?php if (Products::status($_GET['id']) && Products::status($_GET['id'])['ordered'] == 0): ?>
+						<p>The product is new, and no customers has ordered it yet.</p>
+						<button class="btn btn-danger" id="remove-product">Delete Product</button>
+						
+					<?php else: ?> 
+						<?php if (Products::hide_status($_GET['id']) && Products::hide_status($_GET['id'])['hide'] == 0): ?>
+							<p>The product has been recognized and checked out by customers.</p>
+							<button class="btn btn-secondary" id="remove-product">Hide Product</button>
+						<?php else: ?>
+							<p>The product has been hidden from the customers.</p>
+							<button class="btn btn-secondary" id="remove-product">Unhide Product</button>
+						<?php endif; ?>
+					<?php endif; ?>
+					<?php if (Products::status($_GET['id'])): ?>
+						<div class="my-2" style="display:none;" id="confirm-delete">
+							<form method="post" action="admin-products-edit.php?id=<?=$_GET['id']?>">
+								<input type="hidden" name="ordered" value="<?= Products::status($_GET['id'])['ordered'] ?>" />
+								<input type="hidden" name="hide" value="<?= Products::hide_status($_GET['id'])['hide'] ?>" />
+								<input type="password" name="adminpass" placeholder="Enter Admin Password" />
+								<input type="submit" name="delete" value="Confirm Action"  />
+						</div>
+
+					<?php endif; ?>
+				</div>
+
 				<?php else: ?>
 					<div class="text-center font-20 py-5">
 						This page has been accessed incorrectly.<br />
@@ -138,6 +165,7 @@
 
 <!-- SCRIPTING -->		
 <script src="resources/js/javas.js"></script>
+<script src="resources/js/confirm_delete.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script>
 	const image_input = document.getElementById("file-input");

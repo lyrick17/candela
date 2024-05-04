@@ -1,7 +1,7 @@
 <?php require("utilities/process_basket_sync.php"); // sync the basket to the databse ?>
 <table class="w-100">
 <?php foreach ($_SESSION['basket'] as $product_id => $quantity):
-        $get_products = Products::get_product_info($product_id);
+        $get_products = Products::get_product_info_hide($product_id, 0);
         if ($get_products):
             $product = mysqli_fetch_array($get_products, MYSQLI_ASSOC);
 ?>
