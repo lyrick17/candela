@@ -60,7 +60,7 @@
 					if ($product_list):
 						while ($product = mysqli_fetch_array($product_list, MYSQLI_ASSOC)):
 				?>		
-						<div class="col-md-6 col-lg-4">
+						<div class="col-md-6 col-lg-4 paginate">
 							<div class="items">
 								<form method="post" action="admin-products.php" class="form-products">
 									<span class="font-16 fst-italic">

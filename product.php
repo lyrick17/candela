@@ -36,16 +36,31 @@
 			Food Scented Candles
 		<hr><hr>
 		</header>
-
+		<div class="px-3 py-1">
+			<form action="product.php" method="get" id="search-product">
+				<input type="text" class="search-text-width py-1 my-1" placeholder="Search a Product..." name="search" maxlength="255">
+				<input type="submit" value="Search" class="btn btn-success my-1">
+				<a href="product.php" class="btn btn-danger my-1">Clear Search</a>
+				<?php if (isset($_GET['search'])): ?>
+				<div class="text-start font-20">
+					Search Results for: <span class="font-25"><?= $_GET['search']; ?></span>
+				</div>
+			<?php endif; ?>
+			</form>
+		</div>
 		<!-- LIST OF PRODUCTS -->
 		<div id="products" class="text-center">
 			<div class="row gx-0">
-				<?php 
-					$product_list = Products::select_all(0);
+				<?php
+					if (isset($_GET['search'])) {
+						$product_list = Products::select_search($_GET['search'], 0);
+					} else {
+						$product_list = Products::select_all(0);
+					}
 					if ($product_list):
 						while ($product = mysqli_fetch_array($product_list, MYSQLI_ASSOC)):
 				?>
-						<div class="col-md-6">
+						<div class="col-md-6 paginate">
 							<div class="items">
 								<form method="post" action="product.php">
 									<span class="product-pic">
@@ -80,6 +95,11 @@
 							</div>
 						</div>
 				<?php endwhile; ?>
+					<div class="d-flex justify-content-center py-2">
+						<div id="page-nav-content">
+							<div id="page-nav"></div>
+						</div>
+					</div>
 				<?php else: ?>
 						<div class="text-center">
 							<p class="font-25">No products available.</p>
@@ -226,6 +246,7 @@
 <!-- SCRIPTING -->		
 <script src="resources/js/javas.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.4/jquery.simplePagination.min.js" integrity="sha512-J4OD+6Nca5l8HwpKlxiZZ5iF79e9sgRGSf0GxLsL1W55HHdg48AEiKCXqvQCNtA1NOMOVrw15DXnVuPpBm2mPg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="resources/js/product_pagination_2.js"></script>
 </body>
 </html>
