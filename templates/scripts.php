@@ -1,1 +1,0 @@
-<script src="javas.js"></script>
