@@ -1,5 +1,6 @@
 <?php 
 // This file will contain most of the general processes that the website need
+
 require("conn/db_connection.php");
 require("sanitize_input.php");
 
@@ -24,9 +25,9 @@ class Restrict {
 	}
 	
 	// check if Get ID is being used correctly or not in product.php
-	static function product_page_access($product_id) {
+	static function product_page_access($product_id, $hide) {
 		global $mysqli;
-		$product_info = Products::get_product_info($product_id); 
+		$product_info = Products::get_product_info_hide($product_id, $hide); 
 		if (!$product_info) {
 			header("Location: product.php");
 			exit();
@@ -71,19 +72,36 @@ class Restrict {
 class Products {
 	
 	// select all products in ascending order
-	static function select_all() {
+	static function select_all($hide) {
 		global $mysqli;
 		
-        $query = 'SELECT * FROM products ORDER by product_id ASC';
+        $query = "SELECT * FROM products WHERE hide = $hide ORDER by product_id ASC";
         $result = @mysqli_query($mysqli, $query);
-        return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+        return ($result && mysqli_num_rows($result) > 0) ? $result : false;
     }
 	
-	// select three products in descending order
+	
+	// select all products that have been searched
+	static function select_search($like, $hide) {
+		global $mysqli;
+		
+		$like = test_input($mysqli, $like);
+
+		$query = "SELECT * FROM products WHERE hide = $hide AND 
+												(product_id LIKE '%$like%' OR 
+												name LIKE '%$like%' OR
+												price LIKE '%$like%' OR
+												stocks LIKE '%$like%' OR
+												description LIKE '%$like%') ORDER by product_id ASC";
+		$result = @mysqli_query($mysqli, $query);
+		return ($result && mysqli_num_rows($result) > 0) ? $result : false;
+	}
+
+	// select three products in descending order, not including hidden products
 	static function select_three() {
 		global $mysqli;
 		
-        $query = 'SELECT * FROM products ORDER by product_id DESC LIMIT 3';
+        $query = 'SELECT * FROM products WHERE hide = 0 ORDER BY product_id DESC LIMIT 3';
         $result = @mysqli_query($mysqli, $query);
         return ($result || mysqli_num_rows($result) > 0) ? $result : false;
     }
@@ -100,6 +118,20 @@ class Products {
         return ($result && mysqli_num_rows($result) > 0) ? $result : false;
     }
 
+	// get specific product info considering its hidden feature
+	static function get_product_info_hide($id, $hide) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+		$hide = test_input($mysqli, $hide) ?? "";
+
+		$query = "SELECT * FROM products WHERE product_id = '$id' AND hide = $hide";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result && mysqli_num_rows($result) > 0) ? $result : false;
+	
+	}
+
+	// get the stocks of the product
 	static function get_stocks($id) {
 		global $mysqli;
         if (!isset($id)) return false;
@@ -110,13 +142,191 @@ class Products {
         
         return ($result && mysqli_num_rows($result) > 0) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
+
+	// get ordered status of a product
+	static function status($id) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+
+		$query = "SELECT ordered FROM products WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
+	}
+
+	// get hide status of a product
+	static function hide_status($id) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+
+		$query = "SELECT hide FROM products WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
+	}
+
+	// when admin cancels orders, quantities ordered will be reverted into stocks
+	static function revert_stocks($id, $quantity) {
+		global $mysqli;
+		$id = test_input($mysqli, $id);
+		$quantity = test_input($mysqli, $quantity);
+
+		$query = "UPDATE products SET stocks = stocks + $quantity WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	}
+
+	// update price of a specific product
+	static function update_price($id, $newprice) {
+		global $mysqli;
+		$id = test_input($mysqli, $id);
+		$newprice = test_input($mysqli, $newprice);
+
+		$query = "UPDATE products SET price = $newprice WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
 	
+	}
 	
+	// update stocks of a specific product
+	static function update_stocks($id, $newstocks) {
+		global $mysqli;
+		$id = test_input($mysqli, $id);
+		$newstocks = test_input($mysqli, $newstocks);
+
+		$query = "UPDATE products SET stocks = $newstocks WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	
+	}
+	
+	// upload a file, whether new or old
+	static function upload_file($id, $file) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+
+		// create a filepath for the image, as well as it's new filename
+		$path = "images/products/";
+		$extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+		$filepath = $path . "product_" . $id . "." . $extension;
+		UploadFiles::verify_folder($path);
+		// move the file onto the server's folder, and update the database	
+		UploadFiles::delete_file($id);	
+		move_uploaded_file($file['tmp_name'], $filepath);
+
+
+
+		$query = "UPDATE products SET image = '$filepath' WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	}
+
+	// update a specific product
+	static function product_modify($process, $id, $name, $price, $stocks, $description) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+		$name = test_input($mysqli, $name) ?? "";
+		$price = test_input($mysqli, $price) ?? "";
+		$stocks = test_input($mysqli, $stocks) ?? "";
+		$description = test_input($mysqli, $description) ?? "";
+
+		if ($process == "update") {
+			$query = "UPDATE products SET name = '$name', price = '$price', stocks = '$stocks', description = '$description' WHERE product_id = '$id'";
+			$result = @mysqli_query($mysqli, $query);
+		} elseif ($process == "create") {
+			$query = "INSERT INTO products (name, price, stocks, description) VALUES ('$name', '$price', '$stocks', '$description')";
+			$result = @mysqli_query($mysqli, $query);
+			return $result;
+		}
+
+		return $result;
+	}
+
+	// hide the product
+	static function update_hide($id) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+
+		$query = "UPDATE products SET hide = 1 WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	}
+
+	// unhide the product
+	static function update_unhide($id) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+
+		$query = "UPDATE products SET hide = 0 WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	}
+
+	// delete the product 
+	static function delete($id) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+
+		$query = "DELETE FROM products WHERE product_id = '$id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	}
 }
 
 
 // MySQLi User Functions
 class Users {
+
+	// get all user information to display for admin
+	static function select_all() {
+		global $mysqli;
+		
+		$query = 'SELECT u.user_id, username, lastname, email, contactnumber, registration_date, user_address, barangay, type
+					FROM users u LEFT JOIN addresses a ON u.user_id = a.user_id ORDER by user_id ASC';
+		$result = @mysqli_query($mysqli, $query);
+		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+	}
+
+	// get user info based on the search value
+	static function select_search($like) {
+		global $mysqli;
+		
+		$like = test_input($mysqli, $like);
+
+		$query = "SELECT u.user_id, username, lastname, email, contactnumber, registration_date, user_address, barangay, type
+					FROM users u LEFT JOIN addresses a 
+					ON u.user_id = a.user_id WHERE u.user_id LIKE '%$like%' OR 
+												u.username LIKE '%$like%' OR
+												u.lastname LIKE '%$like%' OR
+												u.email LIKE '%$like%' OR
+												u.contactnumber LIKE '%$like%' OR
+												u.registration_date LIKE '%$like%' OR
+												a.user_address LIKE '%$like%' OR
+												a.barangay LIKE '%$like%' ORDER by user_id ASC";
+		$result = @mysqli_query($mysqli, $query);
+		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+	
+	}
+
+	// get specific user info based on id
+	static function select_info($id) {
+		global $mysqli;
+
+		$id = test_input($mysqli, $id);
+
+		$query = "SELECT u.user_id, username, lastname, email, contactnumber, registration_date, user_address, barangay, type
+					FROM users u LEFT JOIN addresses a 
+					ON u.user_id = a.user_id WHERE u.user_id = $id";
+		$result = @mysqli_query($mysqli, $query);
+		return ($result && mysqli_num_rows($result) > 0) ? $result : false;
+	}
 
 	// get all information of a specific user
 	static function get_all_info($email) {
@@ -162,6 +372,7 @@ class Users {
     	$result = @mysqli_query($mysqli, $query);
 		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
+
 	
 	
 }
@@ -197,6 +408,17 @@ class Basket {
 // MySQLi Checkout Order Functions
 class Orders {
 	
+	// get all orders of a specific user
+	static function get_orders_admin() {
+		global $mysqli;
+
+		$query = "SELECT * FROM checkout_orders ORDER BY checkout_id DESC";
+		$result = @mysqli_query($mysqli, $query);
+
+		return ($result) ? $result : false;
+	
+	}
+
 	// get all orders of a specific user
 	static function get_all_orders($user_id) {
 		global $mysqli;
@@ -241,7 +463,7 @@ class Orders {
 
 		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
-
+	// get the address of an order id
 	static function get_address($order_id) {
 		global $mysqli;
 		$order_id = test_input($mysqli, $order_id) ?? "";
@@ -251,7 +473,7 @@ class Orders {
 
 		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
-
+	// get the contact number of a specific order
 	static function get_contact_number($order_id) {
 		global $mysqli;
 		$order_id = test_input($mysqli, $order_id) ?? "";
@@ -262,10 +484,60 @@ class Orders {
 		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}
 
+	// update status of a specific order
+	static function update_status($order_id, $status) {
+		global $mysqli;
+		$order_id = test_input($mysqli, $order_id) ?? "";
+		$status = test_input($mysqli, $status) ?? "";
+
+		// revert the stocks if the order is cancelled
+		if ($status == "Cancelled") {
+			$order = Orders::get_order($order_id);
+			if ($order) {
+				$products = json_decode($order['products'], true);
+				foreach ($products as $product_id => $quantity) {
+					Products::revert_stocks($product_id, $quantity);
+				}
+			}
+		}
+			
+		$query = "UPDATE checkout_orders SET delivered = '$status' WHERE order_id = '$order_id'";
+		$result = @mysqli_query($mysqli, $query);
+
+		return $result;
+	}
+
+}
+
+class Feedbacks {
+	static function select_all() {
+		global $mysqli;
+		
+		$query = 'SELECT * FROM contacts ORDER by contact_id DESC';
+		$result = @mysqli_query($mysqli, $query);
+		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+	}
+
+	static function select_search($like) {
+		global $mysqli;
+		
+		$like = test_input($mysqli, $like);
+
+		$query = "SELECT * FROM contacts WHERE contact_id LIKE '%$like%' OR 
+												user_id LIKE '%$like%' OR
+												name LIKE '%$like%' OR
+												email LIKE '%$like%' OR
+												contactnumber LIKE '%$like%' OR
+												subject LIKE '%$like%' OR
+												comment LIKE '%$like%' ORDER by contact_id DESC";
+		$result = @mysqli_query($mysqli, $query);
+		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+	}
 }
 
 // Other repeatable codes for the website 
 class Formats {
+	// for alerting user if stocks are low
 	static function display_stocks_left($stocks) {
 		if ($stocks <= 15) {
 			echo $stocks . "stock/s left";
@@ -284,6 +556,32 @@ class Formats {
 
 		// general purpose of the function
 		return (isset($_SESSION[$id])) ? $_SESSION[$id] : $info;
+	}
+}
+
+class UploadFiles {
+	// verify folder if it exists
+	static function verify_folder($path) {
+		if (!is_dir($path)) {
+			mkdir($path, 0777, true);
+		}
+	}
+
+	// delete a file in images/products/
+	static function delete_file($id) {
+		$path = "images/products/";
+		$filename = "product_" . $id;
+		
+		// construct the full file path
+		$filepath = $path . $filename . ".*";
+		$files = glob($filepath);
+		foreach ($files as $file) {
+			// check if the file exists then delete if so
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
+		
 	}
 }
 ?>

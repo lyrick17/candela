@@ -81,34 +81,80 @@ Further Upgrades to do:
             - Delivered                                                 - DONE 3-18-24
     - Quantity FetchAPI on basket page (used GET variable instead)      - DONE 3-18-24
     - picture of products in basket in checkout, confirmation, success  - DONE 3-18-24 
+
 - Admin Features:     
     - admin panel
-        - day, and if friday, show message, time to deliver orders
-        - recent orders categorized with their status
-            - button to go to checkout management
-        - list of products, and their stocks
-            - button to go to product management
-    - admin checkout management
-        - able to  view orders
-        - able to cancel orders 
-            (changes status to cancelled, brings back stocks)
-        - mark status per order
+        - day, and if friday, show message, time to deliver orders      - DONE 3-28-24
+        - recent orders categorized with their status                   - DONE 3-28-24
+        - list of products, and their stocks                            - DONE 4-1-24
+
+    - admin checkout management                                         - DONE 3-28-24
+        - able to  view orders                                          - DONE 3-28-24
+        - able to cancel orders                                         - DONE 3-28-24
+        (changes status to cancelled, brings back stocks)               - DONE 3-28-24
+        - mark status per order                                         - DONE 3-28-24
+
     - admin product management
-        - able to add product
-        - able to change product information
-        - able to add stocks
-    - admin, list of Users
-        - able to change user information,
-        - able to delete Users
-    - 
+        - search bar for products                                       - DONE 4-7-24
+        - pagination, 9 products per page                               - DONE 4-2-24
+        - able to add product                                           - DONE 4-7-24
+            - add picture, name, price, stocks, desc                    - DONE 4-7-24
+            - upload picture in folders                                 - DONE 4/3/24
+            - able to resize picture in 200x200 only in website         - --------------hirap
+        - able to display all products                                  - DONE 3-##-24
+        - able to change product information                            - DONE 4-3-24
+            - Change prices and stocks                                  - DONE 3-31-24
+                - Updates all user basket information when they loggedin- DONE apparently it's working
+            - Able to view specific product page                        - DONE 4-2-24
+                - change all information available                      - DONE 4/3/24
+        - able to delete product                                        - 
+            - delete the picture of product as well                     - 
+
+    - admin, list of Users    
+        - search bar for users                                          - DONE 4-25-24
+        - pagination, 10 users per page                                 - DONE 4-25-24
+        - view all users                                                - DONE 4-25-24
+            - change their password to default                          - 
+        - delete user                                                   - DONE 5-1-24
+        - admin able to edit user info                                  - DONE 5/1/24
+        
+    - admin, list of contact feedbacks,  just tables                    - DONE 4-7-24
+        - search bar for feedbacks                                      - DONE 4-7-24
+        - pagination, 5 feedbacks per page - 9 FEEDBACKS                - DONE 4-7-24
+
+    - admin, nav                                                        - DONE 4-7-24
+        - DASHBOARD                                                     - DONE
+        - PRODUCTS                                                      - DONE
+        - FEEDBACK                                                      - DONE
+        - USERS                                                         - DONE
+        - VIEW SITE                                                     - DONE
+        - MY ACCOUNT                                                    - no need, just a button is enough
+        - LOGOUT                                                        - DONE
+
+    - Admin, mga huling gagawin kasi maraming kalikot       
+        - Admin account page                                            - DONE 5-5-24
+        - Able to Delete product                                        - somehow DONE 5-4-24
+            - only hides the product from users when ordered once       - somehow DONE 5-4-24
+                - add hide column in products                           - DONE 5-4-24             
+                - functionality of changing hide column                 - DONE 5-4-24
+                - functionality of unhiding the product                 - DONE 5-4-24
+            - can delete the product if no orders were made             - DONE 5-4-24
+            - add hide section in the products                          - DONE 5-4-24
+            - modify all product selection  to exclude hidden ones      - DONE 5-4-24 needs more testing
+        - basket always checks if product is available                  - somehow DONE 5-5-24
+            - notifies user if some products are pulled out             - somehow DONE 5-5-24
+        - change their password to default                              - 
+    - limit number of products in side-Basket                           - wag muna
+    - added caution  that shows candela is not legit                    - DONE 5-5-24
 
     
--  limit number of products in side-basket                          -   
-- SMTP for:
-    - sending contact from
-    - register, welcome to Candela
-    - basket checked out
-    - order is on the way
-    - order is delivered
-    - deleted an account
+- SMTP for:                                                             - wag na
+    - sending contact from                                              -   
+    - register, welcome to Candela                                      - 
+    - basket checked out                                                - 
+    - order is on the way                                               - 
+    - order is delivered                                                - 
+    - deleted an account                                                - 
+    - 
 
+alter table checkout_orders drop constraint checkout_orders_ibfk_1;

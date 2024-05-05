@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $errors += (empty($_POST['uName']) || strlen($contact['name']) > 255);
     $errors += (empty($_POST['email']) || !filter_var($contact['email'], FILTER_VALIDATE_EMAIL));
-    $errors += $contcontactnumErr ? $errors + 1 : $errors;
+    $errors += ($contact['contact'] && !preg_match("/^(09)\d{9}$/",$contact['contact'])) ? $errors + 1 : $errors;
     $errors += (empty($_POST['subject']) || strlen($contact['subject']) > 255);
     $errors += (empty($_POST['comment']) || strlen($contact['comment']) > 2000);
 

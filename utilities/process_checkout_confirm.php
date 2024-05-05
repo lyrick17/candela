@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         require("process_basket_sync.php");
 
         if ($less_stocks > 0) {
-            echo "<script>alert('Oops! Sorry, the stocks left have been reduced lower than your chosen quantity, please update your basket.')</script>";
             echo "<script>window.location = 'product.php';</script>";
+            exit();
         } else {
             // The order will be processed
             // 1. Create an Order_id 
@@ -97,10 +97,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
             $result = mysqli_stmt_execute($orders_stmt);
             if ($result) {
+                $ordered = 1; // mark the product as ordered. This prohibits admin to delete the product, but only hide it from user
                 // 5.
                 foreach ($_SESSION['basket'] as $product_id => $quantity) {
-                    $update_stmt = mysqli_prepare($mysqli, "UPDATE `products` SET stocks = stocks - ? WHERE product_id = ?");
-                    mysqli_stmt_bind_param($update_stmt, "ii", $quantity, $product_id);
+                    $update_stmt = mysqli_prepare($mysqli, "UPDATE `products` SET stocks = stocks - ? AND ordered = ? WHERE product_id = ?");
+                    mysqli_stmt_bind_param($update_stmt, "iii", $quantity, $ordered, $product_id);
                     mysqli_stmt_execute($update_stmt);
 
                 }

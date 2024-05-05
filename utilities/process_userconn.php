@@ -241,8 +241,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'login') {
 
                 mysqli_close($mysqli);
                 
-                header("location: index.php");
-                exit();
+                // head to either user page or admin page
+                if ($_SESSION['type'] == 0) {           // user
+                    header("location: index.php");
+                    exit();
+                } else {                                // admin
+                    header("location: admin.php");
+                    exit();
+                }
             } else {
                 $inputErr  = error_messages("login_error_2");     // invalid login
             }

@@ -37,31 +37,41 @@
 		?>
 					<div id="tagline-description" class="col-lg-9 text-center">
 						<div id="tagline" class="font-30 m-2">My Orders<br /></div>
-						<div id="order-buttons">
+						<div id="order-buttons" class="row w-75 mx-auto">
 							<?php if (isset($_GET['orders'])): ?>
 							<?php 	if ($_GET['orders'] == 2): ?>
-										<a href="index.php?orders=1" class="order-buttons">Recent Orders</a>
-										<a href="index.php?orders=2" class="order-buttons active">To Receive</a>
-										<a href="index.php?orders=3" class="order-buttons">Delivered</a>
+										<a href="index.php?orders=1" class="col-lg-3 col-md-6 order-buttons">Recent Orders</a>
+										<a href="index.php?orders=2" class="col-lg-3 col-md-6 order-buttons active">To Receive</a>
+										<a href="index.php?orders=3" class="col-lg-3 col-md-6 order-buttons">Delivered</a>
+										<a href="index.php?orders=4" class="col-lg-3 col-md-6 order-buttons">Cancelled</a>
 							<?php	elseif ($_GET['orders'] == 3): ?>
-										<a href="index.php?orders=1" class="order-buttons">Recent Orders</a>
-										<a href="index.php?orders=2" class="order-buttons">To Receive</a>
-										<a href="index.php?orders=3" class="order-buttons active">Delivered</a>
-							<?php	else: ?>
-										<a href="index.php?orders=1" class="order-buttons active">Recent Orders</a>
-										<a href="index.php?orders=2" class="order-buttons">To Receive</a>
-										<a href="index.php?orders=3" class="order-buttons">Delivered</a>
+										<a href="index.php?orders=1" class="col-lg-3 col-md-6 order-buttons">Recent Orders</a>
+										<a href="index.php?orders=2" class="col-lg-3 col-md-6 order-buttons">To Receive</a>
+										<a href="index.php?orders=3" class="col-lg-3 col-md-6 order-buttons active">Delivered</a>
+										<a href="index.php?orders=4" class="col-lg-3 col-md-6 order-buttons">Cancelled</a>
+							<?php	elseif ($_GET['orders'] == 4): ?>
+										<a href="index.php?orders=1" class="col-lg-3 col-md-6 order-buttons">Recent Orders</a>
+										<a href="index.php?orders=2" class="col-lg-3 col-md-6 order-buttons">To Receive</a>
+										<a href="index.php?orders=3" class="col-lg-3 col-md-6 order-buttons">Delivered</a>
+										<a href="index.php?orders=4" class="col-lg-3 col-md-6 order-buttons active">Cancelled</a>
+							<?php 	else: ?>
+										<a href="index.php?orders=1" class="col-lg-3 col-md-6 order-buttons active">Recent Orders</a>
+										<a href="index.php?orders=2" class="col-lg-3 col-md-6 order-buttons">To Receive</a>
+										<a href="index.php?orders=3" class="col-lg-3 col-md-6 order-buttons">Delivered</a>
+										<a href="index.php?orders=4" class="col-lg-3 col-md-6 order-buttons">Cancelled</a>
 							<?php 	endif; ?>
 							<?php else: ?>
-									<a href="index.php?orders=1" class="order-buttons active">Recent Orders</a>
-									<a href="index.php?orders=2" class="order-buttons">To Receive</a>
-									<a href="index.php?orders=3" class="order-buttons">Delivered</a>
+									<a href="index.php?orders=1" class="col-lg-3 col-md-6 order-buttons active">Recent Orders</a>
+									<a href="index.php?orders=2" class="col-lg-3 col-md-6 order-buttons">To Receive</a>
+									<a href="index.php?orders=3" class="col-lg-3 col-md-6 order-buttons">Delivered</a>
+									<a href="index.php?orders=4" class="col-lg-3 col-md-6 order-buttons">Cancelled</a>
 							<?php endif; ?>
 						</div>
 		<?php		
 					// $_GET['orders'] = 1 -> recent orders
 					// $_GET['orders'] = 2 -> to receive
 					// $_GET['orders'] = 3 -> delivered
+					// $_GET['orders'] = 4 -> cancelled
 					// $_GET['orders'] = any -> recent orders
 					$displayed_orders = 0;
 					while($order = mysqli_fetch_array($orders, MYSQLI_ASSOC)):
@@ -77,6 +87,11 @@
 							} elseif ($_GET['orders'] == 3) {
 								// If the order is not "Delivered", skip to the next iteration
 								if ($order['delivered'] != "Delivered") {
+									continue;
+								}
+							} elseif ($_GET['orders'] == 4) {
+								// If the order is not "Cancelled", skip to the next iteration
+								if ($order['delivered'] != "Cancelled") {
 									continue;
 								}
 							} else {
@@ -139,6 +154,8 @@
 									$no_order_message = "No orders are being processed.";
 								elseif ($_GET['orders'] == 3)
 									$no_order_message = "No orders have been delivered yet.";
+								elseif ($_GET['orders'] == 4)
+									$no_order_message = "No orders have been cancelled.";
 								else
 									$no_order_message = "You have no recent orders to display";
 							} else {
@@ -266,7 +283,7 @@
 			
 			<div class="candela-btn-2">
 				<a href="product.php">
-					I Am Ready To Order >>>
+					I Am Ready To Order
 				</a>
 			</div>
 	</div>
@@ -291,6 +308,18 @@
 			</div>
 		</div>
 	<?php endif; ?>
+
+	<!-- FOURTH CONTENT - Warning about This Website -->
+	<div class="text-center" id="about-section-4">
+		<div class="my-4">
+			<h1 class="fw-bold">Caution</h1>
+			<p class="font-20 white-box">
+				Please be aware that this website is a portfolio / personal project only. <br />
+				The products displayed here are not for sale. <br />
+				For more information, please visit my <a href="https://github.com/lyrick17/candela"><u>Github page</u></a>.
+			</p>
+		</div>
+	</div>
 </div>
 
 <!-- FOOTER AND BOTTOM HEADER -->

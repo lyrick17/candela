@@ -12,3 +12,5 @@ Q: What if I don't want to have an account when I want to order?
 A: You can order and choose Guest Check Out option, providing the Name, Email and Address after reading the Terms and Conditions.
 Q: Can I cancel the product I've checked out?
 A: Unfortunately, you have to make sure what details you're entering, for you cannot cancel the order that's been checked out.
+Q: Is Candela legit?
+A: No, Candela is not a real business, but rather a personal portfolio software project only written in PHP.

@@ -33,7 +33,9 @@ body {
 * {
 	box-sizing: border-box;
 }
-
+textarea {
+	resize: both;
+}
 
 
 
@@ -47,6 +49,10 @@ body {
 }
 .color-2-green {
 	color: #13c62e;
+}
+
+.bg-color-2 {
+	background-color: #e89b00;
 }
 /* END OF WEBSITE COLORS ----------------------------------- */
 
@@ -196,6 +202,10 @@ body {
 		width: 65%;
 	}
 }
+.product-200 {
+	width: 200px;
+	height: auto;
+}
 /* END OF IMAGES ----------------------------------- */
 
 
@@ -222,7 +232,30 @@ body {
 	border-style: solid;
 	border-radius: 5px;
 }
-
+.sidebar-box-4 {
+	border-color: #f99b46;
+	border-width: 2px 7px;
+	border-style: solid;
+	border-radius: 5px;
+}
+.sidebar-box-red-1 {
+	border-color: rgb(180, 17, 17) #ababab #ababab #ababab;
+	border-width: 7px 2px 2px 2px;
+	border-style: solid;
+	border-radius: 5px;
+}
+.sidebar-box-red-2 {
+	border-color: rgb(110, 11, 11) #ababab;
+	border-width: 7px 2px;
+	border-style: solid;
+	border-radius: 5px;
+}
+.sidebar-box-green-2 {
+	border-color: rgb(34, 197, 62) #ababab;
+	border-width: 7px 2px;
+	border-style: solid;
+	border-radius: 5px;
+}
 /* END OF SIDEBAR ----------------------------------- */
 
 
@@ -397,15 +430,20 @@ body {
 		width: 90%;
 		height: auto;
 	}
+	.recent-order-img-admin {
+		width: 35%;
+		height: auto;
+	}
 }
 @media (min-width: 992px) {
-	.recent-order-img {
-		width: 50%;
+	.recent-order-img, .recent-order-img-admin {
+		width: 35%;
 		height: auto;
 	}
 }
 .order-buttons {
 	padding: 4px 10px;
+	margin-top: 10px;
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 5px;
@@ -470,6 +508,13 @@ body {
 .login-promotion > span > a {
 	text-decoration: underline;
 }
+
+.white-box {
+	background-color: white;
+	padding: 10px;
+	border-radius: 5px;
+	direction: ltr;
+}
 /* END OF HOME ----------------------------------- */
 
 
@@ -519,6 +564,12 @@ body {
 .about-logo img {
 	width: 300px;
 	height: auto;
+}
+.orange-box {
+	background-color: #ffc44d;
+	padding: 10px;
+	border-radius: 5px;
+	direction: ltr;
 }
 /* END OF ABOUT ----------------------------------- */
 
@@ -1129,3 +1180,33 @@ a.Onow:hover , a.Snow:hover , input.Snow:hover {
 }
 /* END OF MORE FEATURES ----------------------------------- */
 
+/* ADMIN ----------------------------------- */
+.textarea-edit {
+	width: 100%; 
+	height: 30vh; 
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box; 
+	box-sizing: border-box;
+}
+
+.search-text-width {
+	width: 85wv;
+}
+
+/* For Medium Devices */
+@media (min-width: 768px) {
+	.search-text-width {
+		width: 30vw;
+	}
+}
+
+/* For Large Devices */
+@media screen and (min-width: 992px) {
+	.search-text-width {
+		width: 20vw;
+	}
+}
+
+#user-table td {
+	padding: 10px;
+}

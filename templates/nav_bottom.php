@@ -21,6 +21,11 @@
 				<li>
 					<a href="contact-us.php" class="navi">Contact Us</a>
 				</li>
+				<?php if (isset($_SESSION['type']) && $_SESSION['type'] == 1): ?>
+					<li>
+						<a href="admin.php" class="navi">Admin</a>
+					</li>
+				<?php endif; ?>
             </ul>
         </div>
 	

@@ -126,7 +126,7 @@ function error_messages($error) {
             return "<script>alert('Sorry, you have ordered the maximum amount of the product available.');</script>";
             break;
         case "reduced_order":
-            return "<script>alert('Sorry, some of your orders have been reduced its quantity or removed, we have less stocks than your chosen quantity.')</script>";
+            return "<script>alert('Sorry, some of your orders have been reduced its quantity or removed. We have less stocks than your chosen quantity or the product has been removed.')</script>";
             break;
         }
 }
@@ -151,6 +151,25 @@ function success_messages($message) {
         case "update_successful":
             return "Successfully changed";
             break;
+        case "admin_username_edit_successful":
+            return "Successfully edited username";
+            break;
+        case "admin_lastname_edit_successful":
+            return "Successfully edited lastname";
+            break;
+        case "admin_email_edit_successful":
+            return "Successfully edited email";
+            break;
+        case "admin_contactnumber_edit_successful":
+            return "Successfully edited contact number";
+            break;
+        case "admin_address_edit_successful":
+            return "Successfully edited address";
+            break;
+        case "admin_barangay_edit_successful":
+            return "Successfully edited barangay";
+            break;
+        
     }
 }
 ?>
