@@ -85,6 +85,16 @@
 	<div id="about-section-4">
 		If you wish to know more about our Service, please read our <a id="myBtn" style="text-decoration: underline;">Terms and Conditions</a>. Thank you.
 	</div>
+	<div class="text-center">
+		<div class="my-4 mx-2 mx-md-5 orange-box">
+			<h1 class="fw-bold">Caution</h1>
+			<p class="font-20 ">
+				Please be aware that this website is a portfolio / personal project only. <br />
+				The products displayed here are not for sale. <br />
+				For more information, please visit my <a href="https://github.com/lyrick17/candela"><u>Github page</u></a>.
+			</p>
+		</div>
+	</div>
 </div>
 <!-- FOOTER AND BOTTOM HEADER -->
 <?php require("templates/footer.php"); ?>

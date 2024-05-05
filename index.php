@@ -308,6 +308,18 @@
 			</div>
 		</div>
 	<?php endif; ?>
+
+	<!-- FOURTH CONTENT - Warning about This Website -->
+	<div class="text-center" id="about-section-4">
+		<div class="my-4">
+			<h1 class="fw-bold">Caution</h1>
+			<p class="font-20 white-box">
+				Please be aware that this website is a portfolio / personal project only. <br />
+				The products displayed here are not for sale. <br />
+				For more information, please visit my <a href="https://github.com/lyrick17/candela"><u>Github page</u></a>.
+			</p>
+		</div>
+	</div>
 </div>
 
 <!-- FOOTER AND BOTTOM HEADER -->

@@ -508,6 +508,13 @@ textarea {
 .login-promotion > span > a {
 	text-decoration: underline;
 }
+
+.white-box {
+	background-color: white;
+	padding: 10px;
+	border-radius: 5px;
+	direction: ltr;
+}
 /* END OF HOME ----------------------------------- */
 
 
@@ -557,6 +564,12 @@ textarea {
 .about-logo img {
 	width: 300px;
 	height: auto;
+}
+.orange-box {
+	background-color: #ffc44d;
+	padding: 10px;
+	border-radius: 5px;
+	direction: ltr;
 }
 /* END OF ABOUT ----------------------------------- */
 

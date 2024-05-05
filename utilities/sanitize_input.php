@@ -126,7 +126,7 @@ function error_messages($error) {
             return "<script>alert('Sorry, you have ordered the maximum amount of the product available.');</script>";
             break;
         case "reduced_order":
-            return "<script>alert('Sorry, some of your orders have been reduced its quantity or removed, we have less stocks than your chosen quantity.')</script>";
+            return "<script>alert('Sorry, some of your orders have been reduced its quantity or removed. We have less stocks than your chosen quantity or the product has been removed.')</script>";
             break;
         }
 }

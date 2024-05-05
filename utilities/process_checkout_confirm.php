@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         require("process_basket_sync.php");
 
         if ($less_stocks > 0) {
-            echo "<script>alert('Oops! Sorry, the stocks left have been reduced lower than your chosen quantity, please update your basket.')</script>";
             echo "<script>window.location = 'product.php';</script>";
+            exit();
         } else {
             // The order will be processed
             // 1. Create an Order_id 

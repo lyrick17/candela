@@ -52,6 +52,11 @@ $(document).ready(function() {
 
 					<!-- Form for GENERAL INFORMATION -->
 					<h1><?= $_SESSION['username']; ?>'s Account</h1>
+					<?php if ($_SESSION['type'] == 1): ?>
+						<div>
+							<a href="admin-users.php"  class="btn basket_buttons">Go Back to Admin Section</a>
+						</div>
+					<?php endif; ?>
 					<hr>
 					<form method="post" action="myaccount.php">
 						<input type="hidden" name="type" value="general"/>

@@ -128,11 +128,11 @@ Further Upgrades to do:
         - FEEDBACK                                                      - DONE
         - USERS                                                         - DONE
         - VIEW SITE                                                     - DONE
-        - MY ACCOUNT                                                    -
+        - MY ACCOUNT                                                    - no need, just a button is enough
         - LOGOUT                                                        - DONE
 
     - Admin, mga huling gagawin kasi maraming kalikot       
-        - Admin account page                                            -
+        - Admin account page                                            - DONE 5-5-24
         - Able to Delete product                                        - somehow DONE 5-4-24
             - only hides the product from users when ordered once       - somehow DONE 5-4-24
                 - add hide column in products                           - DONE 5-4-24             
@@ -141,20 +141,20 @@ Further Upgrades to do:
             - can delete the product if no orders were made             - DONE 5-4-24
             - add hide section in the products                          - DONE 5-4-24
             - modify all product selection  to exclude hidden ones      - DONE 5-4-24 needs more testing
-        - basket always checks if product is available                  - 
-            - notifies user if some products are pulled out             - 
-        - change their password to default                              -  
-    - limit number of products in side-Basket
-
+        - basket always checks if product is available                  - somehow DONE 5-5-24
+            - notifies user if some products are pulled out             - somehow DONE 5-5-24
+        - change their password to default                              - 
+    - limit number of products in side-Basket                           - wag muna
+    - added caution  that shows candela is not legit                    - DONE 5-5-24
 
     
-- SMTP for:
-    - sending contact from                                              -
-    - register, welcome to Candela                                      -
-    - basket checked out                                                -
-    - order is on the way                                               -
-    - order is delivered                                                -
-    - deleted an account                                                -
-
+- SMTP for:                                                             - wag na
+    - sending contact from                                              -   
+    - register, welcome to Candela                                      - 
+    - basket checked out                                                - 
+    - order is on the way                                               - 
+    - order is delivered                                                - 
+    - deleted an account                                                - 
+    - 
 
 alter table checkout_orders drop constraint checkout_orders_ibfk_1;

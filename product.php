@@ -79,10 +79,13 @@
 								</div>
 							</div>
 						</div>
-				<?php 
-						endwhile;
-					endif;
-				?>
+				<?php endwhile; ?>
+				<?php else: ?>
+						<div class="text-center">
+							<p class="font-25">No products available.</p>
+							<p class="font-20">Candela is working on providing the best services.</p>
+						</div>
+				<?php endif; ?>
 			</div>
 		</div>
 	

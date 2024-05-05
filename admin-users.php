@@ -37,6 +37,9 @@
 		<div class="font-20 text-center">
 			Tip: Click the ID of the user to edit them.
 		</div>
+		<div class="font-20 text-center">
+			<a href="myaccount.php" class="btn btn-primary">Go to My Account</a>
+		</div>
 		<hr />
 		<div class="px-3 py-1">
 			<form action="admin-users.php" method="get" id="search-product">

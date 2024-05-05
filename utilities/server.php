@@ -77,7 +77,7 @@ class Products {
 		
         $query = "SELECT * FROM products WHERE hide = $hide ORDER by product_id ASC";
         $result = @mysqli_query($mysqli, $query);
-        return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+        return ($result && mysqli_num_rows($result) > 0) ? $result : false;
     }
 	
 	
@@ -94,7 +94,7 @@ class Products {
 												stocks LIKE '%$like%' OR
 												description LIKE '%$like%') ORDER by product_id ASC";
 		$result = @mysqli_query($mysqli, $query);
-		return ($result || mysqli_num_rows($result) > 0) ? $result : false;
+		return ($result && mysqli_num_rows($result) > 0) ? $result : false;
 	}
 
 	// select three products in descending order, not including hidden products
