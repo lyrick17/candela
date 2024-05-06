@@ -361,6 +361,16 @@ class Users {
 		// return the address info 
 		return ($result) ? mysqli_fetch_array($result, MYSQLI_ASSOC) : false;
 	}	
+	// get address of a specific user
+	static function check_address($id) {
+		global $mysqli;
+		$id = test_input($mysqli, $id) ?? "";
+		$query = "SELECT * FROM addresses WHERE `user_id` = '". $id ."'";
+		$result = @mysqli_query($mysqli, $query);
+		$count = mysqli_num_rows($result);
+		// return the address info 
+		return ($result && $count > 0) ? true : false;
+	}	
 	
 	// get password of a specific user
 	static function get_password($id) {
@@ -436,7 +446,9 @@ class Orders {
 		global $mysqli;
 		$user_id = test_input($mysqli, $user_id) ?? "";
 
-		$query = "SELECT * FROM checkout_orders WHERE user_id = '$user_id' AND delivered NOT LIKE 'delivered' OR delivered IS NULL ORDER BY checkout_id DESC";
+		$query = "SELECT * FROM checkout_orders WHERE user_id = '$user_id' AND 
+          (delivered NOT LIKE 'Delivered' AND delivered NOT LIKE 'Cancelled' OR delivered IS NULL ) 
+          ORDER BY checkout_id DESC";
 		$result = @mysqli_query($mysqli, $query);
 
 		return ($result) ? $result : false;

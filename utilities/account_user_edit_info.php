@@ -122,7 +122,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == "address") {
     } elseif (!in_array($mydetails['barangay'], $barangay)) {
         $notice['address'] = error_messages("barangay_error");             // barangay not valid
     } elseif (($mydetails['address'] != $_SESSION['address']) || ($mydetails['barangay']  != $_SESSION['barangay'])) {
-        $address_update_sql = "UPDATE addresses SET user_address = '". $mydetails['address'] ."', barangay = '". $mydetails['barangay'] ."' WHERE user_id = '". $_SESSION['id'] ."'";
+        if (Users::check_address($_SESSION['id'])) {
+            $address_update_sql = "UPDATE addresses SET user_address = '". $mydetails['address'] ."', barangay = '". $mydetails['barangay'] ."' WHERE user_id = '". $_SESSION['id'] ."'";
+        } else {
+            $address_update_sql = "INSERT INTO addresses (user_id, user_address, barangay) VALUES ('". $_SESSION['id'] ."', '". $mydetails['address'] ."', '". $mydetails['barangay'] ."')";
+        }
         $address_update_sqlresult = @mysqli_query($mysqli, $address_update_sql);
         if ($address_update_sqlresult) {
             $success['address'] = success_messages("update_successful");

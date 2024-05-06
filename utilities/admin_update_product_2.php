@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete'])) {
     $adminpass = $_POST['adminpass'];
     $adminerror = 0;
     if (!$adminpass) {
-        echo "<script>alert(" + error_messages("psw_error_1") + ")</script>";
+        echo "<script>alert(" . error_messages("psw_error_1") . ")</script>";
         $adminerror++;
     } else {
 
@@ -111,11 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete'])) {
         if ($pass) {
             $hashed_pass = $pass['password'];
             if (!password_verify($adminpass, $hashed_pass)) {
-                echo "<script>alert('" + error_messages("psw_error_6") + "')</script>";
+                echo "<script>alert('" . error_messages("psw_error_6") . "')</script>";
                 $adminerror++;
             }
         } else {
-            echo "<script>alert('" + error_messages("system_error") + "')</script>";
+            echo "<script>alert('" . error_messages("system_error") . "')</script>";
             $adminerror++;
         }
 

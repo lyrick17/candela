@@ -146,8 +146,18 @@
                             <div class="font-30 fw-bold">
                                 CONFIRM DELETE  
                             </div>
-                            <?php if (mysqli_num_rows(Orders::get_recent_orders($user['user_id'])) > 0): ?>
-                                <p class="font-20">This user has pending orders. The account cannot be deleted until the orders have been delivered.</p>
+                            <?php 
+                                $orders = Orders::get_recent_orders($user['user_id']); 
+                                if (mysqli_num_rows(Orders::get_recent_orders($user['user_id'])) > 0): 
+                            ?>
+                                    <p class="font-20">This user has pending orders. The account cannot be deleted until the orders have been delivered.</p>
+                                    <span class="fw-bold">List of Orders:</span>
+                                    <?php while ($order = mysqli_fetch_array($orders, MYSQLI_ASSOC)): ?>
+                                        <div class="font-16">Order ID: <b><?= $order['order_id']; ?></b></div>
+                                        <div class="font-16">Order Date: <b><?= date('F j, Y g:i A', strtotime($order['checked_out'])); ?></b></div>
+                                        <div class="font-16">Order Status: <b><?= $order['delivered']; ?></b></div>
+                                        <hr />
+                                    <?php endwhile; ?>
                             <?php else: ?>
                                 <form method="post" action="admin-users-delete.php?id=<?=$_GET['id']?>">
                                     <div class="py-1">

@@ -66,7 +66,7 @@ $(document).ready(function() {
 							<td class="tdacc-details"><input type="text" name="myfirstname" value="<?= $_SESSION['username'];?>" /></td>
 							<td class="tdacc-details">
 								<span class="field-validity-myaccount"><?= $notice['firstname']; ?></span>
-								<span class="field-success-myaccount"><?= $success['firstname']; ?></span>
+								<span class="text-success"><?= $success['firstname']; ?></span>
 							</td>
 						</tr>
 						<tr>
@@ -74,7 +74,7 @@ $(document).ready(function() {
 							<td class="tdacc-details"><input type="text" name="mylastname" value="<?= $_SESSION['lastname'];?>" /></td>
 							<td class="tdacc-details">
 								<span class="field-validity-myaccount"><?= $notice['lastname']; ?></span>
-								<span class="field-success-myaccount"><?= $success['lastname']; ?></span>
+								<span class="text-success"><?= $success['lastname']; ?></span>
 							</td>
 						</tr>
 						<tr>
@@ -82,7 +82,7 @@ $(document).ready(function() {
 							<td class="tdacc-details"><input type="text" name="myemail" value="<?= $_SESSION['email'];?>" /></td>
 							<td class="tdacc-details">
 								<span class="field-validity-myaccount"><?= $notice['email']; ?></span>
-								<span class="field-success-myaccount"><?= $success['email']; ?></span>
+								<span class="text-success"><?= $success['email']; ?></span>
 							</td>
 						</tr>
 						<tr>
@@ -90,7 +90,7 @@ $(document).ready(function() {
 							<td class="tdacc-details"><input type="text" name="mynumber" value="<?= $_SESSION['contactnumber'];?>" maxlength="11" /></td>
 							<td class="tdacc-details">
 								<span class="field-validity-myaccount"><?= $notice['number']; ?></span>
-								<span class="field-success-myaccount"><?= $success['number']; ?></span>
+								<span class="text-success"><?= $success['number']; ?></span>
 							</td>
 						</tr>
 						</table>
@@ -122,7 +122,7 @@ $(document).ready(function() {
 						<tr>
 							<td class="tdacc-details" colspan="2" style="direction: rtl;">
 								<span class="field-validity-myaccount"><?= $notice['address']; ?></span>
-								<span class="field-success-myaccount"><?= $success['address']; ?></span>
+								<span class="text-success"><?= $success['address']; ?></span>
 							</td>
 						</tr>
 					</table>
@@ -154,7 +154,7 @@ $(document).ready(function() {
 							<td class="tdacc-details"><input type="password" name="confirmpassword" value="" /></td>
 							<td class="tdacc-details">
 								<span class="field-validity-myaccount"><?= $notice['password']; ?></span>
-								<span class="field-success-myaccount"><?= $success['password']; ?></span>
+								<span class="text-success"><?= $success['password']; ?></span>
 							</td>
 						</tr>
 						</table>
