@@ -8,7 +8,7 @@
 		<div class="navbar-nav ms-auto text-end">
 			<ul class="navbar-nav">
 				<?php if (isset($_SESSION['id'])): ?>
-					<li class="m-2"><a href="myaccount.php"><?php echo $_SESSION['username'];?>'s Account</a></li>
+					<li class="m-2"><a href="myaccount.php">View <?php echo $_SESSION['username'];?>'s Account</a></li>
 					<li class="m-2"><a href="utilities/logout.php">Log Out</a></li>
 				<?php else: ?>
 					<li class="m-2"><a href="login-form.php">Log In</a></li>
