@@ -207,6 +207,7 @@ $(document).ready(function() {
 
 <!-- FOOTER -->
 <?php require("templates/footer.php"); ?>
+<?php require("templates/nav_bottom.php"); ?>
 
 <!-- SCRIPTING -->
 <script src="resources/js/javas.js"></script>
