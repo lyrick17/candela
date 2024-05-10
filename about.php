@@ -43,7 +43,7 @@
 			</div>
 			<div class="col-lg-6">
 				<div class="about-logo py-3">
-					<img src="images/Candelalogo.png" class="mx-auto d-block">
+					<img src="images/candelalogo.png" class="mx-auto d-block">
 				</div>
 			</div>
 		</div>

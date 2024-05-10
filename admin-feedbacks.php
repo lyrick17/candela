@@ -60,7 +60,7 @@
 						</div>
 						<div class="card-body">
 							<h4 class="card-title"><?= $feedback['subject']; ?></h4>
-							<p class="card-text"><?= $feedback['comment']; ?></p>
+							<p class="card-text"><?= str_replace("\\r\\n", "<br>", $feedback['comment']); ?></p>
 							<hr />
 							<span class="card-text">
 								: <b><?= $feedback['name']; ?></b> 

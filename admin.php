@@ -198,7 +198,7 @@
 				<div id="tagline" class="font-30 m-2">Admin Dashboard<br /></div>
 				<div id="description" class="font-20">Candela is new. No Orders have been received.</div>
 				<div id="description" class="font-20">For a meantime, you can visit Candela for customers.</div>
-				<a href="index.php" class="Onow">CHECK CANDELA NOW</a>
+				<a href="index.php" class="Onow">VIEW CANDELA</a>
 			</div>
 		<?php 	endif; ?>
 		<?php endif; ?>

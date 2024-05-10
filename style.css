@@ -705,7 +705,9 @@ textarea {
 	vertical-align: top;
 	width: 30%;
 }
-
+#goto-basket-btn {
+	display: none;
+}
 	/* SIDEBAR - SIDE BASKET */
 	.pbasket-td {
 		padding: 10px;
@@ -749,7 +751,11 @@ textarea {
 	#prod-sidebar {
 		display: none;
 	}
+	#goto-basket-btn {
+		display: block;
+	}
 }
+
 /* END OF PRODUCTS ----------------------------------- */
 
 
@@ -789,7 +795,7 @@ textarea {
 
 /* LOGIN AND REGISTER ----------------------------------- */
 #formbg {
-	background-image: url('images/about-background.png.');
+	background-image: url('images/about-background.png');
 }
 #signUpForm {
 	border-color: #f6a708 #fff #fff #fff ;

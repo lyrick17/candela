@@ -50,6 +50,12 @@
 		</div>
 		<!-- LIST OF PRODUCTS -->
 		<div id="products" class="text-center">
+
+			<div id="goto-basket-btn" class="py-2">
+				<hr />
+				<a href="basket.php" class="basket_buttons">Go to My Basket</a>
+				<hr />
+			</div>
 			<div class="row gx-0">
 				<?php
 					if (isset($_GET['search'])) {

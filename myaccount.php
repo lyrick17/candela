@@ -58,44 +58,47 @@ $(document).ready(function() {
 						</div>
 					<?php endif; ?>
 					<hr>
-					<form method="post" action="myaccount.php">
+
+					<form method="post" action="myaccount.php" class="w-100">
 						<input type="hidden" name="type" value="general"/>
-						<table>
-						<tr>
-							<td class="tdacc-details">First Name:</td>
-							<td class="tdacc-details"><input type="text" name="myfirstname" value="<?= $_SESSION['username'];?>" /></td>
-							<td class="tdacc-details">
+						<table class="w-75">
+						<tr class="row gx-0">
+							<td class="col-lg-2 col-sm-12 tdacc-details">First Name:</td>
+							<td class="col-lg-6 col-sm-6 tdacc-details"><input type="text" name="myfirstname" value="<?= $_SESSION['username'];?>" class="w-100"  /></td>
+							<td class="col-lg-4 col-sm-6 tdacc-details">
 								<span class="field-validity-myaccount"><?= $notice['firstname']; ?></span>
 								<span class="text-success"><?= $success['firstname']; ?></span>
 							</td>
 						</tr>
-						<tr>
-							<td class="tdacc-details">Last Name:</td>
-							<td class="tdacc-details"><input type="text" name="mylastname" value="<?= $_SESSION['lastname'];?>" /></td>
-							<td class="tdacc-details">
+						<tr class="row gx-0">
+							<td class="col-lg-2 col-sm-12 tdacc-details">Last Name:</td>
+							<td class="col-lg-6 col-sm-6 tdacc-details"><input type="text" name="mylastname" value="<?= $_SESSION['lastname'];?>" class="w-100" /></td>
+							<td class="col-lg-4 col-sm-6 tdacc-details">
 								<span class="field-validity-myaccount"><?= $notice['lastname']; ?></span>
 								<span class="text-success"><?= $success['lastname']; ?></span>
 							</td>
 						</tr>
-						<tr>
-							<td class="tdacc-details">E-mail:</td>
-							<td class="tdacc-details"><input type="text" name="myemail" value="<?= $_SESSION['email'];?>" /></td>
-							<td class="tdacc-details">
+						<tr class="row gx-0">
+							<td class="col-lg-2 col-sm-12 tdacc-details">E-mail:</td>
+							<td class="col-lg-6 col-sm-6 tdacc-details"><input type="text" name="myemail" value="<?= $_SESSION['email'];?>" class="w-100" /></td>
+							<td class="col-lg-4 col-sm-6 tdacc-details">
 								<span class="field-validity-myaccount"><?= $notice['email']; ?></span>
 								<span class="text-success"><?= $success['email']; ?></span>
 							</td>
 						</tr>
-						<tr>
-							<td class="tdacc-details">Contact Number:</td>
-							<td class="tdacc-details"><input type="text" name="mynumber" value="<?= $_SESSION['contactnumber'];?>" maxlength="11" /></td>
-							<td class="tdacc-details">
+						<tr class="row gx-0">
+							<td class="col-lg-2 col-sm-12 tdacc-details">Contact Number:</td>
+							<td class="col-lg-4 col-sm-6 tdacc-details"><input type="text" name="mynumber" value="<?= $_SESSION['contactnumber'];?>" class="w-100" maxlength="11" /></td>
+							<td class="col-lg-6 col-sm-6 tdacc-details">
 								<span class="field-validity-myaccount"><?= $notice['number']; ?></span>
 								<span class="text-success"><?= $success['number']; ?></span>
 							</td>
 						</tr>
 						</table>
 						<input type="submit" name="newchanges" value="Save Changes" class="savechanges" />
-					</form><br>
+					</form>
+					
+					<br>
 
 
 					<hr>
@@ -105,31 +108,32 @@ $(document).ready(function() {
 					<hr>
 					<form method="post" action="myaccount.php">
 						<input type="hidden" name="type" value="address"/>
-						<table>
-							<tr>
-							<td class="tdacc-details">Current Address:</td>
-							<td class="tdacc-details">
-							<textarea name="myaddress"><?= $_SESSION['address'];?></textarea>
-						</td>
-						</tr>
-						<tr>
-							<td class="tdacc-details"></td>
-							<td class="tdacc-details">
-								<input type="hidden" id="barangayvalue" value="<?= $_SESSION['barangay'] ?>" />
-								<?php require("templates/barangay_list.php"); ?> Imus City, Cavite
-							</td>
-						</tr>
-						<tr>
-							<td class="tdacc-details" colspan="2" style="direction: rtl;">
-								<span class="field-validity-myaccount"><?= $notice['address']; ?></span>
-								<span class="text-success"><?= $success['address']; ?></span>
-							</td>
-						</tr>
-					</table>
+						<table class="w-75">
+							<tr class="row gx-0">
+								<td class="col-lg-2 col-sm-12 tdacc-details">Current Address:</td>
+								<td class="col-lg-10 col-sm-12 tdacc-details">
+									<textarea name="myaddress" class="w-100"><?= $_SESSION['address'];?></textarea>
+								</td>
+							</tr>
+							<tr class="row gx-0">
+								<td class="col-lg-2 col-sm-12 tdacc-details"></td>
+								<td class="col-lg-10 col-sm-12 tdacc-details">
+									<input type="hidden" id="barangayvalue" value="<?= $_SESSION['barangay'] ?>" />
+									<?php require("templates/barangay_list.php"); ?> Imus City, Cavite
+								</td>
+							</tr>
+							<tr class="row gx-0">
+								<td class="col-lg-2 col-sm-12 tdacc-details"></td>
+								<td class="col-lg-10 col-sm-12 tdacc-details">
+									<span class="field-validity-myaccount"><?= $notice['address']; ?></span>
+									<span class="text-success"><?= $success['address']; ?></span>
+								</td>
+							</tr>
+						</table>
 						<input type="submit" name="newchanges" value="Update Address" class="savechanges" />
 
 					</form>
-<br>
+					<br>
 
 					<hr>
 
@@ -139,24 +143,24 @@ $(document).ready(function() {
 					<form method="post" id="changePass" action="myaccount.php">
 						
 						<input type="hidden" name="type" value="password"/>
-						<table>
-						<tr>
-							<td class="tdacc-details" style="font-size: 90%;">Old Password:</td>
-							<td class="tdacc-details"><input type="password" name="oldpassword" value="" /></td>
-						</tr>
-						<tr class="newpass-tr-style">
-							<td class="tdacc-details">New Password:</td>
-							<td class="tdacc-details"><input type="password" name="newpassword" value="" /></td>
-							
-						</tr>
-						<tr class="confirm-tr-style">
-							<td class="tdacc-details">Confirm Password:</td>
-							<td class="tdacc-details"><input type="password" name="confirmpassword" value="" /></td>
-							<td class="tdacc-details">
-								<span class="field-validity-myaccount"><?= $notice['password']; ?></span>
-								<span class="text-success"><?= $success['password']; ?></span>
-							</td>
-						</tr>
+						<table class="w-75">
+							<tr class="row gx-0">
+								<td class="col-lg-3 col-sm-12 tdacc-details" style="font-size: 90%;">Old Password:</td>
+								<td class="col-lg-6 col-sm-6 tdacc-details"><input type="password" name="oldpassword" value="" class="w-100" /></td>
+							</tr>
+							<tr class="row gx-0 newpass-tr-style">
+								<td class="col-lg-3 col-sm-12 tdacc-details">New Password:</td>
+								<td class="col-lg-6 col-sm-6  tdacc-details"><input type="password" name="newpassword" value="" class="w-100" /></td>
+								
+							</tr>
+							<tr class="row gx-0 confirm-tr-style">
+								<td class="col-lg-3 col-sm-12 tdacc-details">Confirm Password:</td>
+								<td class="col-lg-6 col-sm-6 tdacc-details"><input type="password" name="confirmpassword" value="" class="w-100" /></td>
+								<td class="col-lg-3 col-sm-6 tdacc-details">
+									<span class="field-validity-myaccount"><?= $notice['password']; ?></span>
+									<span class="text-success"><?= $success['password']; ?></span>
+								</td>
+							</tr>
 						</table>
 						<input type="submit" name="changepassword" value="Change Password" class="savechanges" />
 					</form><br>
@@ -207,14 +211,15 @@ $(document).ready(function() {
 
 <!-- FOOTER -->
 <?php require("templates/footer.php"); ?>
+<?php require("templates/nav_bottom.php"); ?>
 
 <!-- SCRIPTING -->
 <script src="resources/js/javas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.4/jquery.simplePagination.min.js" integrity="sha512-J4OD+6Nca5l8HwpKlxiZZ5iF79e9sgRGSf0GxLsL1W55HHdg48AEiKCXqvQCNtA1NOMOVrw15DXnVuPpBm2mPg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="resources/js/barangay_select.js"></script>
 <script src="resources/js/del_acc_confirmation.js"></script>
-<script src="resources/js/checkout_history.js"></script>
 
 </body>
 </html>

@@ -228,11 +228,6 @@ class Products {
 	// update a specific product
 	static function product_modify($process, $id, $name, $price, $stocks, $description) {
 		global $mysqli;
-		$id = test_input($mysqli, $id) ?? "";
-		$name = test_input($mysqli, $name) ?? "";
-		$price = test_input($mysqli, $price) ?? "";
-		$stocks = test_input($mysqli, $stocks) ?? "";
-		$description = test_input($mysqli, $description) ?? "";
 
 		if ($process == "update") {
 			$query = "UPDATE products SET name = '$name', price = '$price', stocks = '$stocks', description = '$description' WHERE product_id = '$id'";
