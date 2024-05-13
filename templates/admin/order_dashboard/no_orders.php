@@ -7,7 +7,7 @@
             $no_order_message = "Whew. All products have been prepared!";
         elseif ($_GET['orders'] == 3)
             $no_order_message = "No products are on the road yet.";
-        elseif ($_GET['orders'] == 3)
+        elseif ($_GET['orders'] == 4)
             $no_order_message = "No products have been delivered yet.";
         else 
             $no_order_message = "Woohoo! No products are cancelled!";

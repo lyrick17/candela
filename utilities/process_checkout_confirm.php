@@ -78,9 +78,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     $delivered);
                     
             } else {
+                $delivered = "Order Placed";
                 $orders_stmt = mysqli_prepare($mysqli, "INSERT INTO `checkout_orders` 
                                 (order_id, firstname, lastname, email, contactnumber, address, barangay, products, shipping_fee, total, delivered) 
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 mysqli_stmt_bind_param($orders_stmt, "ssssssssiss",
                     $order_id,
                     $_SESSION['checkout']['username'],
@@ -97,10 +98,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
             $result = mysqli_stmt_execute($orders_stmt);
             if ($result) {
-                $ordered = 1; // mark the product as ordered. This prohibits admin to delete the product, but only hide it from user
                 // 5.
+                $ordered = 1; // mark the product as ordered. This prohibits admin to delete the product, but only hide it from user
                 foreach ($_SESSION['basket'] as $product_id => $quantity) {
-                    $update_stmt = mysqli_prepare($mysqli, "UPDATE `products` SET stocks = stocks - ? AND ordered = ? WHERE product_id = ?");
+                    $update_stmt = mysqli_prepare($mysqli, "UPDATE `products` SET stocks = stocks - ?, ordered = ? WHERE product_id = ?");
                     mysqli_stmt_bind_param($update_stmt, "iii", $quantity, $ordered, $product_id);
                     mysqli_stmt_execute($update_stmt);
 

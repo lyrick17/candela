@@ -1,6 +1,6 @@
 <h1>Terms and Conditions</h1>
 
-<p>Please read these Terms and Conditions carefully before using the http://candela.com website owned and operated by Candela.</p>
+<p>Please read these Terms and Conditions carefully before using the https://candela.great-site.net website owned and operated by Candela.</p>
 <p>Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.</p>
 <p><b>By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the Service.</b></p>
 
@@ -68,6 +68,9 @@
 
 <h2>Contact Us</h2>
 <p>If you have any questions or complaints about the Terms of Service and Conditions, please feel free to contact us at candela.foodcandle@gmail.com, or you could call or text us at 0971-697-0022.</p>
+
+<h2>Not Legitimate</h2>
+<p>Please be aware that Candela is a portfolio / personal project only written in PHP. The products displayed here are not for sale. For more information, please visit my <a href="https://github.com/lyrick17/candela"><u>Github</u></a> page. </p>
 
 <br>
 
